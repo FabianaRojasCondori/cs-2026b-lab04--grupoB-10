@@ -1,0 +1,123 @@
+flowchart TB
+    %% Actores
+    Vecino["Vecino (PWA/Móvil)"]
+    Reciclador["Reciclador formalizado (Móvil 3G)"]
+    Admin["Administrador Municipal (Web)"]
+
+    %% Capa de presentación
+    subgraph Presentacion["Capa de Presentación - API REST"]
+        API["API REST<br/>(Django REST Framework)"]
+        Auth["Autenticación / Autorización<br/>RBAC"]
+        Serializers["Serializers / DTOs"]
+    end
+
+    %% Capa de dominio - Monolito Modular
+    subgraph Dominio["Capa de Dominio - Monolito Modular"]
+        direction TB
+
+        subgraph Solicitudes["Módulo Solicitudes"]
+            SServ["Servicios de aplicación"]
+            SDom["Modelo de dominio"]
+            SPorts["Puertos / Interfaces"]
+        end
+
+        subgraph Rutas["Módulo Rutas"]
+            RServ["Servicios de aplicación"]
+            RDom["Modelo de dominio"]
+            RPorts["Puertos / Interfaces"]
+        end
+
+        subgraph Puntos["Módulo Puntos"]
+            PServ["Servicios de aplicación"]
+            PDom["Modelo de dominio"]
+            PPorts["Puertos / Interfaces"]
+        end
+
+        subgraph Reportes["Módulo Reportes"]
+            TServ["Servicios de aplicación"]
+            TDom["Modelo de dominio"]
+            TPorts["Puertos / Interfaces"]
+        end
+    end
+
+    %% Capa de infraestructura
+    subgraph Infraestructura["Capa de Infraestructura"]
+        Repo["Repositorios / Adaptadores"]
+        ORM["ORM Django"]
+        GeoAdapter["Adaptador de Ruteo"]
+        NotifAdapter["Adaptador de Notificaciones"]
+        Audit["Auditoría / Logs"]
+    end
+
+    %% Persistencia PostgreSQL con esquemas separados
+    subgraph PostgreSQL["PostgreSQL - Esquemas separados"]
+        SchemaSol[("schema_solicitudes")]
+        SchemaRut[("schema_rutas")]
+        SchemaPun[("schema_puntos")]
+        SchemaRep[("schema_reportes")]
+        SchemaAud[("schema_auditoria")]
+    end
+
+    %% Servicios externos
+    subgraph Externos["Servicios Externos"]
+        ExtRuteo["Servicio externo de cálculo de rutas (OSRM / Maps API)"]
+        ExtNotif["Servicio externo de notificaciones (WhatsApp Business API)"]
+    end
+
+    %% Conexiones actores -> presentación
+    Vecino --> API
+    Reciclador --> API
+    Admin --> API
+
+    API --> Auth
+    Auth --> Serializers
+
+    %% Presentación -> servicios de aplicación
+    Serializers --> SServ
+    Serializers --> RServ
+    Serializers --> PServ
+    Serializers --> TServ
+
+    %% Dominio interno
+    SServ --> SDom
+    SServ --> SPorts
+    RServ --> RDom
+    RServ --> RPorts
+    PServ --> PDom
+    PServ --> PPorts
+    TServ --> TDom
+    TServ --> TPorts
+
+    %% Puertos -> infraestructura
+    SPorts --> Repo
+    RPorts --> Repo
+    PPorts --> Repo
+    TPorts --> Repo
+
+    %% Infraestructura -> persistencia
+    Repo --> ORM
+    ORM --> SchemaSol
+    ORM --> SchemaRut
+    ORM --> SchemaPun
+    ORM --> SchemaRep
+    Audit --> SchemaAud
+
+    %% Infraestructura -> servicios externos
+    RPorts --> GeoAdapter
+    GeoAdapter --> ExtRuteo
+    SPorts --> NotifAdapter
+    PServ --> NotifAdapter
+    NotifAdapter --> ExtNotif
+
+    %% Comunicación entre módulos por contratos
+    SServ -.->|Contratos / Eventos| RServ
+    RServ -.->|Contratos / Eventos| TServ
+    PServ -.->|Contratos / Eventos| TServ
+
+    classDef mod fill:#E8F5E9,stroke:#2E7D32,stroke-width:1px,color:#000
+    classDef ext fill:#FFF3E0,stroke:#E65100,stroke-width:1px,stroke-dasharray: 4 3,color:#000
+    classDef usr fill:#E3F2FD,stroke:#1565C0,stroke-width:1px,color:#000
+
+    class SServ,SDom,SPorts,RServ,RDom,RPorts,PServ,PDom,PPorts,TServ,TDom,TPorts mod
+    class ExtRuteo,ExtNotif ext
+    class Vecino,Reciclador,Admin usr
