@@ -1,0 +1,31 @@
+@startuml
+skinparam dpi 200
+skinparam componentStyle rectangle
+skinparam defaultFontName Arial
+skinparam backgroundColor white
+
+title Alternativa A (Segunda Mejor Opción - Descartada): Monolito Tradicional en Capas
+
+actor "Vecino / Reciclador / Municipio" as Actor
+
+package "Monolito en Capas (EcoRecicla AQP)" {
+    [Capa de Presentación / UI Web] as UI
+    [Capa de Lógica de Negocio (Servicios Mezclados)] as Business
+    [Capa de Acceso a Datos (ORM Monolítico)] as DAL
+}
+
+database "PostgreSQL (Esquema Único Compartido)" as DB
+
+Actor --> UI
+UI --> Business
+Business --> DAL
+DAL --> DB
+
+note bottom of Business
+  **Descartada (Puntaje Ponderado: 3.95 frente a 4.10)**
+  Aunque su costo operativo y tiempo de entrega son excelentes (5/5),
+  penaliza severamente el atributo crítico de Modificabilidad (2/5).
+  La ausencia de límites modulares provocaría acoplamiento
+  al incorporar nuevos distritos o alterar reglas de puntaje (QA-01).
+end note
+@endluml
