@@ -1,0 +1,110 @@
+@startuml
+title EcoRecicla AQP - Solicitud de recojo
+
+skinparam classAttributeIconSize 0
+skinparam shadowing false
+skinparam defaultFontName Arial
+skinparam classBackgroundColor #EEF7F0
+skinparam classBorderColor #286140
+skinparam nodesep 30
+skinparam ranksep 40
+
+class Vecino {
+  - id: UUID
+  - nombre: String
+  - celular: String
+}
+
+class FormularioSolicitud <<presentacion>> {
+  + enviar_solicitud(vecino: Vecino, direccion: String, items: List<ItemMaterial>): String
+}
+
+class SolicitudController <<controlador>> {
+  + crear_solicitud(vecino: Vecino, direccion: String, items: List<ItemMaterial>): Solicitud
+}
+
+class ServicioSolicitudes <<servicio>> {
+  + solicitar_recojo(vecino: Vecino, direccion: String, items: List<ItemMaterial>): Solicitud
+  + validar_datos(direccion: String, items: List<ItemMaterial>): bool
+}
+
+class Solicitud <<entidad>> {
+  - id: UUID
+  - fecha: DateTime
+  - direccion: String
+  - estado: EstadoSolicitud
+  - reciclador_id: UUID [0..1]
+  - peso_kg: Decimal [0..1]
+  - puntos: int [0..1]
+  + Solicitud(vecino: Vecino, direccion: String, items: List<ItemMaterial>)
+  + asignar_reciclador(reciclador_id: UUID): void
+  + registrar_recojo(): void
+  + registrar_pesaje(peso_kg: Decimal): void
+  + registrar_acreditacion(puntos: int): void
+}
+
+class ItemMaterial <<entidad>> {
+  - tipo_material: String
+  - volumen_estimado_litros: Decimal
+  + es_valido(): bool
+}
+
+enum EstadoSolicitud {
+  Pendiente
+  Asignada
+  Recogida
+  Pesada
+  PuntosAcreditados
+}
+
+interface RepositorioSolicitudes <<puerto>> {
+  + guardar(solicitud: Solicitud): void
+}
+
+interface NotificadorWhatsapp <<puerto>> {
+  + notificar_solicitud(celular: String, solicitud_id: UUID): void
+}
+
+class WhatsappAdapter <<adaptador>> {
+  + notificar_solicitud(celular: String, solicitud_id: UUID): void
+}
+
+Vecino "1" -- "0..*" Solicitud : realiza
+Solicitud "1" *-- "1..*" ItemMaterial : contiene
+
+FormularioSolicitud "0..*" --> "1" SolicitudController : usa
+SolicitudController "0..*" --> "1" ServicioSolicitudes : delega
+ServicioSolicitudes "0..*" --> "1" RepositorioSolicitudes : persiste mediante
+ServicioSolicitudes "0..*" --> "1" NotificadorWhatsapp : notifica mediante
+
+ServicioSolicitudes ..> Solicitud : crea
+ServicioSolicitudes ..> ItemMaterial : valida
+Solicitud ..> EstadoSolicitud : tipo de estado
+WhatsappAdapter ..|> NotificadorWhatsapp
+
+note bottom of Solicitud
+  El constructor exige datos válidos
+  y uno o más materiales.
+  Estado inicial: Pendiente.
+
+  Cada operación de transición
+  verifica el estado de origen.
+
+  registrar_acreditacion registra
+  el resultado del módulo Puntos.
+end note
+
+note bottom of NotificadorWhatsapp
+  Puerto hacia WhatsApp.
+  La entrega se procesa en segundo plano
+  y no bloquea la respuesta al vecino.
+end note
+
+note bottom of ServicioSolicitudes
+  ADR-001: monolito modular.
+  Solicitudes usa contratos y puertos.
+  El cálculo de puntos permanece
+  en el módulo Puntos.
+end note
+
+@enduml
