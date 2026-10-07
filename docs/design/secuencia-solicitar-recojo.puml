@@ -1,0 +1,74 @@
+@startuml
+title EcoRecicla AQP - Solicitar recojo de reciclables
+
+skinparam shadowing false
+skinparam defaultFontName Arial
+skinparam sequenceMessageAlign center
+autonumber
+
+actor "Vecino" as V
+boundary "ui:FormularioSolicitud" as UI
+control "controller:SolicitudController" as C
+control "servicio:ServicioSolicitudes" as S
+participant "item:ItemMaterial" as I
+participant "repositorio:RepositorioSolicitudes" as R
+participant "notificador:NotificadorWhatsapp" as N
+
+note over V, UI
+  Precondición: vecino autenticado.
+  El formulario ya contiene dirección
+  y los materiales ingresados.
+end note
+
+V -> UI : enviar_solicitud(vecino, direccion, items)
+UI -> C : crear_solicitud(vecino, direccion, items)
+C -> S : solicitar_recojo(vecino, direccion, items)
+
+S -> S : validar_datos(direccion, items)
+
+loop por cada item de items
+  S -> I : es_valido()
+  I --> S : valido
+end
+
+note right of S
+  datos_validos requiere:
+  dirección no vacía,
+  lista no vacía y
+  todos los ítems válidos.
+end note
+
+S --> S : datos_validos
+
+alt datos_validos = true
+  create participant "solicitud:Solicitud" as SOL
+  S -> SOL : Solicitud(vecino, direccion, items)
+  SOL --> S : solicitud en estado Pendiente
+
+  S -> R : guardar(solicitud)
+  R --> S : guardado confirmado
+
+  S ->> N : notificar_solicitud(vecino.celular, solicitud.id)
+
+  note right of N
+    Mensaje asíncrono.
+    La entrega por WhatsApp
+    ocurre en segundo plano.
+  end note
+
+  S --> C : solicitud
+  C --> UI : solicitud
+  UI --> V : confirmación con identificador y estado Pendiente
+
+else datos_validos = false
+  note over S, R
+    No se crea ni se guarda una Solicitud.
+    No se solicita una notificación.
+  end note
+
+  S --> C : error de validación
+  C --> UI : error de validación
+  UI --> V : mensaje para corregir los datos
+end
+
+@enduml
