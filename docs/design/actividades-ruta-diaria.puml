@@ -1,0 +1,69 @@
+@startuml actividades-ruta-diaria
+skinparam shadowing false
+skinparam defaultFontName Arial
+skinparam ActivityBackgroundColor #EEF7F0
+skinparam ActivityBorderColor #286140
+
+|Reciclador|
+start
+:Inicia jornada en la PWA móvil;
+:Solicita sincronización de hoja de ruta del día;
+
+|Sistema|
+:Consulta solicitudes asignadas y traza ruta óptima;
+if (¿Existen solicitudes pendientes de recojo?) then (sí)
+    :Genera itinerario georreferenciado;
+else (no)
+    |Reciclador|
+    :Recibe aviso de sin paradas asignadas;
+    stop
+endif
+
+|Reciclador|
+:Se desplaza al domicilio del vecino;
+:Verifica presencia del vecino y materiales separados;
+
+if (¿Material conforme y vecino presente?) then (sí)
+    :Confirma recojo en la PWA;
+    |Sistema|
+    :Ejecuta registrar_recojo();
+    :Actualiza estado a Recogida;
+    |Reciclador|
+    :Carga materiales al vehículo de recolección;
+else (no)
+    :Registra incidencia de ausencia/rechazo;
+    |Sistema|
+    :Cancela parada en la hoja de ruta;
+    stop
+endif
+
+|Reciclador|
+:Se traslada al Centro de Acopio Municipal;
+
+|Centro de Acopio|
+:Recibe cargamento y descarga materiales;
+:Realiza pesaje clasificado en balanza oficial;
+:Ingresa peso_kg al sistema;
+
+|Sistema|
+:Ejecuta registrar_pesaje(peso_kg);
+:Actualiza estado a Pesada;
+fork
+    :Registra tonelaje acumulado para reporte municipal;
+fork again
+    :Notifica al módulo Puntos para cálculo ecológico;
+fork again
+    :Envía notificación de pesaje al vecino por WhatsApp;
+end fork
+
+|Sistema|
+:Ejecuta registrar_acreditacion(puntos);
+:Actualiza estado a PuntosAcreditados;
+
+|Centro de Acopio|
+:Emite comprobante físico/digital de pesaje;
+
+|Reciclador|
+:Firma conformidad de entrega y finaliza ruta;
+stop
+@enduml
