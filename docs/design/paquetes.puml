@@ -1,0 +1,33 @@
+@startuml paquetes
+skinparam shadowing false
+skinparam defaultFontName Arial
+skinparam packageStyle rectangle
+title EcoRecicla AQP — Paquetes del Monolito Modular (Vista de Desarrollo)
+
+package "ecorecicla" {
+    package "solicitudes" as SOL
+    package "rutas" as RUT
+    package "puntos" as PUN
+    package "reportes" as REP
+    package "compartido" as COM
+}
+
+SOL ..> COM : usa tipos de datos base\ny constantes
+RUT ..> COM : usa utilidades geo\ny horarios
+PUN ..> COM : usa reglas base
+REP ..> COM : usa filtros de fecha
+
+RUT ..> SOL : consulta Solicitudes\npara generar paradas
+PUN ..> SOL : escucha evento SolicitudPesada\ny envía acreditación
+REP ..> SOL : lectura para consolidados\n(toneladas y atenciones)
+REP ..> PUN : lectura para reportes\nde beneficios ecológicos
+
+note bottom of SOL
+  Regla C4 (ADR-001): Dependencias sin ciclos.
+  'solicitudes' es el módulo transaccional base y NO depende
+  de 'rutas', 'puntos' ni 'reportes'.
+  La comunicación entre módulos se realiza mediante contratos,
+  eventos y puertos bien definidos.
+end note
+
+@enduml

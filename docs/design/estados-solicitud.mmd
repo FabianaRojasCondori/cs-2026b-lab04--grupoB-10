@@ -1,0 +1,23 @@
+stateDiagram-v2
+    [*] --> Pendiente : Solicitud(vecino, direccion, items) [items >= 1 y datos validos]
+
+    Pendiente --> Asignada : asignar_reciclador(reciclador_id) [reciclador_id valido]
+
+    Asignada --> Recogida : registrar_recojo() [recojo en domicilio confirmado]
+
+    Recogida --> Pesada : registrar_pesaje(peso_kg) [peso_kg > 0]
+
+    Pesada --> PuntosAcreditados : registrar_acreditacion(puntos) [puntos > 0]
+
+    PuntosAcreditados --> [*]
+
+    note right of Pendiente
+        Estado inicial creado
+        tras validar datos y persistir
+    end note
+
+    note right of PuntosAcreditados
+        Fin del ciclo de vida.
+        Puntos calculados por modulo Puntos
+        y registrados en Solicitud
+    end note
