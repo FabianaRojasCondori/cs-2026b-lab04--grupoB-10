@@ -7,7 +7,17 @@ workspace "EcoRecicla AQP" "Lab 06 - Grupo B-10 - Modelo C4" {
         reciclador = person "Reciclador formalizado" "Consulta rutas y registra recojos y pesajes."
         admin = person "Administrador municipal" "Supervisa recicladores y consulta reportes."
 
-        eco = softwareSystem "EcoRecicla AQP" "Gestiona solicitudes, rutas, puntos y reportes de reciclaje."
+        eco = softwareSystem "EcoRecicla AQP" "Gestiona solicitudes, rutas, puntos y reportes de reciclaje." {
+            pwa = container "Aplicacion web progresiva" "Interfaz por rol para vecinos, recicladores y administracion; permite registro local y sincronizacion al recuperar conexion." "JavaScript / Service Worker / IndexedDB" "Web Browser"
+
+            api = container "API EcoRecicla" "Monolito modular con servicios de aplicacion y adaptadores." "Python / Django REST Framework"
+
+            db = container "Base de datos" "Una instancia con esquemas solicitudes, rutas, puntos y reportes; cada modulo accede solo a su esquema." "PostgreSQL" "Database"
+
+            worker = container "Worker de notificaciones" "Ejecuta tareas de notificacion y reintentos en segundo plano." "Python / Celery"
+
+            cola = container "Cola y cache" "Mantiene tareas pendientes y datos temporales de sesiones y cache." "Redis" "Queue"
+        }
 
         mapas = softwareSystem "Servicio de mapas y rutas" "Proporciona mapas e itinerarios mediante una API externa." "Externo"
         whatsapp = softwareSystem "WhatsApp Business API" "Entrega avisos a los usuarios." "Externo"
@@ -18,7 +28,16 @@ workspace "EcoRecicla AQP" "Lab 06 - Grupo B-10 - Modelo C4" {
         eco -> mapas "Consulta mapas e itinerarios" "HTTPS/JSON"
         eco -> whatsapp "Envia notificaciones" "HTTPS/JSON"
 
-        // RELACIONES_E2
+        vecino -> eco.pwa "Registra solicitudes y consulta puntos" "HTTPS"
+        reciclador -> eco.pwa "Consulta rutas y registra recojos" "HTTPS"
+        admin -> eco.pwa "Supervisa recicladores y consulta reportes" "HTTPS"
+
+        eco.pwa -> eco.api "Invoca los servicios del sistema" "HTTPS/JSON (REST)"
+        eco.api -> eco.db "Lee y escribe mediante el esquema de cada modulo" "SQL/TCP"
+        eco.api -> eco.cola "Encola notificaciones y accede a cache" "Redis protocol/TCP"
+        eco.worker -> eco.cola "Consume tareas pendientes" "Redis protocol/TCP"
+        eco.worker -> whatsapp "Envia avisos y reintenta entregas fallidas" "HTTPS/JSON"
+        eco.api -> mapas "Consulta mapas e itinerarios" "HTTPS/JSON"
         // RELACIONES_E3
     }
 
@@ -28,7 +47,10 @@ workspace "EcoRecicla AQP" "Lab 06 - Grupo B-10 - Modelo C4" {
             autoLayout lr
         }
 
-        // VISTA_E2
+        container eco "Contenedores" "Nivel 2: aplicaciones y almacenes de datos de EcoRecicla AQP." {
+            include *
+            autoLayout lr
+        }
         // VISTA_E3
 
         styles {

@@ -1,0 +1,44 @@
+@startuml
+title <size:24>Container View: EcoRecicla AQP</size>\n<size:24>Nivel 2: aplicaciones y almacenes de datos de EcoRecicla AQP.</size>
+
+set separator none
+left to right direction
+
+<style>
+  root {
+    BackgroundColor: #ffffff
+    FontColor: #444444
+  }
+</style>
+
+!include <C4/C4>
+!include <C4/C4_Context>
+!include <C4/C4_Container>
+
+Person(Vecino, "Vecino", $descr="Solicita recojos y consulta sus puntos.", $tags="", $link="")
+Person(Recicladorformalizado, "Reciclador formalizado", $descr="Consulta rutas y registra recojos y pesajes.", $tags="", $link="")
+Person(Administradormunicipal, "Administrador municipal", $descr="Supervisa recicladores y consulta reportes.", $tags="", $link="")
+System(Serviciodemapasyrutas, "Servicio de mapas y rutas", $descr="Proporciona mapas e itinerarios mediante una API externa.", $tags="", $link="")
+System(WhatsAppBusinessAPI, "WhatsApp Business API", $descr="Entrega avisos a los usuarios.", $tags="", $link="")
+
+System_Boundary("EcoReciclaAQP_boundary", "EcoRecicla AQP", $tags="") {
+  Container(EcoReciclaAQP.Aplicacionwebprogresiva, "Aplicacion web progresiva", $techn="JavaScript / Service Worker / IndexedDB", $descr="Interfaz por rol para vecinos, recicladores y administracion; permite registro local y sincronizacion al recuperar conexion.", $tags="", $link="")
+  Container(EcoReciclaAQP.APIEcoRecicla, "API EcoRecicla", $techn="Python / Django REST Framework", $descr="Monolito modular con servicios de aplicacion y adaptadores.", $tags="", $link="")
+  ContainerDb(EcoReciclaAQP.Basededatos, "Base de datos", $techn="PostgreSQL", $descr="Una instancia con esquemas solicitudes, rutas, puntos y reportes; cada modulo accede solo a su esquema.", $tags="", $link="")
+  Container(EcoReciclaAQP.Workerdenotificaciones, "Worker de notificaciones", $techn="Python / Celery", $descr="Ejecuta tareas de notificacion y reintentos en segundo plano.", $tags="", $link="")
+  ContainerQueue(EcoReciclaAQP.Colaycache, "Cola y cache", $techn="Redis", $descr="Mantiene tareas pendientes y datos temporales de sesiones y cache.", $tags="", $link="")
+}
+
+Rel(Vecino, EcoReciclaAQP.Aplicacionwebprogresiva, "Registra solicitudes y consulta puntos", $techn="HTTPS", $tags="", $link="")
+Rel(Recicladorformalizado, EcoReciclaAQP.Aplicacionwebprogresiva, "Consulta rutas y registra recojos", $techn="HTTPS", $tags="", $link="")
+Rel(Administradormunicipal, EcoReciclaAQP.Aplicacionwebprogresiva, "Supervisa recicladores y consulta reportes", $techn="HTTPS", $tags="", $link="")
+Rel(EcoReciclaAQP.Aplicacionwebprogresiva, EcoReciclaAQP.APIEcoRecicla, "Invoca los servicios del sistema", $techn="HTTPS/JSON (REST)", $tags="", $link="")
+Rel(EcoReciclaAQP.APIEcoRecicla, EcoReciclaAQP.Basededatos, "Lee y escribe mediante el esquema de cada modulo", $techn="SQL/TCP", $tags="", $link="")
+Rel(EcoReciclaAQP.APIEcoRecicla, EcoReciclaAQP.Colaycache, "Encola notificaciones y accede a cache", $techn="Redis protocol/TCP", $tags="", $link="")
+Rel(EcoReciclaAQP.Workerdenotificaciones, EcoReciclaAQP.Colaycache, "Consume tareas pendientes", $techn="Redis protocol/TCP", $tags="", $link="")
+Rel(EcoReciclaAQP.Workerdenotificaciones, WhatsAppBusinessAPI, "Envia avisos y reintenta entregas fallidas", $techn="HTTPS/JSON", $tags="", $link="")
+Rel(EcoReciclaAQP.APIEcoRecicla, Serviciodemapasyrutas, "Consulta mapas e itinerarios", $techn="HTTPS/JSON", $tags="", $link="")
+
+SHOW_LEGEND(true)
+hide stereotypes
+@enduml

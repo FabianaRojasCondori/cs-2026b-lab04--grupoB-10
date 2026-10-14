@@ -1,0 +1,26 @@
+graph LR
+  linkStyle default fill:#ffffff
+
+  subgraph diagram ["System Context View: EcoRecicla AQP"]
+    style diagram fill:#ffffff,stroke:#ffffff
+
+    1["<div style='font-weight: bold'>Vecino</div><div style='font-size: 70%; margin-top: 0px'>[Person]</div><div style='font-size: 80%; margin-top:10px'>Solicita recojos y consulta<br />sus puntos.</div>"]
+    style 1 fill:#08427b,stroke:#052e56,color:#ffffff
+    10["<div style='font-weight: bold'>Servicio de mapas y rutas</div><div style='font-size: 70%; margin-top: 0px'>[Software System]</div><div style='font-size: 80%; margin-top:10px'>Proporciona mapas e<br />itinerarios mediante una API<br />externa.</div>"]
+    style 10 fill:#666666,stroke:#474747,color:#ffffff
+    11["<div style='font-weight: bold'>WhatsApp Business API</div><div style='font-size: 70%; margin-top: 0px'>[Software System]</div><div style='font-size: 80%; margin-top:10px'>Entrega avisos a los<br />usuarios.</div>"]
+    style 11 fill:#666666,stroke:#474747,color:#ffffff
+    2["<div style='font-weight: bold'>Reciclador formalizado</div><div style='font-size: 70%; margin-top: 0px'>[Person]</div><div style='font-size: 80%; margin-top:10px'>Consulta rutas y registra<br />recojos y pesajes.</div>"]
+    style 2 fill:#08427b,stroke:#052e56,color:#ffffff
+    3["<div style='font-weight: bold'>Administrador municipal</div><div style='font-size: 70%; margin-top: 0px'>[Person]</div><div style='font-size: 80%; margin-top:10px'>Supervisa recicladores y<br />consulta reportes.</div>"]
+    style 3 fill:#08427b,stroke:#052e56,color:#ffffff
+    4["<div style='font-weight: bold'>EcoRecicla AQP</div><div style='font-size: 70%; margin-top: 0px'>[Software System]</div><div style='font-size: 80%; margin-top:10px'>Gestiona solicitudes, rutas,<br />puntos y reportes de<br />reciclaje.</div>"]
+    style 4 fill:#1168bd,stroke:#0b4884,color:#ffffff
+
+    1-. "<div>Solicita recojos y consulta<br />puntos</div><div style='font-size: 70%'></div>" .->4
+    2-. "<div>Consulta rutas y registra<br />entregas</div><div style='font-size: 70%'></div>" .->4
+    3-. "<div>Supervisa recicladores y<br />consulta reportes</div><div style='font-size: 70%'></div>" .->4
+    4-. "<div>Consulta mapas e itinerarios</div><div style='font-size: 70%'>[HTTPS/JSON]</div>" .->10
+    4-. "<div>Envia notificaciones</div><div style='font-size: 70%'>[HTTPS/JSON]</div>" .->11
+
+  end
