@@ -22,11 +22,11 @@ System(Serviciodemapasyrutas, "Servicio de mapas y rutas", $descr="Proporciona m
 System(WhatsAppBusinessAPI, "WhatsApp Business API", $descr="Entrega avisos a los usuarios.", $tags="", $link="")
 
 System_Boundary("EcoReciclaAQP_boundary", "EcoRecicla AQP", $tags="") {
-  Container(EcoReciclaAQP.Aplicacionwebprogresiva, "Aplicacion web progresiva", $techn="JavaScript / Service Worker / IndexedDB", $descr="Interfaz por rol para vecinos, recicladores y administracion; permite registro local y sincronizacion al recuperar conexion.", $tags="", $link="")
-  Container(EcoReciclaAQP.APIEcoRecicla, "API EcoRecicla", $techn="Python / Django REST Framework", $descr="Monolito modular con servicios de aplicacion y adaptadores.", $tags="", $link="")
   ContainerDb(EcoReciclaAQP.Basededatos, "Base de datos", $techn="PostgreSQL", $descr="Una instancia con esquemas solicitudes, rutas, puntos y reportes; cada modulo accede solo a su esquema.", $tags="", $link="")
   Container(EcoReciclaAQP.Workerdenotificaciones, "Worker de notificaciones", $techn="Python / Celery", $descr="Ejecuta tareas de notificacion y reintentos en segundo plano.", $tags="", $link="")
   ContainerQueue(EcoReciclaAQP.Colaycache, "Cola y cache", $techn="Redis", $descr="Mantiene tareas pendientes y datos temporales de sesiones y cache.", $tags="", $link="")
+  Container(EcoReciclaAQP.Aplicacionwebprogresiva, "Aplicacion web progresiva", $techn="JavaScript / Service Worker / IndexedDB", $descr="Interfaz por rol para vecinos, recicladores y administracion; permite registro local y sincronizacion al recuperar conexion.", $tags="", $link="")
+  Container(EcoReciclaAQP.APIEcoRecicla, "API EcoRecicla", $techn="Python / Django REST Framework", $descr="Monolito modular con servicios de aplicacion y adaptadores.", $tags="", $link="")
 }
 
 Rel(Vecino, EcoReciclaAQP.Aplicacionwebprogresiva, "Registra solicitudes y consulta puntos", $techn="HTTPS", $tags="", $link="")

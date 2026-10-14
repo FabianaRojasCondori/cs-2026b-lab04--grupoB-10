@@ -1,0 +1,56 @@
+@startuml
+title <size:24>Component View: EcoRecicla AQP - API EcoRecicla</size>\n<size:24>Nivel 3: modulos de la API; dependencias del Lab 05.</size>
+
+set separator none
+left to right direction
+
+<style>
+  root {
+    BackgroundColor: #ffffff
+    FontColor: #444444
+  }
+</style>
+
+!include <C4/C4>
+!include <C4/C4_Context>
+!include <C4/C4_Container>
+!include <C4/C4_Component>
+
+System(Serviciodemapasyrutas, "Servicio de mapas y rutas", $descr="Proporciona mapas e itinerarios mediante una API externa.", $tags="", $link="")
+
+System_Boundary("EcoReciclaAQP_boundary", "EcoRecicla AQP", $tags="") {
+  Container_Boundary("EcoReciclaAQP.APIEcoRecicla_boundary", "API EcoRecicla", $tags="") {
+    Component(EcoReciclaAQP.APIEcoRecicla.reportes, "reportes", $techn="Django app", $descr="Genera consolidados consultando contratos de solicitudes y puntos.", $tags="", $link="")
+    Component(EcoReciclaAQP.APIEcoRecicla.compartido, "compartido", $techn="Modulo Python", $descr="Tipos base, constantes, utilidades geograficas, horarios y filtros comunes.", $tags="", $link="")
+    Component(EcoReciclaAQP.APIEcoRecicla.solicitudes, "solicitudes", $techn="Django app", $descr="Valida y registra solicitudes, gestiona su ciclo de vida y solicita notificaciones mediante un adaptador.", $tags="", $link="")
+    Component(EcoReciclaAQP.APIEcoRecicla.rutas, "rutas", $techn="Django app", $descr="Consulta solicitudes y organiza paradas e itinerarios de recojo.", $tags="", $link="")
+    Component(EcoReciclaAQP.APIEcoRecicla.puntos, "puntos", $techn="Django app", $descr="Procesa SolicitudPesada y calcula y registra beneficios ecologicos.", $tags="", $link="")
+  }
+
+  ContainerDb(EcoReciclaAQP.Basededatos, "Base de datos", $techn="PostgreSQL", $descr="Una instancia con esquemas solicitudes, rutas, puntos y reportes; cada modulo accede solo a su esquema.", $tags="", $link="")
+  ContainerQueue(EcoReciclaAQP.Colaycache, "Cola y cache", $techn="Redis", $descr="Mantiene tareas pendientes y datos temporales de sesiones y cache.", $tags="", $link="")
+  Container(EcoReciclaAQP.Aplicacionwebprogresiva, "Aplicacion web progresiva", $techn="JavaScript / Service Worker / IndexedDB", $descr="Interfaz por rol para vecinos, recicladores y administracion; permite registro local y sincronizacion al recuperar conexion.", $tags="", $link="")
+}
+
+Rel(EcoReciclaAQP.Aplicacionwebprogresiva, EcoReciclaAQP.APIEcoRecicla.solicitudes, "Registra solicitudes y actualiza recojos", $techn="HTTPS/JSON", $tags="", $link="")
+Rel(EcoReciclaAQP.Aplicacionwebprogresiva, EcoReciclaAQP.APIEcoRecicla.rutas, "Consulta la hoja de ruta", $techn="HTTPS/JSON", $tags="", $link="")
+Rel(EcoReciclaAQP.Aplicacionwebprogresiva, EcoReciclaAQP.APIEcoRecicla.puntos, "Consulta puntos y beneficios", $techn="HTTPS/JSON", $tags="", $link="")
+Rel(EcoReciclaAQP.Aplicacionwebprogresiva, EcoReciclaAQP.APIEcoRecicla.reportes, "Solicita reportes municipales", $techn="HTTPS/JSON", $tags="", $link="")
+Rel(EcoReciclaAQP.APIEcoRecicla.solicitudes, EcoReciclaAQP.APIEcoRecicla.compartido, "Usa tipos base y constantes", $techn="Llamada Python en proceso", $tags="", $link="")
+Rel(EcoReciclaAQP.APIEcoRecicla.rutas, EcoReciclaAQP.APIEcoRecicla.compartido, "Usa utilidades geograficas y horarios", $techn="Llamada Python en proceso", $tags="", $link="")
+Rel(EcoReciclaAQP.APIEcoRecicla.puntos, EcoReciclaAQP.APIEcoRecicla.compartido, "Usa reglas base", $techn="Llamada Python en proceso", $tags="", $link="")
+Rel(EcoReciclaAQP.APIEcoRecicla.reportes, EcoReciclaAQP.APIEcoRecicla.compartido, "Usa filtros de fecha", $techn="Llamada Python en proceso", $tags="", $link="")
+Rel(EcoReciclaAQP.APIEcoRecicla.rutas, EcoReciclaAQP.APIEcoRecicla.solicitudes, "Consulta solicitudes para generar paradas", $techn="Contrato Python en proceso", $tags="", $link="")
+Rel(EcoReciclaAQP.APIEcoRecicla.puntos, EcoReciclaAQP.APIEcoRecicla.solicitudes, "Depende del contrato SolicitudPesada y comunica acreditacion", $techn="Contratos y eventos Python en proceso", $tags="", $link="")
+Rel(EcoReciclaAQP.APIEcoRecicla.reportes, EcoReciclaAQP.APIEcoRecicla.solicitudes, "Consulta toneladas y atenciones", $techn="Contrato Python de solo lectura", $tags="", $link="")
+Rel(EcoReciclaAQP.APIEcoRecicla.reportes, EcoReciclaAQP.APIEcoRecicla.puntos, "Consulta beneficios ecologicos", $techn="Contrato Python de solo lectura", $tags="", $link="")
+Rel(EcoReciclaAQP.APIEcoRecicla.solicitudes, EcoReciclaAQP.Basededatos, "Lee y escribe el esquema solicitudes", $techn="SQL/TCP", $tags="", $link="")
+Rel(EcoReciclaAQP.APIEcoRecicla.rutas, EcoReciclaAQP.Basededatos, "Lee y escribe el esquema rutas", $techn="SQL/TCP", $tags="", $link="")
+Rel(EcoReciclaAQP.APIEcoRecicla.puntos, EcoReciclaAQP.Basededatos, "Lee y escribe el esquema puntos", $techn="SQL/TCP", $tags="", $link="")
+Rel(EcoReciclaAQP.APIEcoRecicla.reportes, EcoReciclaAQP.Basededatos, "Lee y escribe el esquema reportes", $techn="SQL/TCP", $tags="", $link="")
+Rel(EcoReciclaAQP.APIEcoRecicla.solicitudes, EcoReciclaAQP.Colaycache, "Encola la notificacion despues de guardar", $techn="Redis protocol/TCP", $tags="", $link="")
+Rel(EcoReciclaAQP.APIEcoRecicla.rutas, Serviciodemapasyrutas, "Solicita itinerarios mediante su adaptador", $techn="HTTPS/JSON", $tags="", $link="")
+
+SHOW_LEGEND(true)
+hide stereotypes
+@enduml

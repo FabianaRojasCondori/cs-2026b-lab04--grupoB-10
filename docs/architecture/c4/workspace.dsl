@@ -10,7 +10,17 @@ workspace "EcoRecicla AQP" "Lab 06 - Grupo B-10 - Modelo C4" {
         eco = softwareSystem "EcoRecicla AQP" "Gestiona solicitudes, rutas, puntos y reportes de reciclaje." {
             pwa = container "Aplicacion web progresiva" "Interfaz por rol para vecinos, recicladores y administracion; permite registro local y sincronizacion al recuperar conexion." "JavaScript / Service Worker / IndexedDB" "Web Browser"
 
-            api = container "API EcoRecicla" "Monolito modular con servicios de aplicacion y adaptadores." "Python / Django REST Framework"
+            api = container "API EcoRecicla" "Monolito modular con servicios de aplicacion y adaptadores." "Python / Django REST Framework" {
+                solicitudes = component "solicitudes" "Valida y registra solicitudes, gestiona su ciclo de vida y solicita notificaciones mediante un adaptador." "Django app"
+
+                rutas = component "rutas" "Consulta solicitudes y organiza paradas e itinerarios de recojo." "Django app"
+
+                puntos = component "puntos" "Procesa SolicitudPesada y calcula y registra beneficios ecologicos." "Django app"
+
+                reportes = component "reportes" "Genera consolidados consultando contratos de solicitudes y puntos." "Django app"
+
+                compartido = component "compartido" "Tipos base, constantes, utilidades geograficas, horarios y filtros comunes." "Modulo Python"
+            }
 
             db = container "Base de datos" "Una instancia con esquemas solicitudes, rutas, puntos y reportes; cada modulo accede solo a su esquema." "PostgreSQL" "Database"
 
@@ -38,7 +48,29 @@ workspace "EcoRecicla AQP" "Lab 06 - Grupo B-10 - Modelo C4" {
         eco.worker -> eco.cola "Consume tareas pendientes" "Redis protocol/TCP"
         eco.worker -> whatsapp "Envia avisos y reintenta entregas fallidas" "HTTPS/JSON"
         eco.api -> mapas "Consulta mapas e itinerarios" "HTTPS/JSON"
-        // RELACIONES_E3
+        
+        eco.pwa -> eco.api.solicitudes "Registra solicitudes y actualiza recojos" "HTTPS/JSON"
+        eco.pwa -> eco.api.rutas "Consulta la hoja de ruta" "HTTPS/JSON"
+        eco.pwa -> eco.api.puntos "Consulta puntos y beneficios" "HTTPS/JSON"
+        eco.pwa -> eco.api.reportes "Solicita reportes municipales" "HTTPS/JSON"
+
+        eco.api.solicitudes -> eco.api.compartido "Usa tipos base y constantes" "Llamada Python en proceso"
+        eco.api.rutas -> eco.api.compartido "Usa utilidades geograficas y horarios" "Llamada Python en proceso"
+        eco.api.puntos -> eco.api.compartido "Usa reglas base" "Llamada Python en proceso"
+        eco.api.reportes -> eco.api.compartido "Usa filtros de fecha" "Llamada Python en proceso"
+
+        eco.api.rutas -> eco.api.solicitudes "Consulta solicitudes para generar paradas" "Contrato Python en proceso"
+        eco.api.puntos -> eco.api.solicitudes "Depende del contrato SolicitudPesada y comunica acreditacion" "Contratos y eventos Python en proceso"
+        eco.api.reportes -> eco.api.solicitudes "Consulta toneladas y atenciones" "Contrato Python de solo lectura"
+        eco.api.reportes -> eco.api.puntos "Consulta beneficios ecologicos" "Contrato Python de solo lectura"
+
+        eco.api.solicitudes -> eco.db "Lee y escribe el esquema solicitudes" "SQL/TCP"
+        eco.api.rutas -> eco.db "Lee y escribe el esquema rutas" "SQL/TCP"
+        eco.api.puntos -> eco.db "Lee y escribe el esquema puntos" "SQL/TCP"
+        eco.api.reportes -> eco.db "Lee y escribe el esquema reportes" "SQL/TCP"
+
+        eco.api.solicitudes -> eco.cola "Encola la notificacion despues de guardar" "Redis protocol/TCP"
+        eco.api.rutas -> mapas "Solicita itinerarios mediante su adaptador" "HTTPS/JSON"
     }
 
     views {
@@ -51,7 +83,11 @@ workspace "EcoRecicla AQP" "Lab 06 - Grupo B-10 - Modelo C4" {
             include *
             autoLayout lr
         }
-        // VISTA_E3
+        
+        component eco.api "Componentes" "Nivel 3: modulos de la API; dependencias del Lab 05." {
+            include *
+            autoLayout lr
+        }
 
         styles {
             element "Person" {

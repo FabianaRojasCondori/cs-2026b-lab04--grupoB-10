@@ -1,0 +1,55 @@
+graph LR
+  linkStyle default fill:#ffffff
+
+  subgraph diagram ["Component View: EcoRecicla AQP - API EcoRecicla"]
+    style diagram fill:#ffffff,stroke:#ffffff
+
+    15["<div style='font-weight: bold'>Servicio de mapas y rutas</div><div style='font-size: 70%; margin-top: 0px'>[Software System]</div><div style='font-size: 80%; margin-top:10px'>Proporciona mapas e<br />itinerarios mediante una API<br />externa.</div>"]
+    style 15 fill:#666666,stroke:#474747,color:#ffffff
+
+    subgraph 4 ["EcoRecicla AQP"]
+      style 4 fill:#ffffff,stroke:#0b4884,color:#0b4884
+
+      subgraph 6 ["API EcoRecicla"]
+        style 6 fill:#ffffff,stroke:#2e6295,color:#2e6295
+
+        10["<div style='font-weight: bold'>reportes</div><div style='font-size: 70%; margin-top: 0px'>[Component: Django app]</div><div style='font-size: 80%; margin-top:10px'>Genera consolidados<br />consultando contratos de<br />solicitudes y puntos.</div>"]
+        style 10 fill:#85bbf0,stroke:#5d82a8,color:#000000
+        11["<div style='font-weight: bold'>compartido</div><div style='font-size: 70%; margin-top: 0px'>[Component: Modulo Python]</div><div style='font-size: 80%; margin-top:10px'>Tipos base, constantes,<br />utilidades geograficas,<br />horarios y filtros comunes.</div>"]
+        style 11 fill:#85bbf0,stroke:#5d82a8,color:#000000
+        7["<div style='font-weight: bold'>solicitudes</div><div style='font-size: 70%; margin-top: 0px'>[Component: Django app]</div><div style='font-size: 80%; margin-top:10px'>Valida y registra<br />solicitudes, gestiona su<br />ciclo de vida y solicita<br />notificaciones mediante un<br />adaptador.</div>"]
+        style 7 fill:#85bbf0,stroke:#5d82a8,color:#000000
+        8["<div style='font-weight: bold'>rutas</div><div style='font-size: 70%; margin-top: 0px'>[Component: Django app]</div><div style='font-size: 80%; margin-top:10px'>Consulta solicitudes y<br />organiza paradas e<br />itinerarios de recojo.</div>"]
+        style 8 fill:#85bbf0,stroke:#5d82a8,color:#000000
+        9["<div style='font-weight: bold'>puntos</div><div style='font-size: 70%; margin-top: 0px'>[Component: Django app]</div><div style='font-size: 80%; margin-top:10px'>Procesa SolicitudPesada y<br />calcula y registra beneficios<br />ecologicos.</div>"]
+        style 9 fill:#85bbf0,stroke:#5d82a8,color:#000000
+      end
+
+      12[("<div style='font-weight: bold'>Base de datos</div><div style='font-size: 70%; margin-top: 0px'>[Container: PostgreSQL]</div><div style='font-size: 80%; margin-top:10px'>Una instancia con esquemas<br />solicitudes, rutas, puntos y<br />reportes; cada modulo accede<br />solo a su esquema.</div>")]
+      style 12 fill:#438dd5,stroke:#2e6295,color:#ffffff
+      14["<div style='font-weight: bold'>Cola y cache</div><div style='font-size: 70%; margin-top: 0px'>[Container: Redis]</div><div style='font-size: 80%; margin-top:10px'>Mantiene tareas pendientes y<br />datos temporales de sesiones<br />y cache.</div>"]
+      style 14 fill:#438dd5,stroke:#2e6295,color:#ffffff
+      5["<div style='font-weight: bold'>Aplicacion web progresiva</div><div style='font-size: 70%; margin-top: 0px'>[Container: JavaScript / Service Worker / IndexedDB]</div><div style='font-size: 80%; margin-top:10px'>Interfaz por rol para<br />vecinos, recicladores y<br />administracion; permite<br />registro local y<br />sincronizacion al recuperar<br />conexion.</div>"]
+      style 5 fill:#438dd5,stroke:#2e6295,color:#ffffff
+    end
+
+    5-. "<div>Registra solicitudes y<br />actualiza recojos</div><div style='font-size: 70%'>[HTTPS/JSON]</div>" .->7
+    5-. "<div>Consulta la hoja de ruta</div><div style='font-size: 70%'>[HTTPS/JSON]</div>" .->8
+    5-. "<div>Consulta puntos y beneficios</div><div style='font-size: 70%'>[HTTPS/JSON]</div>" .->9
+    5-. "<div>Solicita reportes municipales</div><div style='font-size: 70%'>[HTTPS/JSON]</div>" .->10
+    7-. "<div>Usa tipos base y constantes</div><div style='font-size: 70%'>[Llamada Python en proceso]</div>" .->11
+    8-. "<div>Usa utilidades geograficas y<br />horarios</div><div style='font-size: 70%'>[Llamada Python en proceso]</div>" .->11
+    9-. "<div>Usa reglas base</div><div style='font-size: 70%'>[Llamada Python en proceso]</div>" .->11
+    10-. "<div>Usa filtros de fecha</div><div style='font-size: 70%'>[Llamada Python en proceso]</div>" .->11
+    8-. "<div>Consulta solicitudes para<br />generar paradas</div><div style='font-size: 70%'>[Contrato Python en proceso]</div>" .->7
+    9-. "<div>Depende del contrato<br />SolicitudPesada y comunica<br />acreditacion</div><div style='font-size: 70%'>[Contratos y eventos Python en proceso]</div>" .->7
+    10-. "<div>Consulta toneladas y<br />atenciones</div><div style='font-size: 70%'>[Contrato Python de solo lectura]</div>" .->7
+    10-. "<div>Consulta beneficios<br />ecologicos</div><div style='font-size: 70%'>[Contrato Python de solo lectura]</div>" .->9
+    7-. "<div>Lee y escribe el esquema<br />solicitudes</div><div style='font-size: 70%'>[SQL/TCP]</div>" .->12
+    8-. "<div>Lee y escribe el esquema<br />rutas</div><div style='font-size: 70%'>[SQL/TCP]</div>" .->12
+    9-. "<div>Lee y escribe el esquema<br />puntos</div><div style='font-size: 70%'>[SQL/TCP]</div>" .->12
+    10-. "<div>Lee y escribe el esquema<br />reportes</div><div style='font-size: 70%'>[SQL/TCP]</div>" .->12
+    7-. "<div>Encola la notificacion<br />despues de guardar</div><div style='font-size: 70%'>[Redis protocol/TCP]</div>" .->14
+    8-. "<div>Solicita itinerarios mediante<br />su adaptador</div><div style='font-size: 70%'>[HTTPS/JSON]</div>" .->15
+
+  end
