@@ -17,3 +17,31 @@ Usaremos una arquitectura de **Monolito Modular**. El sistema se estructurará e
 ## Consecuencias
 - **Positivas:** Despliegue y mantenimiento simplificados en un único VPS; aislamiento de código que facilita cumplir QA-01; no introduce sobrecarga de red entre módulos.
 - **Negativas / Riesgos:** Un error de memoria o bloqueo no gestionado en un módulo puede comprometer la disponibilidad de toda la instancia; el equipo debe mantener disciplina y linters para no romper las fronteras entre módulos.
+
+## Precisión de implementación para el Lab 06
+
+Esta precisión se incorpora para revisión del equipo en el PR
+del modelo C4.
+
+Se conserva el monolito modular de Django. La API utiliza Django
+REST Framework, como ya se representa en el README del Lab 04.
+
+La PWA utiliza Service Workers e IndexedDB según el ADR-003.
+La persistencia utiliza PostgreSQL con esquemas separados,
+según el ADR-002. Redis mantiene la cola y la caché, como se
+representa en despliegue.py.
+
+Para concretar la notificación asíncrona del flujo
+"Solicitar recojo de reciclables" del Lab 05, se propone
+un proceso worker de Celery que consume tareas desde Redis
+y utiliza WhatsApp Business API.
+
+El worker reutiliza la base de código del proyecto y no
+constituye un microservicio de dominio independiente.
+Se distingue de Redis en C4 porque ejecutar tareas y almacenar
+la cola son responsabilidades de unidades de ejecución distintas.
+
+La notificación se solicita después de confirmar el guardado.
+La entrega se realiza en segundo plano, con reintentos ante fallos.
+Esta separación no elimina por sí sola el riesgo de fallo entre
+guardar y encolar; su tratamiento debe resolverse al implementar.
