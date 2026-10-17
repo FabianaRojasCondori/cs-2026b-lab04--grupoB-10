@@ -1,0 +1,37 @@
+graph LR
+  linkStyle default fill:#ffffff
+
+  subgraph diagram ["Deployment View: EcoRecicla AQP - Producción"]
+    style diagram fill:#ffffff,stroke:#ffffff
+
+    subgraph 49 ["Dispositivo del Usuario"]
+      style 49 fill:#ffffff,stroke:#444444,color:#444444
+
+      50["<div style='font-weight: bold'>Aplicacion web progresiva</div><div style='font-size: 70%; margin-top: 0px'>[Container: JavaScript / Service Worker / IndexedDB]</div><div style='font-size: 80%; margin-top:10px'>Interfaz por rol para<br />vecinos, recicladores y<br />administracion; permite<br />registro local y<br />sincronizacion al recuperar<br />conexion.</div>"]
+      style 50 fill:#438dd5,stroke:#2e6295,color:#ffffff
+    end
+
+    subgraph 51 ["Servidor VPS en la Nube"]
+      style 51 fill:#ffffff,stroke:#444444,color:#444444
+
+      subgraph 52 ["Docker Compose"]
+        style 52 fill:#ffffff,stroke:#444444,color:#444444
+
+        53["<div style='font-weight: bold'>API EcoRecicla</div><div style='font-size: 70%; margin-top: 0px'>[Container: Python / Django REST Framework]</div><div style='font-size: 80%; margin-top:10px'>Monolito modular con<br />servicios de aplicacion y<br />adaptadores.</div>"]
+        style 53 fill:#438dd5,stroke:#2e6295,color:#ffffff
+        55["<div style='font-weight: bold'>Worker de notificaciones</div><div style='font-size: 70%; margin-top: 0px'>[Container: Python / Celery]</div><div style='font-size: 80%; margin-top:10px'>Ejecuta tareas de<br />notificacion y reintentos en<br />segundo plano.</div>"]
+        style 55 fill:#438dd5,stroke:#2e6295,color:#ffffff
+        56[("<div style='font-weight: bold'>Base de datos</div><div style='font-size: 70%; margin-top: 0px'>[Container: PostgreSQL]</div><div style='font-size: 80%; margin-top:10px'>Una instancia con esquemas<br />solicitudes, rutas, puntos y<br />reportes; cada modulo accede<br />solo a su esquema.</div>")]
+        style 56 fill:#438dd5,stroke:#2e6295,color:#ffffff
+        58["<div style='font-weight: bold'>Cola y cache</div><div style='font-size: 70%; margin-top: 0px'>[Container: Redis]</div><div style='font-size: 80%; margin-top:10px'>Mantiene tareas pendientes y<br />datos temporales de sesiones<br />y cache.</div>"]
+        style 58 fill:#438dd5,stroke:#2e6295,color:#ffffff
+      end
+
+    end
+
+    50-. "<div>Invoca los servicios del<br />sistema</div><div style='font-size: 70%'>[HTTPS/JSON (REST)]</div>" .->53
+    53-. "<div>Lee y escribe mediante el<br />esquema de cada modulo</div><div style='font-size: 70%'>[SQL/TCP]</div>" .->56
+    53-. "<div>Encola notificaciones y<br />accede a cache</div><div style='font-size: 70%'>[Redis protocol/TCP]</div>" .->58
+    55-. "<div>Consume tareas pendientes</div><div style='font-size: 70%'>[Redis protocol/TCP]</div>" .->58
+
+  end
