@@ -71,6 +71,23 @@ workspace "EcoRecicla AQP" "Lab 06 - Grupo B-10 - Modelo C4" {
 
         eco.api.solicitudes -> eco.cola "Encola la notificacion despues de guardar" "Redis protocol/TCP"
         eco.api.rutas -> mapas "Solicita itinerarios mediante su adaptador" "HTTPS/JSON"
+
+        // --- E5: ENTORNO DE DESPLIEGUE ---
+        produccion = deploymentEnvironment "Producción" {
+            deploymentNode "Dispositivo del Usuario" "Teléfono móvil inteligente o navegador web de escritorio." "Android / iOS / Chrome / Firefox" {
+                containerInstance eco.pwa
+            }
+
+            deploymentNode "Servidor VPS en la Nube" "Servidor virtual de bajo costo para el MVP (DigitalOcean / Linode / AWS Lightsail)." "Ubuntu 24.04 LTS, 2 vCPU, 4 GB RAM" {
+                deploymentNode "Docker Compose" "Orquestación de servicios locales en el servidor único." "Docker 27" {
+                    containerInstance eco.api
+                    containerInstance eco.worker
+                    containerInstance eco.db
+                    containerInstance eco.cola
+                }
+            }
+        }
+    
     }
 
     views {
@@ -85,6 +102,23 @@ workspace "EcoRecicla AQP" "Lab 06 - Grupo B-10 - Modelo C4" {
         }
         
         component eco.api "Componentes" "Nivel 3: modulos de la API; dependencias del Lab 05." {
+            include *
+            autoLayout lr
+        }
+
+        // --- E4: VISTA DINÁMICA ---
+        dynamic eco.api "SolicitarRecojo" "Flujo crítico: Vecino solicita recojo de reciclables (secuencia Lab 05)." {
+            eco.pwa -> eco.api.solicitudes "1. POST /solicitudes (dirección, lista de items)"
+            eco.api.solicitudes -> eco.api.compartido "2. Valida estructura de items y tipos base"
+            eco.api.solicitudes -> eco.db "3. INSERT solicitud en estado Pendiente (SQL)"
+            eco.api.solicitudes -> eco.cola "4. Encola tarea de notificación asíncrona"
+            eco.worker -> eco.cola "5. Consume tarea de notificación pendiente"
+            eco.worker -> whatsapp "6. Envía confirmación por WhatsApp al vecino"
+            autoLayout lr
+        }
+
+        // --- E5: VISTA DE DESPLIEGUE ---
+        deployment eco produccion "Despliegue" "Despliegue de EcoRecicla AQP en el servidor VPS único de producción." {
             include *
             autoLayout lr
         }

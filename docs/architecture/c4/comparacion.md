@@ -1,0 +1,12 @@
+# Comparación Técnica de Vistas y Herramientas — Lab 06
+
+## 1. Comparación: Vista Dinámica C4 frente a Diagrama de Secuencia UML (E4)
+- **Detalles que muestra la secuencia UML y que C4 omite:** El diagrama de secuencia UML modela el ciclo de ejecución a nivel de clases y objetos internos (`SolicitudController`, `ServicioSolicitudes`, entidad `Solicitud`), bifurcaciones condicionales explícitas (`alt [datos_validos]`), bucles de validación (`loop`) y retornos síncronos. En cambio, la vista dinámica de C4 opera a nivel de contenedores y componentes, mostrando únicamente el flujo feliz lineal de mensajes con pasos numerados.
+- **Público objetivo de cada una:** La vista dinámica de C4 sirve al equipo técnico general, arquitectos y operaciones para entender rápidamente el orden de interacción macro entre subsistemas. La secuencia UML está destinada a desarrolladores para la codificación detallada de métodos, excepciones y pruebas unitarias.
+
+## 2. Comparación: Modelado (Structurizr DSL) frente a Diagramación Manual (C4-PlantUML) (E6)
+- **Tiempo invertido:** Inicialmente, Structurizr DSL requiere mayor tiempo de configuración para definir el modelo abstracto (`model { ... }`), pero una vez declarado, generar y actualizar las 5 vistas toma segundos. Escribir manualmente en C4-PlantUML es más rápido para un único diagrama suelto, pero lento y repetitivo para múltiples niveles.
+- **Errores encontrados:** En la diagramación manual es fácil cometer errores de tipeo en los nombres de los sistemas, olvidar etiquetas de tecnología/protocolo o dejar flechas inconsistentes entre el contexto y los contenedores. En Structurizr DSL, el compilador valida la existencia de identificadores y dependencias en un solo comando (`validate`), garantizando integridad referencial.
+- **Impacto si mañana cambia el nombre o tecnología de un contenedor:**
+  - *Con diagramación manual:* Se debe buscar y reemplazar manualmente en cada archivo (`contexto.puml`, `contenedores.puml`, `componentes.puml`, `despliegue.puml`), con alto riesgo de desincronización y olvidos.
+  - *Con Structurizr DSL:* Se cambia en una sola línea del `workspace.dsl` y, al volver a exportar (`structurizr export`), todas las vistas (Mermaid, PlantUML, PNG) quedan automáticamente actualizadas y consistentes.
