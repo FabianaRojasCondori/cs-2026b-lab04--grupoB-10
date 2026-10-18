@@ -1,0 +1,3 @@
+# Explicación Ejecutiva del Sistema EcoRecicla AQP
+
+EcoRecicla AQP conecta a los vecinos de Arequipa, los recicladores formalizados y la municipalidad en una sola plataforma. Los vecinos solicitan la recolección de sus residuos reciclables desde su aplicación móvil o mediante avisos por WhatsApp. Los recicladores reciben estas solicitudes y utilizan la aplicación para seguir rutas optimizadas de recojo, mejorando su tiempo y cobertura diaria. Por su parte, la municipalidad supervisa el avance del reciclaje en tiempo real, analiza datos clave del servicio y gestiona de manera transparente las operaciones ambientales de la ciudad.

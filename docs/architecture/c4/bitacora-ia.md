@@ -1,0 +1,9 @@
+# Bitácora de Registro de Uso de Inteligencia Artificial
+
+| # | Fecha | Herramienta | Prompt Enviado | Propuesta de la IA | Verificación / Decisión |
+|---|---|---|---|---|---|
+| 1 | 2026-10-15 | ChatGPT | "Genera el diagrama C4 de nivel 1 en Mermaid para EcoRecicla AQP con Vecino, Reciclador y Municipalidad." | Creó el diagrama con los 3 usuarios y el sistema central. | **Aprobado con ajustes:** Se incluyeron los sistemas externos (Servicio de mapas y WhatsApp). |
+| 2 | 2026-10-15 | Claude | "Verifica si los nombres de los contenedores cumplen la guía C4 en el diagrama Nivel 2." | Recomendó reemplazar nombres genéricos por `App Vecino (React Native)` y `Base de Datos (PostgreSQL)`. | **Aprobado:** Aplicado en la vista de contenedores. |
+| 3 | 2026-10-16 | ChatGPT | "Evalúa integrar la notificación a vecinos directamente por SMS tradicional." | Sugirió usar SMS como canal principal. | **Rechazado:** Se decidió usar la integración con WhatsApp por mayor uso en Arequipa y menor costo. |
+| 4 | 2026-10-16 | Claude | "Analiza si la Tarea de optimización de rutas debe estar dentro del API." | Recomendó unificar la optimización de rutas dentro del proceso de la API backend. | **Rechazado (Falso Positivo):** Refutado en `revision-c4.md` para no bloquear el backend principal. |
+| 5 | 2026-10-17 | ChatGPT | "Escribe la explicación no técnica del diagrama de contexto para el Gerente Municipal en menos de 120 palabras." | Generó un texto enfocado en el impacto ambiental y uso por vecinos y recicladores. | **Aprobado con ajustes:** Se refinó la redacción para el archivo `explicacion.md`. |
