@@ -1,0 +1,51 @@
+@startuml classes_solicitudes
+set namespaceSeparator none
+
+enum EstadoSolicitud {
+  PENDIENTE
+  ASIGNADA
+  RECOGIDA
+  PESADA
+  PUNTOS_ACREDITADOS
+}
+
+class ItemMaterial {
+  peso_estimado : float
+  tipo_material : str
+}
+
+class NotificadorFolder {
+  enviar_notificacion(numero: str, mensaje: str) : bool
+}
+
+class ServicioSolicitudes {
+  notificador : NotificadorFolder
+  solicitudes_activas : list
+  crear_nueva_solicitud(vecino: Vecino) : Solicitud
+}
+
+class Solicitud {
+  estado : EstadoSolicitud
+  id_solicitud : int
+  items : list
+  vecino : Vecino
+  acreditar_puntos()
+  agregar_item(item: ItemMaterial)
+  asignar_reciclador(id_reciclador: int)
+  registrar_peso()
+  registrar_recojo()
+}
+
+class Vecino {
+  celular : str
+  direccion : str
+  id_vecino : int
+  nombre : str
+}
+
+Solicitud *-- ItemMaterial : "contiene"
+Solicitud o-- Vecino : "asociada a"
+ServicioSolicitudes --> NotificadorFolder : "usa"
+ServicioSolicitudes "1" *-- "many" Solicitud : "gestiona"
+Solicitud --> EstadoSolicitud : "tiene"
+@enduml

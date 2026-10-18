@@ -1,0 +1,48 @@
+@startuml
+title <size:24>Dynamic View: EcoRecicla AQP - API EcoRecicla</size>\n<size:24>Flujo crítico: Vecino solicita recojo de reciclables (secuencia Lab 05).</size>
+
+set separator none
+left to right direction
+
+<style>
+  root {
+    BackgroundColor: #ffffff
+    FontColor: #444444
+  }
+</style>
+
+!include <C4/C4>
+!include <C4/C4_Context>
+!include <C4/C4_Container>
+!include <C4/C4_Component>
+
+System(WhatsAppBusinessAPI, "WhatsApp Business API", $descr="Entrega avisos a los usuarios.", $tags="", $link="")
+
+System_Boundary("EcoReciclaAQP_boundary", "EcoRecicla AQP", $tags="") {
+  Container_Boundary("EcoReciclaAQP.APIEcoRecicla_boundary", "API EcoRecicla", $tags="") {
+    Component(EcoReciclaAQP.APIEcoRecicla.compartido, "compartido", $techn="Modulo Python", $descr="Tipos base, constantes, utilidades geograficas, horarios y filtros comunes.", $tags="", $link="")
+    Component(EcoReciclaAQP.APIEcoRecicla.solicitudes, "solicitudes", $techn="Django app", $descr="Valida y registra solicitudes, gestiona su ciclo de vida y solicita notificaciones mediante un adaptador.", $tags="", $link="")
+  }
+
+  ContainerDb(EcoReciclaAQP.Basededatos, "Base de datos", $techn="PostgreSQL", $descr="Una instancia con esquemas solicitudes, rutas, puntos y reportes; cada modulo accede solo a su esquema.", $tags="", $link="")
+  Container(EcoReciclaAQP.Workerdenotificaciones, "Worker de notificaciones", $techn="Python / Celery", $descr="Ejecuta tareas de notificacion y reintentos en segundo plano.", $tags="", $link="")
+  ContainerQueue(EcoReciclaAQP.Colaycache, "Cola y cache", $techn="Redis", $descr="Mantiene tareas pendientes y datos temporales de sesiones y cache.", $tags="", $link="")
+  Container(EcoReciclaAQP.Aplicacionwebprogresiva, "Aplicacion web progresiva", $techn="JavaScript / Service Worker / IndexedDB", $descr="Interfaz por rol para vecinos, recicladores y administracion; permite registro local y sincronizacion al recuperar conexion.", $tags="", $link="")
+}
+
+Container(EcoReciclaAQP.Aplicacionwebprogresiva, "Aplicacion web progresiva", $techn="JavaScript / Service Worker / IndexedDB", $descr="Interfaz por rol para vecinos, recicladores y administracion; permite registro local y sincronizacion al recuperar conexion.", $tags="", $link="")
+ContainerDb(EcoReciclaAQP.Basededatos, "Base de datos", $techn="PostgreSQL", $descr="Una instancia con esquemas solicitudes, rutas, puntos y reportes; cada modulo accede solo a su esquema.", $tags="", $link="")
+Container(EcoReciclaAQP.Workerdenotificaciones, "Worker de notificaciones", $techn="Python / Celery", $descr="Ejecuta tareas de notificacion y reintentos en segundo plano.", $tags="", $link="")
+ContainerQueue(EcoReciclaAQP.Colaycache, "Cola y cache", $techn="Redis", $descr="Mantiene tareas pendientes y datos temporales de sesiones y cache.", $tags="", $link="")
+System(WhatsAppBusinessAPI, "WhatsApp Business API", $descr="Entrega avisos a los usuarios.", $tags="", $link="")
+
+Rel(EcoReciclaAQP.Aplicacionwebprogresiva, EcoReciclaAQP.APIEcoRecicla.solicitudes, "1: 1. POST /solicitudes (dirección, lista de items)", $techn="HTTPS/JSON", $tags="", $link="")
+Rel(EcoReciclaAQP.APIEcoRecicla.solicitudes, EcoReciclaAQP.APIEcoRecicla.compartido, "2: 2. Valida estructura de items y tipos base", $techn="Llamada Python en proceso", $tags="", $link="")
+Rel(EcoReciclaAQP.APIEcoRecicla.solicitudes, EcoReciclaAQP.Basededatos, "3: 3. INSERT solicitud en estado Pendiente (SQL)", $techn="SQL/TCP", $tags="", $link="")
+Rel(EcoReciclaAQP.APIEcoRecicla.solicitudes, EcoReciclaAQP.Colaycache, "4: 4. Encola tarea de notificación asíncrona", $techn="Redis protocol/TCP", $tags="", $link="")
+Rel(EcoReciclaAQP.Workerdenotificaciones, EcoReciclaAQP.Colaycache, "5: 5. Consume tarea de notificación pendiente", $techn="Redis protocol/TCP", $tags="", $link="")
+Rel(EcoReciclaAQP.Workerdenotificaciones, WhatsAppBusinessAPI, "6: 6. Envía confirmación por WhatsApp al vecino", $techn="HTTPS/JSON", $tags="", $link="")
+
+SHOW_LEGEND(true)
+hide stereotypes
+@enduml
