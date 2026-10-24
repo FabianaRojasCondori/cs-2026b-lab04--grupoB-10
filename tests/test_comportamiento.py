@@ -4,16 +4,27 @@ from decimal import Decimal
 import pytest
 from src.solicitudes.externos import RepositorioMemoria, WhatsAppSDK, MensajeriaCliente
 
-VERSIONES = ["antes"]
+VERSIONES = ["antes", "despues"]
 
 
 @pytest.fixture(params=VERSIONES)
 def caso(request):
-    m = importlib.import_module("src.solicitudes.antes.servicio")
+    modulo = "src.solicitudes.antes.servicio" if request.param == "antes" else "src.solicitudes.servicio"
+    m = importlib.import_module(modulo)
     def construir(fallas=0, proveedor="whatsapp", repo=None, sdk=None):
         repo = repo if repo is not None else RepositorioMemoria()
         sdk = sdk if sdk is not None else (WhatsAppSDK(fallas) if proveedor == "whatsapp" else MensajeriaCliente(fallas))
-        return m, m.ServicioSolicitudes(repo, sdk, proveedor), m.ServicioPuntos(), repo, sdk
+        if request.param == "antes":
+            servicio = m.ServicioSolicitudes(repo, sdk, proveedor)
+            puntos = m.ServicioPuntos()
+        else:
+            from src.solicitudes.adaptadores import WhatsappAdapter, MensajeriaAdapter
+            from src.puntos.reglas import fabrica_estandar
+            from src.puntos.servicio import ServicioPuntos
+            adapter = WhatsappAdapter(sdk) if proveedor == "whatsapp" else MensajeriaAdapter(sdk)
+            servicio = m.ServicioSolicitudes(repo, adapter)
+            puntos = ServicioPuntos(fabrica_estandar())
+        return m, servicio, puntos, repo, sdk
     return construir
 
 
