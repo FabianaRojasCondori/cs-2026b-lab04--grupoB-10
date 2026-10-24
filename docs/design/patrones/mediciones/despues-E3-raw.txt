@@ -1,0 +1,84 @@
+src/solicitudes/modelos.py
+    LOC: 53
+    LLOC: 44
+    SLOC: 38
+    Comments: 0
+    Single comments: 1
+    Multi: 0
+    Blank: 14
+    - Comment Stats
+        (C % L): 0%
+        (C % S): 0%
+        (C + M % L): 0%
+src/solicitudes/estados.py
+    LOC: 58
+    LLOC: 38
+    SLOC: 37
+    Comments: 0
+    Single comments: 1
+    Multi: 0
+    Blank: 20
+    - Comment Stats
+        (C % L): 0%
+        (C % S): 0%
+        (C + M % L): 0%
+src/solicitudes/servicio.py
+    LOC: 37
+    LLOC: 31
+    SLOC: 30
+    Comments: 1
+    Single comments: 2
+    Multi: 0
+    Blank: 5
+    - Comment Stats
+        (C % L): 3%
+        (C % S): 3%
+        (C + M % L): 3%
+src/solicitudes/adaptadores.py
+    LOC: 28
+    LLOC: 20
+    SLOC: 19
+    Comments: 0
+    Single comments: 1
+    Multi: 0
+    Blank: 8
+    - Comment Stats
+        (C % L): 0%
+        (C % S): 0%
+        (C + M % L): 0%
+src/puntos/reglas.py
+    LOC: 46
+    LLOC: 32
+    SLOC: 31
+    Comments: 0
+    Single comments: 1
+    Multi: 0
+    Blank: 14
+    - Comment Stats
+        (C % L): 0%
+        (C % S): 0%
+        (C + M % L): 0%
+src/puntos/servicio.py
+    LOC: 15
+    LLOC: 10
+    SLOC: 10
+    Comments: 1
+    Single comments: 2
+    Multi: 0
+    Blank: 3
+    - Comment Stats
+        (C % L): 7%
+        (C % S): 10%
+        (C + M % L): 7%
+** Total **
+    LOC: 237
+    LLOC: 175
+    SLOC: 165
+    Comments: 2
+    Single comments: 8
+    Multi: 0
+    Blank: 64
+    - Comment Stats
+        (C % L): 1%
+        (C % S): 1%
+        (C + M % L): 1%

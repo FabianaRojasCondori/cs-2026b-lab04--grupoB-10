@@ -1,0 +1,18 @@
+src/solicitudes/antes/servicio.py
+    M 74:4 ServicioSolicitudes.solicitar_recojo - C (14)
+    C 68:0 ServicioSolicitudes - B (9)
+    C 106:0 ServicioPuntos - B (7)
+    M 107:4 ServicioPuntos.calcular_y_acreditar - B (6)
+    C 19:0 ItemMaterial - A (3)
+    C 27:0 Solicitud - A (3)
+    M 38:4 Solicitud.asignar_reciclador - A (3)
+    M 51:4 Solicitud.registrar_pesaje - A (3)
+    M 59:4 Solicitud.registrar_acreditacion - A (3)
+    M 23:4 ItemMaterial.es_valido - A (2)
+    M 46:4 Solicitud.registrar_recojo - A (2)
+    C 12:0 Vecino - A (1)
+    M 28:4 Solicitud.__init__ - A (1)
+    M 69:4 ServicioSolicitudes.__init__ - A (1)
+
+14 blocks (classes, functions, methods) analyzed.
+Average complexity: A (4.142857142857143)
