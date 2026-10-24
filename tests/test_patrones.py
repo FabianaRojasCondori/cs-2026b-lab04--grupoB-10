@@ -4,9 +4,15 @@ import pytest
 from src.solicitudes.servicio import Vecino, ItemMaterial, ServicioSolicitudes
 from src.solicitudes.externos import RepositorioMemoria, WhatsAppSDK, MensajeriaCliente
 from src.solicitudes.adaptadores import WhatsappAdapter, MensajeriaAdapter
-from src.puntos.reglas import ReglaPuntos, fabrica_estandar
+from src.puntos.reglas import ReglaPuntos, fabrica_estandar, BonoCampanaVerdeDecorator
 from src.puntos.servicio import ServicioPuntos
 
+# --- E4: Importaciones de Observer ---
+from src.solicitudes.eventos import (
+    PublicadorEventos,
+    NotificadorWhatsApp,
+    ActualizadorEstadisticas,
+)
 
 def solicitud(material="PLASTICO"):
     servicio = ServicioSolicitudes(RepositorioMemoria(), WhatsappAdapter(WhatsAppSDK()))
@@ -72,3 +78,48 @@ def test_state_impide_todas_las_transiciones_prohibidas(pasos, operacion, argume
     with pytest.raises(ValueError, match="Transición no permitida"):
         getattr(s, operacion)(*argumentos)
     assert (s.estado, s.reciclador_id, s.peso_kg, s.puntos) == antes
+
+# Entregable E4: Observer y Decorator
+def test_observer_publica_a_multiples_suscriptores_sin_acoplar_servicio():
+    """
+    Observer: demuestra que al emitir 'solicitud_registrada', el PublicadorEventos
+    notifica a WhatsApp y al colector de estadísticas de forma desacoplada.
+    """
+    publicador = PublicadorEventos()
+    sdk = WhatsAppSDK()
+    adaptador_whatsapp = WhatsappAdapter(sdk)
+
+    notificador = NotificadorWhatsApp(adaptador_whatsapp)
+    estadisticas = ActualizadorEstadisticas()
+
+    publicador.suscribir("solicitud_registrada", notificador)
+    publicador.suscribir("solicitud_registrada", estadisticas)
+
+    payload = {"celular": "959123456", "id": "solicitud-abc-123"}
+    publicador.publicar("solicitud_registrada", payload)
+
+    assert sdk.pendientes == [("959123456", "Solicitud solicitud-abc-123 registrada")]
+    assert len(estadisticas.eventos_procesados) == 1
+    assert estadisticas.eventos_procesados[0] == ("solicitud_registrada", payload)
+
+
+def test_decorator_bono_campana_verde_duplica_puntos_en_la_fabrica():
+    """
+    Decorator: demuestra que BonoCampanaVerdeDecorator envuelve una ReglaPuntos
+    base y multiplica los puntos calculados sin alterar la clase original.
+    """
+    fabrica = fabrica_estandar()
+
+    regla_plastico_base = fabrica.crear("PLASTICO")
+    assert regla_plastico_base.calcular(Decimal("10")) == Decimal("20")
+
+    regla_con_bono = BonoCampanaVerdeDecorator(regla_plastico_base, multiplicador=2)
+    assert regla_con_bono.calcular(Decimal("10")) == Decimal("40")
+
+    fabrica.registrar(
+        "PLASTICO_PROMO",
+        lambda: BonoCampanaVerdeDecorator(fabrica.crear("PLASTICO"), multiplicador=2),
+    )
+
+    regla_desde_fabrica = fabrica.crear("PLASTICO_PROMO")
+    assert regla_desde_fabrica.calcular(Decimal("5")) == Decimal("20")
