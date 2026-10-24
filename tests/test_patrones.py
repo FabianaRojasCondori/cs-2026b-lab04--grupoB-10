@@ -2,7 +2,7 @@
 from decimal import Decimal
 import pytest
 from src.solicitudes.servicio import Vecino, ItemMaterial, ServicioSolicitudes
-from src.solicitudes.externos import RepositorioMemoria, WhatsAppSDK, MensajeriaCliente
+from src.solicitudes.externos import RepositorioMemoria, WhatsAppSDK, MensajeriaCliente, ClienteLLMFalso
 from src.solicitudes.adaptadores import WhatsappAdapter, MensajeriaAdapter
 from src.puntos.reglas import ReglaPuntos, fabrica_estandar, BonoCampanaVerdeDecorator
 from src.puntos.servicio import ServicioPuntos
@@ -12,6 +12,14 @@ from src.solicitudes.eventos import (
     PublicadorEventos,
     NotificadorWhatsApp,
     ActualizadorEstadisticas,
+)
+
+from src.solicitudes.ia import (
+    AdaptadorClienteLLM,
+    ConCacheLLM,
+    SinResiduosPeligrosos,
+    CategoriaPermitida,
+    ClasificadorResiduosIA,
 )
 
 def solicitud(material="PLASTICO"):
@@ -123,3 +131,71 @@ def test_decorator_bono_campana_verde_duplica_puntos_en_la_fabrica():
 
     regla_desde_fabrica = fabrica.crear("PLASTICO_PROMO")
     assert regla_desde_fabrica.calcular(Decimal("5")) == Decimal("20")
+
+# Entregable E5: IA Aislada (Strategy + Decorator + Chain of Responsibility)
+
+def test_ia_con_cache_llama_solo_una_vez_al_cliente_ante_descripciones_repetidas():
+    sdk_simulado = ClienteLLMFalso(respuesta="PAPEL")
+    adaptador = AdaptadorClienteLLM(sdk_simulado)
+    proveedor_con_cache = ConCacheLLM(adaptador)
+
+    res1 = proveedor_con_cache.clasificar_residuo(
+        "cajas de carton y hojas"
+    )
+    assert res1 == "PAPEL"
+    assert sdk_simulado.llamadas == 1
+
+    res2 = proveedor_con_cache.clasificar_residuo(
+        "  cajas de carton y hojas  "
+    )
+    assert res2 == "PAPEL"
+    assert sdk_simulado.llamadas == 1
+
+
+def test_ia_guardrail_sin_residuos_peligrosos_lanza_value_error():
+    sdk_simulado = ClienteLLMFalso(respuesta="BATERIA DE AUTO")
+    adaptador = AdaptadorClienteLLM(sdk_simulado)
+
+    cadena_guardrails = SinResiduosPeligrosos()
+    clasificador = ClasificadorResiduosIA(adaptador, cadena_guardrails)
+
+    with pytest.raises(
+        ValueError,
+        match="Guardrail: material no reciclable o peligroso"
+    ):
+        clasificador.clasificar("acumulador de plomo viejo")
+
+
+def test_ia_cadena_guardrails_permite_respuesta_valida():
+    sdk_simulado = ClienteLLMFalso(respuesta="PLASTICO")
+    adaptador = AdaptadorClienteLLM(sdk_simulado)
+
+    cadena_completa = SinResiduosPeligrosos(
+        siguiente=CategoriaPermitida()
+    )
+    clasificador = ClasificadorResiduosIA(adaptador, cadena_completa)
+
+    resultado = clasificador.clasificar(
+        "botellas de gaseosa aplastadas"
+    )
+    assert resultado == "PLASTICO"
+
+
+def test_ia_integracion_cache_y_guardrails():
+    sdk_simulado = ClienteLLMFalso(respuesta="VIDRIO")
+    adaptador_con_cache = ConCacheLLM(
+        AdaptadorClienteLLM(sdk_simulado)
+    )
+    cadena_completa = SinResiduosPeligrosos(
+        siguiente=CategoriaPermitida()
+    )
+
+    clasificador = ClasificadorResiduosIA(
+        adaptador_con_cache,
+        cadena_completa
+    )
+
+    assert clasificador.clasificar("frasco de mermelada") == "VIDRIO"
+    assert clasificador.clasificar("frasco de mermelada") == "VIDRIO"
+
+    assert sdk_simulado.llamadas == 1
