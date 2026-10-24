@@ -1,4 +1,4 @@
-"""Modelo del flujo de solicitudes. E3 sustituirá los condicionales por State."""
+"""Entidad canónica: delega cada transición al objeto State."""
 from dataclasses import dataclass
 from decimal import Decimal
 from uuid import uuid4
@@ -20,42 +20,34 @@ class ItemMaterial:
         return bool(self.tipo_material.strip()) and self.volumen_estimado_litros > 0
 
 
+
 class Solicitud:
     def __init__(self, vecino, direccion, items):
+        from .estados import Pendiente
         self.id = uuid4()
         self.vecino = vecino
         self.direccion = direccion
         self.items = list(items)
-        self.estado = "Pendiente"
+        self._estado = Pendiente()
         self.reciclador_id = None
         self.peso_kg = None
         self.puntos = None
 
+    @property
+    def estado(self):
+        return self._estado.nombre
+
+    def _cambiar_estado(self, estado):
+        self._estado = estado
+
     def asignar_reciclador(self, reciclador_id):
-        if self.estado != "Pendiente":
-            raise ValueError("Transición no permitida")
-        if not reciclador_id:
-            raise ValueError("Reciclador inválido")
-        self.reciclador_id = reciclador_id
-        self.estado = "Asignada"
+        self._estado.asignar_reciclador(self, reciclador_id)
 
     def registrar_recojo(self):
-        if self.estado != "Asignada":
-            raise ValueError("Transición no permitida")
-        self.estado = "Recogida"
+        self._estado.registrar_recojo(self)
 
     def registrar_pesaje(self, peso_kg):
-        if self.estado != "Recogida":
-            raise ValueError("Transición no permitida")
-        if peso_kg <= 0:
-            raise ValueError("El peso debe ser positivo")
-        self.peso_kg = peso_kg
-        self.estado = "Pesada"
+        self._estado.registrar_pesaje(self, peso_kg)
 
     def registrar_acreditacion(self, puntos):
-        if self.estado != "Pesada":
-            raise ValueError("Transición no permitida")
-        if puntos <= 0:
-            raise ValueError("Los puntos deben ser positivos")
-        self.puntos = puntos
-        self.estado = "PuntosAcreditados"
+        self._estado.registrar_acreditacion(self, puntos)

@@ -1,0 +1,6 @@
+src/solicitudes/modelos.py - A (54.47)
+src/solicitudes/estados.py - A (54.46)
+src/solicitudes/servicio.py - A (65.31)
+src/solicitudes/adaptadores.py - A (63.09)
+src/puntos/reglas.py - A (61.21)
+src/puntos/servicio.py - A (100.00)

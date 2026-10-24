@@ -1,0 +1,36 @@
+src/solicitudes/antes/servicio.py
+    LOC: 122
+    LLOC: 107
+    SLOC: 101
+    Comments: 0
+    Single comments: 0
+    Multi: 4
+    Blank: 17
+    - Comment Stats
+        (C % L): 0%
+        (C % S): 0%
+        (C + M % L): 3%
+src/solicitudes/antes/__init__.py
+    LOC: 0
+    LLOC: 0
+    SLOC: 0
+    Comments: 0
+    Single comments: 0
+    Multi: 0
+    Blank: 0
+    - Comment Stats
+        (C % L): 0%
+        (C % S): 0%
+        (C + M % L): 0%
+** Total **
+    LOC: 122
+    LLOC: 107
+    SLOC: 101
+    Comments: 0
+    Single comments: 0
+    Multi: 4
+    Blank: 17
+    - Comment Stats
+        (C % L): 0%
+        (C % S): 0%
+        (C + M % L): 3%

@@ -46,3 +46,29 @@ def test_fabricas_no_comparten_registro_global():
     assert primera.crear("METAL").calcular(Decimal("3")) == 3
     with pytest.raises(ValueError):
         segunda.crear("METAL")
+
+
+
+OPERACIONES = [
+    ("asignar_reciclador", ("r",)),
+    ("registrar_recojo", ()),
+    ("registrar_pesaje", (Decimal("2"),)),
+    ("registrar_acreditacion", (20,)),
+]
+TRANSICIONES_PROHIBIDAS = [
+    (pasos, nombre, argumentos)
+    for pasos in range(5)
+    for indice, (nombre, argumentos) in enumerate(OPERACIONES)
+    if indice != pasos
+]
+
+
+@pytest.mark.parametrize("pasos,operacion,argumentos", TRANSICIONES_PROHIBIDAS)
+def test_state_impide_todas_las_transiciones_prohibidas(pasos, operacion, argumentos):
+    s = solicitud()
+    for nombre, args in OPERACIONES[:pasos]:
+        getattr(s, nombre)(*args)
+    antes = (s.estado, s.reciclador_id, s.peso_kg, s.puntos)
+    with pytest.raises(ValueError, match="Transición no permitida"):
+        getattr(s, operacion)(*argumentos)
+    assert (s.estado, s.reciclador_id, s.peso_kg, s.puntos) == antes
