@@ -44,3 +44,13 @@ def fabrica_estandar():
     fabrica.registrar("VIDRIO", VidrioStrategy)
     fabrica.registrar("PAPEL", PapelStrategy)
     return fabrica
+
+class BonoCampanaVerdeDecorator(ReglaPuntos):
+    """Decorator: multiplica o bonifica los puntos sin alterar la estrategia base."""
+    def __init__(self, regla_base: ReglaPuntos, multiplicador: int = 2):
+        self._regla_base = regla_base
+        self._multiplicador = multiplicador
+
+    def calcular(self, volumen_litros):
+        puntos_base = self._regla_base.calcular(volumen_litros)
+        return puntos_base * self._multiplicador
