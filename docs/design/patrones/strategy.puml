@@ -1,0 +1,23 @@
+@startuml
+interface EstrategiaPuntos <<Strategy>> {
+    + calcular_puntos(pesaje_kg: float): int
+}
+
+class PuntosEstandar <<Strategy>> {
+    + calcular_puntos(pesaje_kg: float): int
+}
+
+class PuntosPromocional <<Strategy>> {
+    + calcular_puntos(pesaje_kg: float): int
+}
+
+class CalculadoraPuntos {
+    - estrategia: EstrategiaPuntos
+    + set_estrategia(e: EstrategiaPuntos)
+    + procesar_reciclaje(pesaje_kg: float): int
+}
+
+EstrategiaPuntos <|.. PuntosEstandar
+EstrategiaPuntos <|.. PuntosPromocional
+CalculadoraPuntos o-- EstrategiaPuntos
+@enduml
