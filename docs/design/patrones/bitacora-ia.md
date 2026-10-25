@@ -1,0 +1,9 @@
+# Bitácora de Registro de Uso de IA - Patrones de Diseño 
+
+| # | Fecha | Herramienta | Prompt Enviado | Propuesta de la IA | Verificación / Decisión |
+|---|---|---|---|---|---|
+| 1 | 2026-10-22 | ChatGPT | "Propón un patrón GoF para cambiar las reglas de cálculo de puntos por reciclaje según el distrito." | Sugirió aplicar el patrón **Strategy** con interfaces desacopladas. | **Aprobado:** Permite cumplir la regla de modificabilidad (≤ 2 días-persona). |
+| 2 | 2026-10-22 | Claude | "Genera el código en Python para el patrón State de las solicitudes de recojo." | Propuso el patrón **State** instanciando clases por cada cambio de estado. | **Aprobado:** Elimina las sentencias `if/else` complejas en la entidad principal. |
+| 3 | 2026-10-23 | ChatGPT | "Genera un patrón Singleton para gestionar la conexión a la base de datos PostgreSQL en Django." | Generó una clase Singleton personalizada para reusar la conexión de BD. | **Rechazado (Fallo detectado por pruebas):** Las pruebas unitarias concurrentes fallaron al compartir el estado global de la conexión. Django ya gestiona el *connection pooling* nativamente. |
+| 4 | 2026-10-23 | Claude | "Genera el diagrama PlantUML del patrón Strategy con sus estereotipos correspondientes." | Produjo el diagrama UML incluyendo `<<Strategy>>` en la interfaz. | **Aprobado:** Guardado en `docs/design/patrones/strategy.puml`. |
+| 5 | 2026-10-24 | ChatGPT | "Escribe la estructura del ADR-005 para justificar la elección de patrones de diseño GoF." | Sugirió la plantilla estándar con Contexto, Decisión y Consecuencias. | **Aprobado:** Se adaptó para crear `docs/architecture/adr/005-patrones-de-diseno.md`. |

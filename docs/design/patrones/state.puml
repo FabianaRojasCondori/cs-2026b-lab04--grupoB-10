@@ -1,0 +1,22 @@
+@startuml
+interface EstadoSolicitud <<State>> {
+    + programar(solicitud)
+    + asignar(solicitud)
+    + completar(solicitud)
+}
+
+class EstadoPendiente <<State>>
+class EstadoAsignado <<State>>
+class EstadoCompletado <<State>>
+
+class SolicitudRecojo {
+    - estado: EstadoSolicitud
+    + cambiar_estado(e: EstadoSolicitud)
+    + completar()
+}
+
+EstadoSolicitud <|.. EstadoPendiente
+EstadoSolicitud <|.. EstadoAsignado
+EstadoSolicitud <|.. EstadoCompletado
+SolicitudRecojo o-- EstadoSolicitud
+@enduml

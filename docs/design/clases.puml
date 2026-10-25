@@ -1,5 +1,5 @@
 @startuml
-title EcoRecicla AQP - Solicitud de recojo
+title EcoRecicla AQP - Solicitud de recojo con Patrones de Diseño (Lab 07)
 
 skinparam classAttributeIconSize 0
 skinparam shadowing false
@@ -10,9 +10,9 @@ skinparam nodesep 30
 skinparam ranksep 40
 
 class Vecino {
-  - id: UUID
-  - nombre: String
-  - celular: String
+-   id: UUID
+-   nombre: String
+-   celular: String
 }
 
 class FormularioSolicitud <<presentacion>> {
@@ -29,14 +29,15 @@ class ServicioSolicitudes <<servicio>> {
 }
 
 class Solicitud <<entidad>> {
-  - id: UUID
-  - fecha: DateTime
-  - direccion: String
-  - estado: EstadoSolicitud
-  - reciclador_id: UUID [0..1]
-  - peso_kg: Decimal [0..1]
-  - puntos: int [0..1]
+-   id: UUID
+-   fecha: DateTime
+-   direccion: String
+-   estado: EstadoSolicitudState
+-   reciclador_id: UUID [0..1]
+-   peso_kg: Decimal [0..1]
+-   puntos: int [0..1]
   + Solicitud(vecino: Vecino, direccion: String, items: List<ItemMaterial>)
+  + cambiar_estado(nuevo_estado: EstadoSolicitudState): void
   + asignar_reciclador(reciclador_id: UUID): void
   + registrar_recojo(): void
   + registrar_pesaje(peso_kg: Decimal): void
@@ -44,19 +45,54 @@ class Solicitud <<entidad>> {
 }
 
 class ItemMaterial <<entidad>> {
-  - tipo_material: String
-  - volumen_estimado_litros: Decimal
+-   tipo_material: String
+-   volumen_estimado_litros: Decimal
   + es_valido(): bool
 }
 
-enum EstadoSolicitud {
-  Pendiente
-  Asignada
-  Recogida
-  Pesada
-  PuntosAcreditados
+' ==========================================
+' PATRÓN STATE (Lab 07)
+' ==========================================
+interface EstadoSolicitudState <<State>> {
+  + manejar(solicitud: Solicitud): void
 }
 
+class EstadoPendiente <<State>> {
+  + manejar(solicitud: Solicitud): void
+}
+
+class EstadoAsignado <<State>> {
+  + manejar(solicitud: Solicitud): void
+}
+
+class EstadoCompletado <<State>> {
+  + manejar(solicitud: Solicitud): void
+}
+
+' ==========================================
+' PATRÓN STRATEGY (Lab 07)
+' ==========================================
+interface EstrategiaPuntos <<Strategy>> {
+  + calcular_puntos(peso_kg: Decimal): int
+}
+
+class PuntosEstandar <<Strategy>> {
+  + calcular_puntos(peso_kg: Decimal): int
+}
+
+class PuntosPromocional <<Strategy>> {
+  + calcular_puntos(peso_kg: Decimal): int
+}
+
+class CalculadoraPuntos <<servicio>> {
+  - estrategia: EstrategiaPuntos
+  + set_estrategia(e: EstrategiaPuntos): void
+  + procesar_puntos(peso_kg: Decimal): int
+}
+
+' ==========================================
+' PUERTOS Y ADAPTADORES
+' ==========================================
 interface RepositorioSolicitudes <<puerto>> {
   + guardar(solicitud: Solicitud): void
 }
@@ -69,6 +105,9 @@ class WhatsappAdapter <<adaptador>> {
   + notificar_solicitud(celular: String, solicitud_id: UUID): void
 }
 
+' ==========================================
+' RELACIONES
+' ==========================================
 Vecino "1" -- "0..*" Solicitud : realiza
 Solicitud "1" *-- "1..*" ItemMaterial : contiene
 
@@ -79,19 +118,26 @@ ServicioSolicitudes "0..*" --> "1" NotificadorWhatsapp : notifica mediante
 
 ServicioSolicitudes ..> Solicitud : crea
 ServicioSolicitudes ..> ItemMaterial : valida
-Solicitud ..> EstadoSolicitud : tipo de estado
 WhatsappAdapter ..|> NotificadorWhatsapp
 
+' Relaciones de los Patrones (Lab 07)
+Solicitud o-- EstadoSolicitudState : gestiona estado con
+EstadoSolicitudState <|.. EstadoPendiente
+EstadoSolicitudState <|.. EstadoAsignado
+EstadoSolicitudState <|.. EstadoCompletado
+
+CalculadoraPuntos o-- EstrategiaPuntos : usa
+EstrategiaPuntos <|.. PuntosEstandar
+EstrategiaPuntos <|.. PuntosPromocional
+
+' ==========================================
+' NOTAS
+' ==========================================
 note bottom of Solicitud
   El constructor exige datos válidos
   y uno o más materiales.
-  Estado inicial: Pendiente.
-
-  Cada operación de transición
-  verifica el estado de origen.
-
-  registrar_acreditacion registra
-  el resultado del módulo Puntos.
+  Usa el patrón State para manejar 
+  sus transiciones de estado.
 end note
 
 note bottom of NotificadorWhatsapp
@@ -103,8 +149,7 @@ end note
 note bottom of ServicioSolicitudes
   ADR-001: monolito modular.
   Solicitudes usa contratos y puertos.
-  El cálculo de puntos permanece
-  en el módulo Puntos.
+  El cálculo de puntos utiliza el patrón
+  Strategy según el tipo de promoción.
 end note
-
 @enduml
