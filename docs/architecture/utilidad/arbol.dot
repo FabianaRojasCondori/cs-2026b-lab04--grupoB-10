@@ -1,0 +1,32 @@
+digraph U {
+graph [rankdir=LR, bgcolor="white", pad="0.3", nodesep="0.25", ranksep="0.4", label="EcoRecicla AQP | Lab 08 | de 3 a 12 distritos", labelloc=t, fontsize=20];
+node [shape=box, style="rounded,filled", fontname="Arial", fontsize=12, fillcolor="#eef5f6", color="#68918e", margin="0.18,0.14"];
+edge [arrowhead=none, color="#7d9292"];
+U [label="Utilidad",fillcolor="#123f47",fontcolor=white];
+"Rendimiento" [fillcolor="#196c72",fontcolor=white];
+U -> "Rendimiento";
+"Disponibilidad" [fillcolor="#196c72",fontcolor=white];
+U -> "Disponibilidad";
+"Seguridad" [fillcolor="#196c72",fontcolor=white];
+U -> "Seguridad";
+"Modificabilidad" [fillcolor="#196c72",fontcolor=white];
+U -> "Modificabilidad";
+QA_01r [label="Latencia en campañas"];
+QA_01 [label="QA-01 (H,M)\n16 req/s totales; p95 <= 2000 ms"];
+"Rendimiento" -> QA_01r -> QA_01;
+QA_02r [label="Falla de mensajería"];
+QA_02 [label="QA-02 (H,H)\nCaída externa 20 min; 0 solicitudes perdidas"];
+"Disponibilidad" -> QA_02r -> QA_02;
+QA_03r [label="Trabajo sin conexión"];
+QA_03 [label="QA-03 (H,M)\nSin red; sincronización <= 5 min"];
+"Disponibilidad" -> QA_03r -> QA_03;
+QA_04r [label="Aislamiento distrital"];
+QA_04 [label="QA-04 (H,M)\n12 distritos; 0 accesos cruzados"];
+"Seguridad" -> QA_04r -> QA_04;
+QA_05r [label="Reglas y horarios por distrito"];
+QA_05 [label="QA-05 (H,M)\nReglas y horarios <= 1 día; 0 redespliegues"];
+"Modificabilidad" -> QA_05r -> QA_05;
+QA_06r [label="Confidencialidad"];
+QA_06 [label="QA-06 (H,M)\n100% canales, volúmenes y copias cifrados"];
+"Seguridad" -> QA_06r -> QA_06;
+}
