@@ -1,0 +1,36 @@
+
+╔══╗─────────▶╔╗ ╔╗      ╔╗◀───┐
+╚╣╠╝◀─────┐  ╔╝╚╗║║────▶╔╝╚╗   │
+ ║║   ╔══╦══╦╩╗╔╝║║  ╔╦═╩╗╔╝╔═╦══╗
+ ║║╔══╣╔╗║╔╗║╔╣║ ║║ ╔╬╣╔╗║║ ║│║╔═╝
+╔╣╠╣║║║╚╝║╚╝║║║╚╗║╚═╝║║║║║╚╗║═╣║
+╚══╩╩╩╣╔═╩══╩╝╚═╝╚═══╩╩╝╚╩═╩╩═╩╝
+  └──▶║║                    ▲ 
+      ╚╝────────────────────┘
+
+
+---------
+Contracts
+---------
+
+Analyzed 16 files, 7 dependencies.
+----------------------------------
+
+FF-01 El dominio no importa adaptadores ni SDKs externos (ADR-005) BROKEN
+FF-02 El módulo de puntos no depende del módulo de solicitudes KEPT
+
+Contracts: 1 kept, 1 broken.
+
+
+----------------
+Broken contracts
+----------------
+
+FF-01 El dominio no importa adaptadores ni SDKs externos (ADR-005)
+------------------------------------------------------------------
+
+src.solicitudes.clases is not allowed to import src.solicitudes.adaptadores:
+
+-   src.solicitudes.clases -> src.solicitudes.adaptadores (l.10)
+
+
