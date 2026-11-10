@@ -1,0 +1,22 @@
+[importlinter]
+root_package = src
+
+[importlinter:contract:dominio-sin-infra]
+name = FF-01 El dominio no importa adaptadores ni SDKs externos (ADR-005)
+type = forbidden
+source_modules =
+    src.solicitudes.modelos
+    src.solicitudes.estados
+    src.puntos.reglas
+forbidden_modules =
+    src.solicitudes.adaptadores
+    src.solicitudes.externos
+    src.solicitudes.ia
+
+[importlinter:contract:puntos-no-solicitudes]
+name = FF-02 El módulo de puntos no depende del módulo de solicitudes
+type = forbidden
+source_modules =
+    src.puntos
+forbidden_modules =
+    src.solicitudes
