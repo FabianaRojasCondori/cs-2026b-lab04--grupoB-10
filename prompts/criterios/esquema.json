@@ -1,0 +1,124 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Criterios de aceptacion para EcoRecicla AQP",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "historia_id",
+    "invest_ok",
+    "preguntas",
+    "escenarios"
+  ],
+  "properties": {
+    "historia_id": {
+      "type": "string",
+      "pattern": "^HU-[0-9]{2}$"
+    },
+    "invest_ok": {
+      "type": "boolean"
+    },
+    "preguntas": {
+      "type": "array",
+      "maxItems": 3,
+      "items": {
+        "type": "string",
+        "minLength": 5
+      }
+    },
+    "escenarios": {
+      "type": "array",
+      "maxItems": 4,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "titulo",
+          "tipo",
+          "dado",
+          "cuando",
+          "entonces"
+        ],
+        "properties": {
+          "titulo": {
+            "type": "string",
+            "minLength": 3
+          },
+          "tipo": {
+            "type": "string",
+            "enum": [
+              "exito",
+              "error",
+              "borde"
+            ]
+          },
+          "dado": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "string",
+              "minLength": 3
+            }
+          },
+          "cuando": {
+            "type": "string",
+            "minLength": 5
+          },
+          "entonces": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "string",
+              "minLength": 3
+            }
+          }
+        }
+      }
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "invest_ok": {
+            "const": true
+          }
+        },
+        "required": [
+          "invest_ok"
+        ]
+      },
+      "then": {
+        "properties": {
+          "preguntas": {
+            "maxItems": 0
+          },
+          "escenarios": {
+            "minItems": 2
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "invest_ok": {
+            "const": false
+          }
+        },
+        "required": [
+          "invest_ok"
+        ]
+      },
+      "then": {
+        "properties": {
+          "preguntas": {
+            "minItems": 1
+          },
+          "escenarios": {
+            "maxItems": 0
+          }
+        }
+      }
+    }
+  ]
+}
