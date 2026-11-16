@@ -1,0 +1,3 @@
+Escribe la documentación y el docstring de esta función de EcoRecicla AQP.
+Función: {{funcion}}
+{{codigo}}

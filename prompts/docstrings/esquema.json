@@ -1,0 +1,104 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Documentación de funciones EcoRecicla AQP",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "funcion",
+    "resumen",
+    "parametros",
+    "retorno",
+    "excepciones",
+    "docstring"
+  ],
+  "properties": {
+    "funcion": {
+      "type": "string",
+      "minLength": 1
+    },
+    "resumen": {
+      "type": "string",
+      "minLength": 10
+    },
+    "parametros": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "nombre",
+          "tipo",
+          "descripcion",
+          "obligatorio",
+          "valor_por_defecto"
+        ],
+        "properties": {
+          "nombre": {
+            "type": "string",
+            "minLength": 1
+          },
+          "tipo": {
+            "type": "string",
+            "minLength": 1
+          },
+          "descripcion": {
+            "type": "string",
+            "minLength": 5
+          },
+          "obligatorio": {
+            "type": "boolean"
+          },
+          "valor_por_defecto": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        }
+      }
+    },
+    "retorno": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "tipo",
+        "descripcion"
+      ],
+      "properties": {
+        "tipo": {
+          "type": "string",
+          "minLength": 1
+        },
+        "descripcion": {
+          "type": "string",
+          "minLength": 5
+        }
+      }
+    },
+    "excepciones": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "tipo",
+          "condicion"
+        ],
+        "properties": {
+          "tipo": {
+            "type": "string",
+            "minLength": 1
+          },
+          "condicion": {
+            "type": "string",
+            "minLength": 5
+          }
+        }
+      }
+    },
+    "docstring": {
+      "type": "string",
+      "minLength": 20
+    }
+  }
+}
