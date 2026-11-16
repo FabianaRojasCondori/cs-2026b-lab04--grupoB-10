@@ -10,7 +10,7 @@ siguen pendientes de evaluación; sus mejoras todavía son hipótesis.
 |---|---|---|---|
 | v1 | Petición simple sin formato | Línea base | 0/8 (0.00 %). Véase resultados/evaluacion-v1.md |
 | v2 | Rol, contexto, tarea, restricciones, JSON y datos delimitados | Mejorar A1/A2/A3 | 4/8 (50.00 %) con A3 corregida. Véase resultados/evaluacion-v2.md |
-| v3 | Verificación de firma, convenciones de tipos/defaults, defensas y ejemplo | Mejorar A2-A6 | PENDIENTE |
+| v3 | Verificación de firma, convenciones de tipos/defaults, defensas y ejemplo | Mejorar A2-A6 | 8/8 (100.00 %). Véase resultados/evaluacion-v3.md |
 
 v2 usa Persona y Template. v3 agrega Cognitive Verifier y un ejemplo de contrato
 (one-shot, de la familia de aprendizaje por ejemplos). No se afirma que un único
@@ -89,12 +89,33 @@ Evidencia:
 - [Captura D6](grabaciones/v2/D6.txt)
 - [Pruebas de A3](tests/test_correccion_a3.py)
 
-Tasa de partida para comparar con v3: 50.00 %.
-Tasa de v3 y regresiones: pendientes de evaluación.
+Resultado de v3: 8/8 casos aprobados (100.00 %), frente a 4/8
+(50.00 %) de v2 con el evaluador corregido. La mejora fue de
+50 puntos porcentuales. D3, D5, D6 y D7 pasaron a aprobar;
+D1, D2, D4 y D8 conservaron su aprobación. No se observaron
+regresiones en los ocho casos del dataset.
 
 ### Selección final
 
-PENDIENTE: justificar la versión elegida. Si es <85 %, explicar fallo e hipótesis.
+Se selecciona v3 porque obtuvo 8/8 casos aprobados (100.00 %),
+superando la meta del 85 % y conservando los casos aprobados por v2.
+La comparación utiliza el mismo dataset, esquema y evaluador corregido.
+
+Las instrucciones explícitas sobre anotaciones y representación de
+valores predeterminados resolvieron los incumplimientos observados.
+D8 también aprobó las aserciones del caso adversario.
+
+Este resultado corresponde a ocho respuestas grabadas y a las
+aserciones definidas. No garantiza corrección universal ni resistencia
+frente a cualquier ataque. Se mantiene la revisión humana del contenido.
+
+Evidencia:
+- [Evaluación v3](resultados/evaluacion-v3.md)
+- [Comparación de versiones](resultados/resumen.md)
+- [Gráfico de tasas](resultados/tasas.svg)
+
+El análisis de no determinismo se realizará con nueve generaciones
+nuevas de v3 sobre D1, D4 y D8.
 
 ### Revisión del evaluador
 
