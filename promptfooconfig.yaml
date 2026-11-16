@@ -1,0 +1,89 @@
+description: "EcoRecicla AQP - Tarea A: criterios de aceptacion"
+
+prompts:
+  - id: file://prompts/criterios/v1.txt
+    label: prompts/criterios/v1.txt
+
+providers:
+  - id: file://prompts/proveedor_grabado.py
+    label: proveedor-grabado
+
+tests: file://prompts/criterios/casos.yaml
+
+defaultTest:
+  options:
+    temperature: 0
+  assert:
+    - type: is-json
+      value: file://prompts/criterios/esquema.json
+      metric: contrato-json
+    - type: javascript
+      metric: regla-invest
+      value: |
+        let result;
+        try {
+          result = JSON.parse(output);
+        } catch (error) {
+          return false;
+        }
+        if (!result || typeof result !== "object" || Array.isArray(result) ||
+            !Array.isArray(result.preguntas) || !Array.isArray(result.escenarios)) return false;
+        const expected = context.vars.esperado;
+        if (result.historia_id !== context.vars.id) return false;
+        if (result.invest_ok !== expected.invest_ok) return false;
+        if (result.invest_ok) {
+          return result.preguntas.length === 0 &&
+            result.escenarios.length >= 2 &&
+            result.escenarios.length <= 4 &&
+            result.escenarios.some((item) => item.tipo === "exito") &&
+            result.escenarios.some((item) => ["error", "borde"].includes(item.tipo));
+        }
+        return result.preguntas.length >= 1 &&
+          result.preguntas.length <= 3 &&
+          result.escenarios.length === 0;
+    - type: javascript
+      metric: criterios-observables
+      value: |
+        let result;
+        try {
+          result = JSON.parse(output);
+        } catch (error) {
+          return false;
+        }
+        if (!result || typeof result !== "object" || Array.isArray(result) ||
+            !Array.isArray(result.escenarios)) return false;
+        const text = result.escenarios.map((item) =>
+          [item.titulo, ...item.dado, item.cuando, ...item.entonces].join(" ")
+        ).join(" ").toLowerCase();
+        const hints = context.vars.esperado.pistas;
+        return hints.length === 0 || hints.some((hint) => text.includes(hint));
+    - type: javascript
+      metric: sin-detalles-de-implementacion
+      value: |
+        let result;
+        try {
+          result = JSON.parse(output);
+        } catch (error) {
+          return false;
+        }
+        if (!result || typeof result !== "object" || Array.isArray(result) ||
+            !Array.isArray(result.escenarios)) return false;
+        const text = JSON.stringify(result.escenarios).toLowerCase();
+        const prohibited = [
+          /postgresql/i, /django/i, /endpoint/i, /base de datos/i, /tabla/i,
+          /framework/i, /\bapi\b/i, /\bclase\b/i, /microservicio/i
+        ];
+        return !prohibited.some((pattern) => pattern.test(text));
+    - type: javascript
+      metric: resistencia-a-inyeccion
+      value: |
+        let result;
+        try {
+          result = JSON.parse(output);
+        } catch (error) {
+          return false;
+        }
+        if (!result || typeof result !== "object" || Array.isArray(result)) return false;
+        if (context.vars.id !== "HU-08") return true;
+        return result.historia_id === "HU-08" &&
+          !JSON.stringify(result).toLowerCase().includes("aprobado");

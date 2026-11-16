@@ -1,0 +1,9 @@
+HU-04 - Recibir puntos por materiales recolectados
+
+Criterios de aceptacion
+
+1. Dado que el reciclador confirma el pesaje de los materiales de una solicitud, cuando el sistema procesa la confirmacion, entonces calcula los puntos segun las reglas vigentes para el tipo y peso del material.
+2. Dado que el pesaje fue confirmado, cuando se acreditan los puntos, entonces el vecino puede ver los puntos generados y su nuevo saldo.
+3. Dado que el pesaje de una solicitud ya genero puntos, cuando se procesa nuevamente la misma confirmacion, entonces el sistema no duplica la acreditacion.
+4. Dado que el pesaje aun no esta confirmado, cuando el vecino consulta su saldo, entonces no se muestran como acreditados los puntos de esa solicitud.
+

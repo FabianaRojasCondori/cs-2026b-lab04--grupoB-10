@@ -1,0 +1,9 @@
+HU-03 - Consultar la hoja de ruta diaria
+
+Criterios de aceptacion
+
+1. Dado que el reciclador formalizado tiene una hoja de ruta asignada por la municipalidad para el dia, cuando la consulta, entonces ve los recojos incluidos en esa ruta con sus direcciones y datos necesarios para identificarlos.
+2. Dado que la ruta incluye mas de un recojo, cuando el reciclador la consulta, entonces los recojos aparecen en el orden establecido por la municipalidad.
+3. Dado que el reciclador no tiene una ruta asignada para el dia, cuando consulta la hoja de ruta, entonces el sistema indica que no hay una ruta disponible.
+4. Dado que un usuario no tiene el rol de reciclador formalizado, cuando intenta acceder a la hoja de ruta, entonces el sistema deniega el acceso.
+

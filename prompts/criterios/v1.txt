@@ -1,0 +1,2 @@
+Escribe criterios de aceptacion para esta historia de usuario:
+{{historia}}

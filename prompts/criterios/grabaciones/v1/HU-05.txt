@@ -1,0 +1,9 @@
+HU-05 - Consultar el reporte mensual de toneladas recicladas por sector
+
+Criterios de aceptacion
+
+1. Dado que el administrador municipal selecciona un mes, cuando solicita el reporte, entonces el sistema muestra las toneladas recicladas correspondientes a ese mes, desglosadas por sector.
+2. Dado que hay datos para varios sectores, cuando se genera el reporte, entonces cada sector aparece identificado con su total en toneladas y el reporte incluye un total general del periodo.
+3. Dado que no existen datos para el mes seleccionado, cuando se genera el reporte, entonces el sistema lo indica y presenta el resultado como cero, sin reutilizar datos de otro periodo.
+4. Dado que un usuario no tiene permisos de administrador municipal, cuando intenta consultar el reporte, entonces el sistema deniega el acceso.
+
