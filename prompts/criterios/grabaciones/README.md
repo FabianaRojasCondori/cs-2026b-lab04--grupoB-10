@@ -1,15 +1,26 @@
-# Grabaciones de la Tarea A
+## Prompt engineering (Lab 09) — Tarea A
 
-Cada carpeta `v1/`, `v2/` y `v3/` contiene las respuestas para los ocho casos
-de `../casos.yaml`, guardadas como `<id>.txt`.
+### Estructura
+- `prompts/criterios/v1.txt` — versión inicial del prompt (sin formato JSON)
+- `prompts/criterios/v2.txt`, `v3.txt` — versiones posteriores (ver E3)
+- `prompts/criterios/esquema.json` — contrato de salida (JSON Schema, draft-07)
+- `prompts/criterios/casos.yaml` — dataset: 8 casos (6 normales + HU-07 no INVEST + HU-08 adversario con inyección)
+- `prompts/criterios/grabaciones/<version>/<id>.txt` — respuestas grabadas del asistente de IA
+- `prompts/proveedor_grabado.py` — provider de promptfoo que lee las grabaciones (sin clave de API)
+- `promptfooconfig.yaml` — aserciones (contrato JSON, INVEST, observables, sin implementación, resistencia a inyección)
 
-Las respuestas v1 fueron copiadas de la ejecucion del asistente realizada
-para E2. Las respuestas v2 y v3 se generaron con el asistente Copilot de esta
-sesion aplicando esas versiones de prompt y se guardaron sin modificarlas.
-Revisar el contenido antes de entregar; si el curso requiere grabaciones de
-una ejecucion separada del prompt, repetirla con el asistente elegido y
-reemplazar cada archivo con su salida original.
+### Línea base v1 (E2)
 
-La evaluacion Promptfoo se ejecuta localmente contra estas grabaciones y es
-reproducible, sin clave de API. Registrar proveedor/modelo y fecha si se
-vuelven a generar.
+- **Comando:** `npx promptfoo eval`
+- **Fecha de ejecución:** 2026-11-16
+- **promptfoo:** 0.120.19
+- **Prompt evaluado:** `prompts/criterios/v1.txt` ("Escribe criterios de aceptación para esta historia de usuario: {{historia}}")
+- **Proveedor de respuestas grabadas:** asistente de IA (ver `bitacora-ia.md`)
+- **Resultado:** **0 passed · 8 failed · 0 errors · 0.00 %**
+- **Motivo del 0 %:** v1 pide texto libre; la salida no es JSON y no cumple `esquema.json`. Fallan `is-json` y todos los asserts que hacen `JSON.parse(output)` (regla-invest, criterios-observables, sin-detalles-de-implementacion, resistencia-a-inyeccion).
+- **Evidencia:** `resultados-v1.json`, `resultados.html`
+
+### Progresión (se completa en E3)
+- v1: **0.00 %** ← línea base
+- v2: _pendiente (commit E3)_
+- v3: _pendiente (commit E3)_
