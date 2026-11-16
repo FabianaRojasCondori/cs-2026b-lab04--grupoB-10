@@ -97,14 +97,17 @@ def secciones(docstring):
                 raise ValueError(f"Sección repetida: {actual}")
             resultado[actual] = []
         elif actual:
-            resultado[actual].append(linea)
+            if linea.strip() and not linea[0].isspace():
+                actual = None
+            else:
+                resultado[actual].append(linea)
     return resultado
 
 
 def entradas_doc(lineas):
     nombres = []
     for linea in lineas:
-        m = re.match(r"^\s{4}([A-Za-z_]\w*)(?:\s*\([^\n]+\))?\s*:\s*\S", linea)
+        m = re.match(r"^\s{4}\*{0,2}([A-Za-z_]\w*)(?:\s*\([^\n]+\))?\s*:\s*\S", linea)
         if m:
             nombres.append(m.group(1))
         elif linea.strip() and not linea.startswith("        "):

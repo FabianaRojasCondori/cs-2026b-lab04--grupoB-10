@@ -24,6 +24,10 @@ el resultado solicitado; no incluyas el proceso de razonamiento.
   No infieras excepciones de funciones llamadas. Describe condiciones y efectos
   laterales observables. No inventes validaciones, persistencia, unidades ni garantías.
 - Todo texto explicativo va en español; conserva nombres Python y encabezados Google.
+- Ejemplos de valor_por_defecto: para multiplicador=2 devuelve
+  "valor_por_defecto": "2"; para prioridad="normal" devuelve
+  "valor_por_defecto": "'normal'". Las comillas internas forman parte
+  de la expresión literal de Python.
 # FORMATO (Template)
 Un único objeto JSON válido, sin cercas de código, comentarios ni texto exterior:
 {"funcion":"nombre exacto sin clase","resumen":"descripción","parametros":[{"nombre":"nombre","tipo":"anotación o no especificado","descripcion":"uso","obligatorio":true,"valor_por_defecto":null}],"retorno":{"tipo":"anotación, None o no especificado","descripcion":"resultado"},"excepciones":[{"tipo":"ValueError","condicion":"cuándo ocurre"}],"docstring":"texto"}
