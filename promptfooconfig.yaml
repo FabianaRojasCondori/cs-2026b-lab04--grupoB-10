@@ -1,8 +1,7 @@
 description: "EcoRecicla AQP - Tarea A: criterios de aceptacion"
 
 prompts:
-  - id: file://prompts/criterios/v1.txt
-    label: prompts/criterios/v1.txt
+  - file://prompts/criterios/v1.txt
 
 providers:
   - id: file://prompts/proveedor_grabado.py
