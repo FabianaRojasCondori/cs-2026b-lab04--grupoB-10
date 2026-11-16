@@ -1,0 +1,45 @@
+**Documentación:** `resumir_ruta` reúne el identificador de una solicitud, sus paradas, la prioridad y opciones adicionales en un diccionario. No valida ni transforma los valores recibidos.
+
+- `solicitud_id`: identificador obligatorio, aceptado únicamente por posición.
+- `*paradas`: cantidad variable de argumentos posicionales, almacenados como tupla.
+- `prioridad`: argumento exclusivo por nombre; su valor predeterminado es `"normal"`.
+- `**opciones`: argumentos adicionales por nombre, almacenados como diccionario.
+- **Retorno:** diccionario con las claves `solicitud_id`, `paradas`, `prioridad` y `opciones`.
+
+```python
+def resumir_ruta(solicitud_id, /, *paradas, prioridad="normal", **opciones) -> dict:
+    """Construye un resumen de ruta para una solicitud de EcoRecicla AQP.
+
+    Args:
+        solicitud_id: Identificador de la solicitud. Solo se admite por posición.
+        *paradas: Paradas de la ruta, conservadas en el orden recibido.
+        prioridad: Prioridad de la ruta. Solo se admite por nombre y su valor
+            predeterminado es "normal".
+        **opciones: Opciones adicionales proporcionadas como argumentos
+            por nombre.
+
+    Returns:
+        dict: Resumen con el identificador en "solicitud_id", las paradas
+        como tupla en "paradas", la prioridad en "prioridad" y las opciones
+        adicionales como diccionario en "opciones".
+
+    Notes:
+        No valida los valores recibidos. Si no se proporcionan paradas
+        ni opciones, se almacenan una tupla vacía y un diccionario vacío,
+        respectivamente.
+    """
+    return {"solicitud_id": solicitud_id, "paradas": paradas,
+            "prioridad": prioridad, "opciones": opciones}
+```
+
+**Ejemplo:**
+
+```python
+resumir_ruta(15, "Yanahuara", "Cayma", prioridad="alta", vehiculo="V01")
+# {
+#     "solicitud_id": 15,
+#     "paradas": ("Yanahuara", "Cayma"),
+#     "prioridad": "alta",
+#     "opciones": {"vehiculo": "V01"}
+# }
+```

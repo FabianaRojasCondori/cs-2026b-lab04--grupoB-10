@@ -1,0 +1,12 @@
+{
+  "version": "v1",
+  "caso": "D2",
+  "repeticion": null,
+  "fecha_captura_utc": "2026-11-16T01:37:15.198392+00:00",
+  "modelo_declarado": "ChatGPT (modelo no mostrado)",
+  "sesion_declarada": "v1-D2-r0-20261116T013715180419Z",
+  "enlace_conversacion": "https://chatgpt.com/share/6afa5e48-63ec-83e8-b391-615357519724",
+  "prompt_sha256": "8419069687d6a94a1c03503211b590762adac11eab9f8ef795d6f6e386045391",
+  "respuesta_sha256": "7684852d42a2197d688b390738c0fa7ebe7b72d62e5459d1c8cbe2beaeb9f10e",
+  "nota": "Copia manual declarada por el operador; los hashes no certifican su origen."
+}

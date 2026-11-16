@@ -1,0 +1,35 @@
+**Documentación**
+
+`fabrica_estandar()` crea una instancia de `FabricaReglasPuntos` y registra las estrategias de cálculo de puntos para los materiales admitidos por defecto en EcoRecicla AQP.
+
+- **Parámetros:** ninguno.
+- **Retorno:** una instancia de `FabricaReglasPuntos` configurada con las siguientes asociaciones:
+
+| Material | Estrategia |
+|---|---|
+| `PLASTICO` | `PlasticoStrategy` |
+| `VIDRIO` | `VidrioStrategy` |
+| `PAPEL` | `PapelStrategy` |
+
+Cada llamada crea una nueva fábrica. La función registra las clases de las estrategias, sin instanciarlas directamente.
+
+**Función con docstring**
+
+```python
+def fabrica_estandar():
+    """Crea una fábrica con las estrategias de puntos predeterminadas.
+
+    Registra las clases PlasticoStrategy, VidrioStrategy y PapelStrategy
+    con las claves "PLASTICO", "VIDRIO" y "PAPEL", respectivamente.
+    Cada llamada devuelve una nueva instancia de la fábrica.
+
+    Returns:
+        FabricaReglasPuntos: Fábrica configurada para crear estrategias
+            de cálculo de puntos para plástico, vidrio y papel.
+    """
+    fabrica = FabricaReglasPuntos()
+    fabrica.registrar("PLASTICO", PlasticoStrategy)
+    fabrica.registrar("VIDRIO", VidrioStrategy)
+    fabrica.registrar("PAPEL", PapelStrategy)
+    return fabrica
+```

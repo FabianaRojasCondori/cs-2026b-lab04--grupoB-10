@@ -1,0 +1,21 @@
+**Documentación:** El método `calcular` devuelve el resultado de multiplicar `volumen_litros` por 2. No valida el tipo ni el rango del argumento.
+
+- **Parámetro:** `volumen_litros`: volumen en litros, esperado como valor numérico.
+- **Retorno:** resultado de `volumen_litros * 2`.
+- **Efectos secundarios:** no modifica el estado del objeto.
+
+```python
+def calcular(self, volumen_litros):
+    """Calcula el resultado de multiplicar el volumen en litros por dos.
+
+    Args:
+        volumen_litros (int | float): Volumen en litros.
+
+    Returns:
+        int | float: Resultado de multiplicar el volumen por dos.
+
+    Note:
+        No valida el tipo ni el rango del argumento.
+    """
+    return volumen_litros * 2
+```
