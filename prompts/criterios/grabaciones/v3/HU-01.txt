@@ -1,0 +1,42 @@
+{
+  "historia_id": "HU-01",
+  "invest_ok": true,
+  "preguntas": [],
+  "escenarios": [
+    {
+      "titulo": "Registrar solicitud con direccion, material y volumen",
+      "tipo": "exito",
+      "dado": [
+        "un vecino que indica la direccion Av. Ejercito 101",
+        "el tipo de material papel",
+        "un volumen estimado de 2 bolsas"
+      ],
+      "cuando": "solicita el recojo de sus materiales reciclables",
+      "entonces": [
+        "la solicitud queda registrada para programar su recoleccion"
+      ]
+    },
+    {
+      "titulo": "Consultar el estado de una solicitud registrada",
+      "tipo": "exito",
+      "dado": [
+        "un vecino con una solicitud de recojo registrada"
+      ],
+      "cuando": "consulta el estado de esa solicitud",
+      "entonces": [
+        "ve el estado actual de su solicitud"
+      ]
+    },
+    {
+      "titulo": "Intentar solicitar un recojo sin indicar el volumen",
+      "tipo": "error",
+      "dado": [
+        "un vecino que indica la direccion Av. Ejercito 101 y el material papel, pero no un volumen estimado"
+      ],
+      "cuando": "intenta solicitar el recojo",
+      "entonces": [
+        "la solicitud no queda registrada con los datos incompletos"
+      ]
+    }
+  ]
+}

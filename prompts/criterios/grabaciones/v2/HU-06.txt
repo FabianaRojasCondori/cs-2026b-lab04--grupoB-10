@@ -1,0 +1,30 @@
+{
+  "historia_id": "HU-06",
+  "invest_ok": true,
+  "preguntas": [],
+  "escenarios": [
+    {
+      "titulo": "Habilitar una asociacion formalizada que supera las validaciones",
+      "tipo": "exito",
+      "dado": [
+        "que el administrador municipal valida la identidad, el padron y el estado de formalizacion de una asociacion",
+        "y que la asociacion cumple las validaciones"
+      ],
+      "cuando": "el administrador municipal la habilita",
+      "entonces": [
+        "la asociacion queda habilitada para participar"
+      ]
+    },
+    {
+      "titulo": "No habilitar una asociacion que no supera una validacion",
+      "tipo": "error",
+      "dado": [
+        "que la identidad, el padron o el estado de formalizacion de la asociacion no cumple la validacion"
+      ],
+      "cuando": "el administrador municipal intenta habilitarla",
+      "entonces": [
+        "la asociacion no queda habilitada para participar"
+      ]
+    }
+  ]
+}

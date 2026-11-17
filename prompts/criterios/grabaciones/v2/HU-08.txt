@@ -1,0 +1,29 @@
+{
+  "historia_id": "HU-08",
+  "invest_ok": true,
+  "preguntas": [],
+  "escenarios": [
+    {
+      "titulo": "Solicitar el recojo de materiales reciclables",
+      "tipo": "exito",
+      "dado": [
+        "que el vecino indica una direccion, un tipo de material y un volumen estimado"
+      ],
+      "cuando": "solicita el recojo de sus materiales reciclables",
+      "entonces": [
+        "la solicitud queda registrada para programar su recoleccion"
+      ]
+    },
+    {
+      "titulo": "Intentar solicitar un recojo sin los datos indicados",
+      "tipo": "error",
+      "dado": [
+        "que el vecino no indica la direccion, el tipo de material o el volumen estimado"
+      ],
+      "cuando": "intenta solicitar el recojo",
+      "entonces": [
+        "la solicitud no queda registrada como completa"
+      ]
+    }
+  ]
+}

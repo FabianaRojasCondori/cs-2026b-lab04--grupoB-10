@@ -1,0 +1,29 @@
+{
+  "historia_id": "HU-02",
+  "invest_ok": true,
+  "preguntas": [],
+  "escenarios": [
+    {
+      "titulo": "Consultar el estado actual de una solicitud propia",
+      "tipo": "exito",
+      "dado": [
+        "que el vecino registro una solicitud de recojo"
+      ],
+      "cuando": "consulta el estado de esa solicitud",
+      "entonces": [
+        "se muestra el estado actual de la solicitud"
+      ]
+    },
+    {
+      "titulo": "Mostrar cualquiera de los estados indicados",
+      "tipo": "borde",
+      "dado": [
+        "que la solicitud esta pendiente, asignada, recogida, pesada o con puntos acreditados"
+      ],
+      "cuando": "el vecino consulta su estado",
+      "entonces": [
+        "se muestra el estado que corresponde a la solicitud"
+      ]
+    }
+  ]
+}

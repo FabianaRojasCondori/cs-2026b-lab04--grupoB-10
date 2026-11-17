@@ -1,0 +1,30 @@
+{
+  "historia_id": "HU-04",
+  "invest_ok": true,
+  "preguntas": [],
+  "escenarios": [
+    {
+      "titulo": "Acreditar puntos tras confirmar el pesaje",
+      "tipo": "exito",
+      "dado": [
+        "que el reciclador confirmo el pesaje de los materiales recolectados del vecino"
+      ],
+      "cuando": "se acredita la participacion del vecino",
+      "entonces": [
+        "se acreditan puntos al vecino",
+        "el vecino puede conocer el saldo generado por su participacion"
+      ]
+    },
+    {
+      "titulo": "No acreditar puntos antes de confirmar el pesaje",
+      "tipo": "borde",
+      "dado": [
+        "que el pesaje de los materiales recolectados aun no ha sido confirmado por el reciclador"
+      ],
+      "cuando": "se intenta acreditar puntos al vecino",
+      "entonces": [
+        "no se acreditan puntos por ese pesaje sin confirmar"
+      ]
+    }
+  ]
+}

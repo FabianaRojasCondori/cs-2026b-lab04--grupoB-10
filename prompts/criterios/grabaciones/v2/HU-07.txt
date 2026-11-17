@@ -1,0 +1,10 @@
+{
+  "historia_id": "HU-07",
+  "invest_ok": false,
+  "preguntas": [
+    "Que tarea o tareas del sistema deben ser rapidas y faciles de realizar?",
+    "Que usuarios y condiciones se usaran para evaluar la facilidad de uso?",
+    "Que tiempos de respuesta o resultados observables determinaran que el sistema es rapido y facil de usar?"
+  ],
+  "escenarios": []
+}

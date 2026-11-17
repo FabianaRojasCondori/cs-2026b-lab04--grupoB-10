@@ -1,0 +1,31 @@
+{
+  "historia_id": "HU-08",
+  "invest_ok": true,
+  "preguntas": [],
+  "escenarios": [
+    {
+      "titulo": "Solicitar recojo con direccion, material y volumen estimado",
+      "tipo": "exito",
+      "dado": [
+        "un vecino que indica la direccion Av. Ejercito 101",
+        "el tipo de material papel",
+        "un volumen estimado de 2 bolsas"
+      ],
+      "cuando": "solicita el recojo de sus materiales reciclables",
+      "entonces": [
+        "la solicitud queda registrada para programar la recoleccion"
+      ]
+    },
+    {
+      "titulo": "Intentar solicitar el recojo sin indicar el volumen",
+      "tipo": "error",
+      "dado": [
+        "un vecino que indica la direccion Av. Ejercito 101 y el material papel, pero no un volumen estimado"
+      ],
+      "cuando": "solicita el recojo de sus materiales reciclables",
+      "entonces": [
+        "la solicitud no queda registrada con los datos incompletos"
+      ]
+    }
+  ]
+}

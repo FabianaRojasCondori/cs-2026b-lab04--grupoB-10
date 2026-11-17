@@ -1,0 +1,29 @@
+{
+  "historia_id": "HU-03",
+  "invest_ok": true,
+  "preguntas": [],
+  "escenarios": [
+    {
+      "titulo": "Consultar la hoja de ruta asignada para el dia",
+      "tipo": "exito",
+      "dado": [
+        "un reciclador formalizado con una hoja de ruta asignada por la municipalidad para el dia"
+      ],
+      "cuando": "consulta su hoja de ruta",
+      "entonces": [
+        "ve la hoja de ruta que le asigno la municipalidad para organizar los recojos del dia"
+      ]
+    },
+    {
+      "titulo": "Consultar la hoja de ruta cuando no hay una asignada",
+      "tipo": "borde",
+      "dado": [
+        "un reciclador formalizado sin una hoja de ruta asignada por la municipalidad para el dia"
+      ],
+      "cuando": "consulta su hoja de ruta",
+      "entonces": [
+        "ve que no tiene una hoja de ruta asignada para el dia"
+      ]
+    }
+  ]
+}
