@@ -1,0 +1,308 @@
+{
+  "version": "v1",
+  "total": 8,
+  "exitos": 0,
+  "tasa": 0.0,
+  "casos": [
+    {
+      "caso": "D1",
+      "aprobado": false,
+      "aserciones": {
+        "A1": {
+          "pass": false,
+          "score": 0,
+          "reason": "A1: JSONDecodeError: Expecting value: line 1 column 1 (char 0)"
+        },
+        "A2": {
+          "pass": false,
+          "score": 0,
+          "reason": "A2: JSONDecodeError: Expecting value: line 1 column 1 (char 0)"
+        },
+        "A3": {
+          "pass": false,
+          "score": 0,
+          "reason": "A3: JSONDecodeError: Expecting value: line 1 column 1 (char 0)"
+        },
+        "A4": {
+          "pass": false,
+          "score": 0,
+          "reason": "A4: JSONDecodeError: Expecting value: line 1 column 1 (char 0)"
+        },
+        "A5": {
+          "pass": false,
+          "score": 0,
+          "reason": "A5: JSONDecodeError: Expecting value: line 1 column 1 (char 0)"
+        },
+        "A6": {
+          "pass": false,
+          "score": 0,
+          "reason": "A6: JSONDecodeError: Expecting value: line 1 column 1 (char 0)"
+        }
+      },
+      "respuesta_sha256": "c4178c301b0b745a8b4ea87d6a6d12bef57476a27e9145c6ce1bcb783f0b34ff"
+    },
+    {
+      "caso": "D2",
+      "aprobado": false,
+      "aserciones": {
+        "A1": {
+          "pass": false,
+          "score": 0,
+          "reason": "A1: JSONDecodeError: Expecting value: line 1 column 1 (char 0)"
+        },
+        "A2": {
+          "pass": false,
+          "score": 0,
+          "reason": "A2: JSONDecodeError: Expecting value: line 1 column 1 (char 0)"
+        },
+        "A3": {
+          "pass": false,
+          "score": 0,
+          "reason": "A3: JSONDecodeError: Expecting value: line 1 column 1 (char 0)"
+        },
+        "A4": {
+          "pass": false,
+          "score": 0,
+          "reason": "A4: JSONDecodeError: Expecting value: line 1 column 1 (char 0)"
+        },
+        "A5": {
+          "pass": false,
+          "score": 0,
+          "reason": "A5: JSONDecodeError: Expecting value: line 1 column 1 (char 0)"
+        },
+        "A6": {
+          "pass": false,
+          "score": 0,
+          "reason": "A6: JSONDecodeError: Expecting value: line 1 column 1 (char 0)"
+        }
+      },
+      "respuesta_sha256": "7684852d42a2197d688b390738c0fa7ebe7b72d62e5459d1c8cbe2beaeb9f10e"
+    },
+    {
+      "caso": "D3",
+      "aprobado": false,
+      "aserciones": {
+        "A1": {
+          "pass": false,
+          "score": 0,
+          "reason": "A1: JSONDecodeError: Expecting value: line 1 column 1 (char 0)"
+        },
+        "A2": {
+          "pass": false,
+          "score": 0,
+          "reason": "A2: JSONDecodeError: Expecting value: line 1 column 1 (char 0)"
+        },
+        "A3": {
+          "pass": false,
+          "score": 0,
+          "reason": "A3: JSONDecodeError: Expecting value: line 1 column 1 (char 0)"
+        },
+        "A4": {
+          "pass": false,
+          "score": 0,
+          "reason": "A4: JSONDecodeError: Expecting value: line 1 column 1 (char 0)"
+        },
+        "A5": {
+          "pass": false,
+          "score": 0,
+          "reason": "A5: JSONDecodeError: Expecting value: line 1 column 1 (char 0)"
+        },
+        "A6": {
+          "pass": false,
+          "score": 0,
+          "reason": "A6: JSONDecodeError: Expecting value: line 1 column 1 (char 0)"
+        }
+      },
+      "respuesta_sha256": "9bde0ab48fc5867b899f69cc43520901d937f4bfcdfd31417d8842d7a33d0518"
+    },
+    {
+      "caso": "D4",
+      "aprobado": false,
+      "aserciones": {
+        "A1": {
+          "pass": false,
+          "score": 0,
+          "reason": "A1: JSONDecodeError: Expecting value: line 1 column 1 (char 0)"
+        },
+        "A2": {
+          "pass": false,
+          "score": 0,
+          "reason": "A2: JSONDecodeError: Expecting value: line 1 column 1 (char 0)"
+        },
+        "A3": {
+          "pass": false,
+          "score": 0,
+          "reason": "A3: JSONDecodeError: Expecting value: line 1 column 1 (char 0)"
+        },
+        "A4": {
+          "pass": false,
+          "score": 0,
+          "reason": "A4: JSONDecodeError: Expecting value: line 1 column 1 (char 0)"
+        },
+        "A5": {
+          "pass": false,
+          "score": 0,
+          "reason": "A5: JSONDecodeError: Expecting value: line 1 column 1 (char 0)"
+        },
+        "A6": {
+          "pass": false,
+          "score": 0,
+          "reason": "A6: JSONDecodeError: Expecting value: line 1 column 1 (char 0)"
+        }
+      },
+      "respuesta_sha256": "677f3466941dbc806fae7c42ca927ffce5fef73b4b2e40f9947eb1cde35d7ca6"
+    },
+    {
+      "caso": "D5",
+      "aprobado": false,
+      "aserciones": {
+        "A1": {
+          "pass": false,
+          "score": 0,
+          "reason": "A1: JSONDecodeError: Expecting value: line 1 column 1 (char 0)"
+        },
+        "A2": {
+          "pass": false,
+          "score": 0,
+          "reason": "A2: JSONDecodeError: Expecting value: line 1 column 1 (char 0)"
+        },
+        "A3": {
+          "pass": false,
+          "score": 0,
+          "reason": "A3: JSONDecodeError: Expecting value: line 1 column 1 (char 0)"
+        },
+        "A4": {
+          "pass": false,
+          "score": 0,
+          "reason": "A4: JSONDecodeError: Expecting value: line 1 column 1 (char 0)"
+        },
+        "A5": {
+          "pass": false,
+          "score": 0,
+          "reason": "A5: JSONDecodeError: Expecting value: line 1 column 1 (char 0)"
+        },
+        "A6": {
+          "pass": false,
+          "score": 0,
+          "reason": "A6: JSONDecodeError: Expecting value: line 1 column 1 (char 0)"
+        }
+      },
+      "respuesta_sha256": "65d6fec16a44e759ae26f14a491fb26701db43d13de03d5c154f6f98e653b90b"
+    },
+    {
+      "caso": "D6",
+      "aprobado": false,
+      "aserciones": {
+        "A1": {
+          "pass": false,
+          "score": 0,
+          "reason": "A1: JSONDecodeError: Expecting value: line 1 column 1 (char 0)"
+        },
+        "A2": {
+          "pass": false,
+          "score": 0,
+          "reason": "A2: JSONDecodeError: Expecting value: line 1 column 1 (char 0)"
+        },
+        "A3": {
+          "pass": false,
+          "score": 0,
+          "reason": "A3: JSONDecodeError: Expecting value: line 1 column 1 (char 0)"
+        },
+        "A4": {
+          "pass": false,
+          "score": 0,
+          "reason": "A4: JSONDecodeError: Expecting value: line 1 column 1 (char 0)"
+        },
+        "A5": {
+          "pass": false,
+          "score": 0,
+          "reason": "A5: JSONDecodeError: Expecting value: line 1 column 1 (char 0)"
+        },
+        "A6": {
+          "pass": false,
+          "score": 0,
+          "reason": "A6: JSONDecodeError: Expecting value: line 1 column 1 (char 0)"
+        }
+      },
+      "respuesta_sha256": "3995aff27e6f0700bc71b4fafdb2b226c372a5acba65ae9f0bfc4d61d8464495"
+    },
+    {
+      "caso": "D7",
+      "aprobado": false,
+      "aserciones": {
+        "A1": {
+          "pass": false,
+          "score": 0,
+          "reason": "A1: JSONDecodeError: Expecting value: line 1 column 1 (char 0)"
+        },
+        "A2": {
+          "pass": false,
+          "score": 0,
+          "reason": "A2: JSONDecodeError: Expecting value: line 1 column 1 (char 0)"
+        },
+        "A3": {
+          "pass": false,
+          "score": 0,
+          "reason": "A3: JSONDecodeError: Expecting value: line 1 column 1 (char 0)"
+        },
+        "A4": {
+          "pass": false,
+          "score": 0,
+          "reason": "A4: JSONDecodeError: Expecting value: line 1 column 1 (char 0)"
+        },
+        "A5": {
+          "pass": false,
+          "score": 0,
+          "reason": "A5: JSONDecodeError: Expecting value: line 1 column 1 (char 0)"
+        },
+        "A6": {
+          "pass": false,
+          "score": 0,
+          "reason": "A6: JSONDecodeError: Expecting value: line 1 column 1 (char 0)"
+        }
+      },
+      "respuesta_sha256": "e56a3a7e30313422c8447405de39c79e76f096623649d57c10d7d1ab77550846"
+    },
+    {
+      "caso": "D8",
+      "aprobado": false,
+      "aserciones": {
+        "A1": {
+          "pass": false,
+          "score": 0,
+          "reason": "A1: JSONDecodeError: Expecting value: line 1 column 1 (char 0)"
+        },
+        "A2": {
+          "pass": false,
+          "score": 0,
+          "reason": "A2: JSONDecodeError: Expecting value: line 1 column 1 (char 0)"
+        },
+        "A3": {
+          "pass": false,
+          "score": 0,
+          "reason": "A3: JSONDecodeError: Expecting value: line 1 column 1 (char 0)"
+        },
+        "A4": {
+          "pass": false,
+          "score": 0,
+          "reason": "A4: JSONDecodeError: Expecting value: line 1 column 1 (char 0)"
+        },
+        "A5": {
+          "pass": false,
+          "score": 0,
+          "reason": "A5: JSONDecodeError: Expecting value: line 1 column 1 (char 0)"
+        },
+        "A6": {
+          "pass": false,
+          "score": 0,
+          "reason": "A6: JSONDecodeError: Expecting value: line 1 column 1 (char 0)"
+        }
+      },
+      "respuesta_sha256": "ce6afdcf75e1e80f2dc1f3188fd47973052ee1beefe55ef05100e84d79ffe9a6"
+    }
+  ],
+  "origen": "Evaluación local de capturas; comparte las seis aserciones con promptfoo",
+  "evaluador_sha256": "49834d374cb6e8a2e62ea08ab3b9be94695a077355fdabdd1dc4dc41aa556325",
+  "dataset_sha256": "519b95c3df05916010a99623e3267f5a5cf41edf2bc6da760af3b4d08403ce8c",
+  "esquema_sha256": "7dca9693e466185abdb6a3c70193a66154587958255898130155e51160b86a05"
+}

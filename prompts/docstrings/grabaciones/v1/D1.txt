@@ -1,0 +1,30 @@
+### Documentación
+
+La función `calcular` recibe un volumen en litros y devuelve el resultado de multiplicarlo por 2.
+
+- **Parámetro:** `volumen_litros`, valor numérico que representa el volumen en litros.
+- **Retorno:** valor numérico equivalente al doble del volumen recibido.
+- **Validación:** no verifica el tipo de dato ni rechaza valores negativos.
+- **Ejemplo:** para `volumen_litros = 10`, devuelve `20`.
+
+El código no especifica qué representa el factor `2` ni la unidad del resultado.
+
+### Función con docstring
+
+```python
+def calcular(self, volumen_litros):
+    """Calcula el doble del volumen recibido.
+
+    Args:
+        volumen_litros (int | float): Volumen expresado en litros.
+
+    Returns:
+        int | float: Resultado de multiplicar el volumen por 2.
+
+    Note:
+        No valida el tipo de dato ni restringe valores negativos.
+        El significado del factor 2 y la unidad del resultado
+        no están definidos en esta función.
+    """
+    return volumen_litros * 2
+```

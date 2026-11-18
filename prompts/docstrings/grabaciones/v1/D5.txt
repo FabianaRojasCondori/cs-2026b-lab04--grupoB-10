@@ -1,0 +1,31 @@
+**Documentación de `es_valido`**
+
+Comprueba si la solicitud tiene un tipo de material no vacío después de eliminar los espacios en blanco de sus extremos y un volumen estimado mayor que cero.
+
+- **Parámetros:** no recibe argumentos adicionales a `self`.
+- **Retorno:** `bool`. Devuelve `True` si ambas condiciones se cumplen; en caso contrario, `False`.
+- **Precondiciones:** `self.tipo_material` debe ser una cadena y `self.volumen_estimado_litros` un valor numérico.
+- **Efectos secundarios:** no modifica los atributos del objeto.
+- **Alcance:** no verifica que el material pertenezca al catálogo de materiales admitidos.
+
+**Función con docstring:**
+
+```python
+def es_valido(self):
+    """Comprueba si el material y el volumen estimado son válidos.
+
+    El tipo de material debe contener al menos un carácter distinto
+    de espacios en blanco y el volumen estimado debe ser mayor que cero.
+
+    Returns:
+        bool: True si el material no está vacío tras aplicar strip()
+        y el volumen estimado es positivo; False en caso contrario.
+
+    Notes:
+        Requiere que tipo_material sea una cadena y
+        volumen_estimado_litros sea un valor numérico.
+        No modifica los atributos ni comprueba si el material está
+        incluido en el catálogo de materiales admitidos.
+    """
+    return bool(self.tipo_material.strip()) and self.volumen_estimado_litros > 0
+```

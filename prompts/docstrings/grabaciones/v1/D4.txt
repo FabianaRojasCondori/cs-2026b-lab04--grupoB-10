@@ -1,0 +1,37 @@
+**Documentación**
+
+El método `registrar_pesaje` registra el peso de una solicitud de EcoRecicla AQP y cambia su estado a `Pesada`.
+
+- **Parámetros:**
+  - `solicitud`: objeto de la solicitud cuyo peso y estado se actualizarán.
+  - `peso_kg`: peso en kilogramos; debe ser mayor que cero.
+- **Retorno:** `None`.
+- **Excepción:** lanza `ValueError` con el mensaje `"El peso debe ser positivo"` si `peso_kg <= 0`.
+- **Efectos:** asigna el peso a `solicitud.peso_kg` y llama a `solicitud._cambiar_estado(Pesada())`. Si el peso no es positivo, no realiza estas modificaciones.
+
+**Función con docstring**
+
+```python
+def registrar_pesaje(self, solicitud, peso_kg):
+    """Registra el peso de una solicitud y cambia su estado a Pesada.
+
+    Args:
+        solicitud: Solicitud que se actualizará. Debe disponer del atributo
+            peso_kg y del método _cambiar_estado.
+        peso_kg: Peso en kilogramos, mayor que cero.
+
+    Returns:
+        None.
+
+    Raises:
+        ValueError: Si el peso es menor o igual que cero.
+
+    Note:
+        Modifica la solicitud recibida: asigna su peso_kg y solicita
+        el cambio de estado a Pesada.
+    """
+    if peso_kg <= 0:
+        raise ValueError("El peso debe ser positivo")
+    solicitud.peso_kg = peso_kg
+    solicitud._cambiar_estado(Pesada())
+```

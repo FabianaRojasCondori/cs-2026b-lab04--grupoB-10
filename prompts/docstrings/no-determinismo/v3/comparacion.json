@@ -1,0 +1,35 @@
+[
+  {
+    "caso": "D1",
+    "textos_distintos": 2,
+    "json_distintos": 2,
+    "json_validos": 3,
+    "aprobados": 3,
+    "campos_con_cambios": [
+      "retorno",
+      "docstring"
+    ]
+  },
+  {
+    "caso": "D4",
+    "textos_distintos": 3,
+    "json_distintos": 3,
+    "json_validos": 3,
+    "aprobados": 3,
+    "campos_con_cambios": [
+      "parametros",
+      "docstring"
+    ]
+  },
+  {
+    "caso": "D8",
+    "textos_distintos": 2,
+    "json_distintos": 2,
+    "json_validos": 3,
+    "aprobados": 3,
+    "campos_con_cambios": [
+      "retorno",
+      "docstring"
+    ]
+  }
+]

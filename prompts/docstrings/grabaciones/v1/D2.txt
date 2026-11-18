@@ -1,0 +1,35 @@
+**Documentación**
+
+El método `crear` obtiene el creador registrado para el material indicado y lo invoca sin argumentos. Devuelve el objeto generado.
+
+- **Parámetro:** `material`, clave utilizada para buscar en `self._creadores`.
+- **Retorno:** objeto devuelto por el creador seleccionado.
+- **Excepción:** `ValueError` con el mensaje `"Material no soportado"` si la clave no está registrada.
+- **Consideraciones:** la clave debe ser hashable y el creador debe poder invocarse sin argumentos. Los errores producidos al ejecutar el creador se propagan.
+
+**Función con docstring (estilo Google)**
+
+```python
+def crear(self, material):
+    """Crea un objeto mediante el creador registrado para un material.
+
+    Args:
+        material: Clave hashable que identifica el material en
+            self._creadores.
+
+    Returns:
+        Objeto devuelto al invocar el creador seleccionado sin argumentos.
+
+    Raises:
+        ValueError: Si el material no está registrado, con el mensaje
+            "Material no soportado".
+
+    Note:
+        Los errores producidos por el creador se propagan al llamador.
+    """
+    try:
+        creador = self._creadores[material]
+    except KeyError:
+        raise ValueError("Material no soportado") from None
+    return creador()
+```

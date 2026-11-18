@@ -1,0 +1,26 @@
+**Documentación**
+
+Inicializa el objeto con una regla base de cálculo de puntos y un multiplicador. Guarda ambos valores en los atributos internos `_regla_base` y `_multiplicador`.
+
+- **`regla_base` (`ReglaPuntos`):** regla base de cálculo de puntos.
+- **`multiplicador` (`int`, opcional):** factor que se almacena para multiplicar los puntos. Su valor predeterminado es `2`.
+- **Retorno:** `None`.
+- **Observaciones:** el constructor no calcula puntos ni valida los valores recibidos. Las anotaciones de tipo no imponen validación en tiempo de ejecución.
+
+**Código con docstring**
+
+```python
+def __init__(self, regla_base: ReglaPuntos, multiplicador: int = 2):
+    """Inicializa el objeto con una regla base y un multiplicador.
+
+    Args:
+        regla_base (ReglaPuntos): Regla base de cálculo de puntos.
+        multiplicador (int, optional): Factor para multiplicar los puntos.
+            Por defecto, 2.
+
+    Note:
+        Almacena los argumentos sin validarlos ni calcular puntos.
+    """
+    self._regla_base = regla_base
+    self._multiplicador = multiplicador
+```

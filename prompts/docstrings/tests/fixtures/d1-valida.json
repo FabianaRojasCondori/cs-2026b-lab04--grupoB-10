@@ -1,0 +1,8 @@
+{
+  "funcion": "calcular",
+  "resumen": "Calcula el doble del volumen recibido.",
+  "parametros": [{"nombre": "volumen_litros", "tipo": "no especificado", "descripcion": "Volumen que se multiplicará por dos.", "obligatorio": true, "valor_por_defecto": null}],
+  "retorno": {"tipo": "no especificado", "descripcion": "El resultado de multiplicar el volumen por dos."},
+  "excepciones": [],
+  "docstring": "Calcula el doble del volumen recibido.\n\nArgs:\n    volumen_litros (no especificado): Volumen que se multiplica por dos.\n\nReturns:\n    no especificado: El doble del volumen."
+}

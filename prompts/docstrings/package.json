@@ -1,0 +1,16 @@
+{
+  "name": "lab09-docstrings-ecorecicla",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Tarea B de Andres: evaluaciones reproducibles de docstrings",
+  "scripts": {
+    "version": "node --require ./sin-red.cjs ./node_modules/promptfoo/dist/src/main.js --version",
+    "eval": "node --require ./sin-red.cjs ./node_modules/promptfoo/dist/src/main.js eval --no-cache -c promptfooconfig.yaml -o resultados/promptfoo.json -o resultados/promptfoo.html",
+    "eval:v1": "node --require ./sin-red.cjs ./node_modules/promptfoo/dist/src/main.js eval --no-cache -c eval-v1.yaml -o resultados/promptfoo-v1.json -o resultados/promptfoo-v1.html",
+    "eval:v2": "node --require ./sin-red.cjs ./node_modules/promptfoo/dist/src/main.js eval --no-cache -c eval-v2.yaml -o resultados/promptfoo-v2.json -o resultados/promptfoo-v2.html",
+    "eval:v3": "node --require ./sin-red.cjs ./node_modules/promptfoo/dist/src/main.js eval --no-cache -c eval-v3.yaml -o resultados/promptfoo-v3.json -o resultados/promptfoo-v3.html"
+  },
+  "devDependencies": {
+    "promptfoo": "0.118.0"
+  }
+}
