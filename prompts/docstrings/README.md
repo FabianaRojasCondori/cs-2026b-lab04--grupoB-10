@@ -5,15 +5,23 @@ Responsable propuesto: Andrés, persona 2. Base inspeccionada: `main` en
 
 ## Estado y alcance
 
-Se entrega infraestructura ejecutable, contrato, ocho casos, seis aserciones y tres
-plantillas **propuestas**. Las tasas, 24 grabaciones de evaluación y nueve respuestas
-para no determinismo están pendientes de obtener mediante ejecuciones reales.
-`tests/fixtures/` contiene datos sintéticos para probar el evaluador: no son evidencia
-de rendimiento de un LLM y no se usan en `promptfooconfig.yaml`.
+Se completaron las 24 capturas de evaluación y las nueve generaciones
+adicionales para analizar no determinismo.
 
-La persona 2 realiza E4, el análisis de no determinismo de E7, su aporte a la bitácora
-y un PR. La persona 3 revisa este PR; Andrés revisa el PR de la persona 1. La división
-no asigna nombres a las personas 1 y 3: confirmarlos dentro del equipo.
+Resultados con el evaluador corregido:
+- v1: 0/8 (0 %).
+- v2: 4/8 (50 %).
+- v3: 8/8 (100 %), versión seleccionada.
+- No determinismo de v3: 9/9 respuestas aprobadas.
+
+La evaluación conjunta de promptfoo terminó con 12 éxitos, 12 fallos
+y cero errores. Los fallos corresponden a las versiones anteriores.
+
+Reportes: resultados/promptfoo.html, resultados/promptfoo.json y
+resultados/resumen.md. Análisis adicional: no-determinismo/v3/analisis.md.
+
+Los archivos de tests/fixtures siguen siendo ejemplos sintéticos para
+probar el evaluador, separados de las capturas del experimento.
 
 ## Dataset y procedencia
 

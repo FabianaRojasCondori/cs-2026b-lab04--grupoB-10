@@ -137,7 +137,7 @@
           return {"solicitud_id": solicitud_id, "paradas": paradas,
                   "prioridad": prioridad, "opciones": opciones}
     origen: Caso didáctico creado para el dataset; no pertenece a src/
-    commit_origen: null
+    commit_origen: "no_aplica_caso_didactico"
     tipo_caso: borde_firma_avanzada
     es_metodo: false
     esperado: Documenta solicitud_id, paradas, prioridad y opciones. Solo solicitud_id

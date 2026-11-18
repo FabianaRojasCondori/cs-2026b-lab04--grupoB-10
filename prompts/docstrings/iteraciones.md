@@ -114,8 +114,10 @@ Evidencia:
 - [Comparación de versiones](resultados/resumen.md)
 - [Gráfico de tasas](resultados/tasas.svg)
 
-El análisis de no determinismo se realizará con nueve generaciones
-nuevas de v3 sobre D1, D4 y D8.
+Se completó el análisis de no determinismo con nueve generaciones nuevas:
+tres por cada caso D1, D4 y D8. Aprobaron 9/9 respuestas y se observaron
+variaciones textuales en los tres casos. La evidencia está en
+no-determinismo/v3/analisis.md.
 
 ### Revisión del evaluador
 

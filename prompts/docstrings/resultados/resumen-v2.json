@@ -303,6 +303,6 @@
   ],
   "origen": "Evaluación local de capturas; comparte las seis aserciones con promptfoo",
   "evaluador_sha256": "49834d374cb6e8a2e62ea08ab3b9be94695a077355fdabdd1dc4dc41aa556325",
-  "dataset_sha256": "0d02b752baf4f7de9ab5c9e3d5bae7af0fca2a773e00da1d459441cfde313806",
+  "dataset_sha256": "519b95c3df05916010a99623e3267f5a5cf41edf2bc6da760af3b4d08403ce8c",
   "esquema_sha256": "7dca9693e466185abdb6a3c70193a66154587958255898130155e51160b86a05"
 }

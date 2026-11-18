@@ -1,22 +1,31 @@
-# Aporte de Andrés a la bitácora de IA
+# Aporte de Andrés a la bitácora de IA — Lab 09
 
-Integrar estos registros en `prompts/bitacora-ia.md` cuando estén completos.
-La división pide al menos dos interacciones reales por integrante; el grupo debe
-superar cinco y documentar al menos una sugerencia rechazada con evidencia.
+Responsable: Andrés, persona 2.
+Asistente utilizado: ChatGPT; modelo específico no mostrado.
 
-| N.º | Fecha | Interacción real | Propuesta / hallazgo | Decisión humana y evidencia |
-|---|---|---|---|---|
-| 1 | 2026-11-15 (Perú) | Solicitud a ChatGPT de revisar la guía, reparto y repositorio y preparar el patch de persona 2 | Contrato, dataset basado en funciones, aserciones, prompts candidatos y captura reproducible | PENDIENTE: Andrés revisa el diff y registra qué acepta o corrige |
-| 2 | PENDIENTE | PENDIENTE: revisión de resultados reales de v1 | PENDIENTE | PENDIENTE |
-| 3 | PENDIENTE | PENDIENTE: revisión de la iteración / evaluador | PENDIENTE | PENDIENTE |
+| N.º | Interacción | Hallazgo o propuesta | Decisión y evidencia |
+|---|---|---|---|
+| 1 | Solicité preparar la Tarea B a partir de la guía y el repositorio. | Se propusieron contrato, ocho casos, seis aserciones, prompts v1-v3 y herramientas de captura. | Se incorporó la estructura mediante el patch y se conservaron las respuestas reales por versión. |
+| 2 | Compartí la evaluación de v1 y su respuesta D1. | V1 produjo texto y Markdown en lugar del JSON requerido; obtuvo 0/8. | Se incorporó en v2 un formato JSON explícito. Evidencia: resultados/evaluacion-v1.md y grabaciones/v1/D1.txt. |
+| 3 | Compartí los fallos de v2 y las respuestas D4 y D7. | A3 rechazaba un párrafo explicativo posterior a Raises y los nombres *paradas y **opciones. | Se rechazó mantener esa validación original por sus falsos positivos. Se corrigió el evaluador, se añadieron dos pruebas y se reevaluaron las mismas capturas. Evidencia: tests/test_correccion_a3.py. |
+| 4 | Revisé con el asistente los incumplimientos restantes de v2. | Faltaban instrucciones explícitas sobre anotaciones y representación textual de valores predeterminados. | Se precisó v3 antes de capturarla. V2 obtuvo 4/8 con A3 corregida y v3 obtuvo 8/8. Evidencia: resultados/resumen.md. |
+| 5 | Compartí los errores de instalación y ejecución de promptfoo en Windows. | Hubo incompatibilidad entre Node 24 y el módulo nativo instalado, y un problema al localizar Python mediante una ruta con espacios. | Se utilizó Node 22 portátil y PROMPTFOO_PYTHON=python. La evaluación conjunta terminó con 12 éxitos, 12 fallos y cero errores. Evidencia: resultados/promptfoo.json. |
 
-Prompts de revisión sugeridos, para usar DESPUÉS de tener los resultados:
+## No determinismo
 
-1. «Estos son mi v1, mi esquema y el reporte de los ocho casos. Identifica dos fallos
-   concretos y propón cambios mínimos de v2; enlaza cada cambio con su caso y aserción».
-2. «Revisa este evaluador y estas respuestas. Señala una posible mejora de la aserción
-   de parámetros y un contraejemplo que podría dar un falso positivo».
+Se obtuvieron nueve respuestas nuevas de v3: tres por cada caso D1, D4 y D8.
+Los tres casos presentaron variaciones textuales y aprobaron las nueve respuestas.
+La comparación detectó cambios en retorno/docstring para D1 y D8, y en
+parametros/docstring para D4. Estos cambios de campos no demuestran por sí solos
+un cambio de significado.
 
-Registrar las respuestas y decisiones que realmente ocurran. No escribir que se
-rechazó una sugerencia antes de recibirla y examinarla. Una discrepancia con un test
-puede sustentar un rechazo, pero la decisión corresponde al integrante.
+Evidencia: no-determinismo/v3/analisis.md.
+
+## Alcance
+
+Las grabaciones se conservaron sin corregir sus respuestas.
+Las tasas describen el dataset y las aserciones utilizados; no garantizan
+corrección universal. La revisión del significado y del idioma es humana.
+
+Este aporte debe consolidarse con los de las otras personas en la bitácora
+general del Lab 09.
