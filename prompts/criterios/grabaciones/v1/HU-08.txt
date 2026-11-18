@@ -1,0 +1,8 @@
+HU-08 - Solicitar recojo de materiales reciclables
+
+Criterios de aceptacion
+
+1. Dado que el vecino completa la direccion, el tipo de material y un volumen estimado mayor que cero, cuando envia la solicitud, entonces el sistema la registra y confirma su recepcion con un identificador.
+2. Dado que falta un dato obligatorio o el volumen no es valido, cuando el vecino intenta enviar la solicitud, entonces el sistema no la registra e indica que dato debe corregirse.
+3. Dada una solicitud valida, cuando queda registrada, entonces se incorpora al proceso de programacion de recoleccion y el vecino recibe confirmacion de que fue recibida.
+

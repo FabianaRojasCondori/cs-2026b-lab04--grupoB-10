@@ -1,0 +1,9 @@
+HU-06 - Validar y habilitar una asociacion de recicladores
+
+Criterios de aceptacion
+
+1. Dada una asociacion pendiente de validacion, cuando el administrador municipal revisa su identidad, su registro en el padron y su estado de formalizacion, entonces el sistema presenta el resultado de cada verificacion.
+2. Dado que la identidad y los datos del padron coinciden y la asociacion figura como formalizada, cuando el administrador confirma la validacion, entonces el sistema permite habilitarla para participar.
+3. Dado que falta una verificacion, hay datos que no coinciden o la asociacion no esta formalizada, cuando se intenta habilitarla, entonces el sistema impide la habilitacion e indica el motivo.
+4. Dado que la asociacion ya fue habilitada, cuando se consulta su registro, entonces se muestra su estado habilitado y queda constancia de la validacion realizada.
+

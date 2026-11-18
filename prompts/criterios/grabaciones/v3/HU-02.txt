@@ -1,0 +1,51 @@
+{
+  "historia_id": "HU-02",
+  "invest_ok": true,
+  "preguntas": [],
+  "escenarios": [
+    {
+      "titulo": "Consultar una solicitud pendiente",
+      "tipo": "exito",
+      "dado": [
+        "un vecino con una solicitud de recojo en estado pendiente"
+      ],
+      "cuando": "consulta el estado de esa solicitud",
+      "entonces": [
+        "ve que su solicitud esta pendiente"
+      ]
+    },
+    {
+      "titulo": "Consultar una solicitud asignada",
+      "tipo": "exito",
+      "dado": [
+        "un vecino con una solicitud de recojo en estado asignada"
+      ],
+      "cuando": "consulta el estado de esa solicitud",
+      "entonces": [
+        "ve que su solicitud esta asignada"
+      ]
+    },
+    {
+      "titulo": "Consultar una solicitud recogida",
+      "tipo": "exito",
+      "dado": [
+        "un vecino con una solicitud de recojo en estado recogida"
+      ],
+      "cuando": "consulta el estado de esa solicitud",
+      "entonces": [
+        "ve que su solicitud fue recogida"
+      ]
+    },
+    {
+      "titulo": "Consultar una solicitud con puntos acreditados",
+      "tipo": "borde",
+      "dado": [
+        "un vecino con una solicitud de recojo en estado con puntos acreditados"
+      ],
+      "cuando": "consulta el estado de esa solicitud",
+      "entonces": [
+        "ve que su solicitud tiene puntos acreditados"
+      ]
+    }
+  ]
+}

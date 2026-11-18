@@ -1,0 +1,40 @@
+{
+  "historia_id": "HU-01",
+  "invest_ok": true,
+  "preguntas": [],
+  "escenarios": [
+    {
+      "titulo": "Registrar solicitud con los datos requeridos",
+      "tipo": "exito",
+      "dado": [
+        "que el vecino indica una direccion, un tipo de material y un volumen estimado"
+      ],
+      "cuando": "solicita el recojo de sus materiales reciclables",
+      "entonces": [
+        "la solicitud queda registrada para programar su recoleccion"
+      ]
+    },
+    {
+      "titulo": "Consultar el estado de una solicitud registrada",
+      "tipo": "exito",
+      "dado": [
+        "que el vecino tiene una solicitud de recojo registrada"
+      ],
+      "cuando": "consulta esa solicitud",
+      "entonces": [
+        "se muestra el estado actual de la solicitud"
+      ]
+    },
+    {
+      "titulo": "Intentar registrar una solicitud incompleta",
+      "tipo": "error",
+      "dado": [
+        "que el vecino no indica la direccion, el tipo de material o el volumen estimado"
+      ],
+      "cuando": "intenta solicitar el recojo",
+      "entonces": [
+        "la solicitud no queda registrada como completa"
+      ]
+    }
+  ]
+}

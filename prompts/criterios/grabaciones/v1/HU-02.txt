@@ -1,0 +1,9 @@
+HU-02 - Consultar el estado de una solicitud de recojo
+
+Criterios de aceptacion
+
+1. Dado que el vecino tiene una solicitud registrada, cuando consulta esa solicitud, entonces ve su estado mas reciente: pendiente, asignada, recogida, pesada o puntos acreditados.
+2. Dado que la solicitud cambia de estado, cuando el vecino vuelve a consultarla, entonces ve el nuevo estado y la fecha de su ultima actualizacion.
+3. Dado que el vecino intenta consultar una solicitud inexistente o que no le corresponde, cuando realiza la consulta, entonces el sistema no revela sus datos y muestra un mensaje claro.
+4. Dado que el vecino ingresa un identificador invalido, cuando solicita la consulta, entonces el sistema informa que no pudo encontrar la solicitud y permite corregir el identificador.
+

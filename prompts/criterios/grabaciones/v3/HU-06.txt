@@ -1,0 +1,30 @@
+{
+  "historia_id": "HU-06",
+  "invest_ok": true,
+  "preguntas": [],
+  "escenarios": [
+    {
+      "titulo": "Habilitar una asociacion formalizada que supera las validaciones",
+      "tipo": "exito",
+      "dado": [
+        "el administrador municipal valida la identidad y el padron de la Asociacion de Recicladores del Sur",
+        "el estado de formalizacion de la asociacion es formalizado"
+      ],
+      "cuando": "el administrador municipal la habilita",
+      "entonces": [
+        "la asociacion queda habilitada para participar"
+      ]
+    },
+    {
+      "titulo": "No habilitar una asociacion que no supera la validacion",
+      "tipo": "error",
+      "dado": [
+        "la identidad, el padron o el estado de formalizacion de la asociacion no supera la validacion"
+      ],
+      "cuando": "el administrador municipal intenta habilitarla",
+      "entonces": [
+        "la asociacion no queda habilitada para participar"
+      ]
+    }
+  ]
+}

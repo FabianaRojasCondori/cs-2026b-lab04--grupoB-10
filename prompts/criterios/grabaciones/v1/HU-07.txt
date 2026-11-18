@@ -1,0 +1,11 @@
+HU-07 - Mejorar rapidez y facilidad de uso
+
+La historia no identifica que tarea debe ser rapida ni que usuarios o condiciones se usaran para medir la facilidad. Los siguientes criterios son una propuesta inicial y deben validarse con el responsable del producto antes de considerarse definitivos.
+
+Criterios de aceptacion propuestos
+
+1. Dada la tarea principal que se acuerde para el sistema, cuando una persona representativa del usuario la realiza por primera vez, entonces puede completarla sin ayuda siguiendo las indicaciones de la interfaz.
+2. Dada esa tarea principal y un entorno de prueba acordado, cuando se mide el tiempo de respuesta de cada accion, entonces las operaciones habituales responden en un maximo de 2 segundos.
+3. Dado que ocurre un error durante la tarea, cuando el sistema lo presenta, entonces el mensaje explica el problema y como continuar, sin borrar los datos ya ingresados.
+4. Dado que el equipo acuerda una tarea y un protocolo de prueba de usabilidad, cuando se evalua con usuarios representativos, entonces se registran la tasa de exito y el tiempo de realizacion para compararlos con umbrales acordados antes de la prueba.
+

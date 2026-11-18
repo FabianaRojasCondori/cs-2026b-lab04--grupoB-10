@@ -1,0 +1,31 @@
+{
+  "historia_id": "HU-05",
+  "invest_ok": true,
+  "preguntas": [],
+  "escenarios": [
+    {
+      "titulo": "Consultar toneladas recicladas por sector en octubre",
+      "tipo": "exito",
+      "dado": [
+        "un reporte de octubre de 2026 con 12.5 toneladas recicladas en el sector Centro",
+        "el mismo reporte registra 8 toneladas recicladas en el sector Norte"
+      ],
+      "cuando": "el administrador municipal consulta el reporte mensual",
+      "entonces": [
+        "ve 12.5 toneladas para el sector Centro",
+        "ve 8 toneladas para el sector Norte"
+      ]
+    },
+    {
+      "titulo": "Consultar el reporte mensual sin toneladas registradas",
+      "tipo": "borde",
+      "dado": [
+        "ninguna tonelada reciclada registrada para octubre de 2026"
+      ],
+      "cuando": "el administrador municipal consulta el reporte mensual por sector de octubre de 2026",
+      "entonces": [
+        "el reporte indica que no hay toneladas recicladas registradas para ese mes"
+      ]
+    }
+  ]
+}

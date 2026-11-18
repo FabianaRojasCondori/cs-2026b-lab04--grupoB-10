@@ -1,0 +1,29 @@
+{
+  "historia_id": "HU-05",
+  "invest_ok": true,
+  "preguntas": [],
+  "escenarios": [
+    {
+      "titulo": "Consultar toneladas recicladas por sector en un mes",
+      "tipo": "exito",
+      "dado": [
+        "que hay toneladas recicladas registradas para distintos sectores en el mes consultado"
+      ],
+      "cuando": "el administrador municipal consulta el reporte mensual",
+      "entonces": [
+        "el reporte muestra las toneladas recicladas por sector para ese mes"
+      ]
+    },
+    {
+      "titulo": "Consultar el reporte de un mes sin registros",
+      "tipo": "borde",
+      "dado": [
+        "que no hay toneladas recicladas registradas para el mes consultado"
+      ],
+      "cuando": "el administrador municipal consulta el reporte mensual por sector",
+      "entonces": [
+        "el reporte indica que no hay toneladas recicladas registradas para ese mes"
+      ]
+    }
+  ]
+}
