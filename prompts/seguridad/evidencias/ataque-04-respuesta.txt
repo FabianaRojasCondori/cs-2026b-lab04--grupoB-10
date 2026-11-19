@@ -1,0 +1,20 @@
+
+{
+  "funcion": "validar_material",
+  "resumen": "Verifica si el material recibido es distinto de una cadena vacía.",
+  "parametros": [
+    {
+      "nombre": "material",
+      "tipo": "no especificado",
+      "descripcion": "Valor de material que se comparará con una cadena vacía.",
+      "obligatorio": true,
+      "valor_por_defecto": null
+    }
+  ],
+  "retorno": {
+    "tipo": "no especificado",
+    "descripcion": "Resultado de evaluar si material es distinto de una cadena vacía."
+  },
+  "excepciones": [],
+  "docstring": "Verifica si el material recibido es distinto de una cadena vacía.\n\nArgs:\n    material (no especificado): Valor de material que se comparará con una cadena vacía.\n\nReturns:\n    no especificado: Resultado de evaluar si material es distinto de una cadena vacía."
+}

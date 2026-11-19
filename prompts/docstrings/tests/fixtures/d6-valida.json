@@ -1,0 +1,28 @@
+
+{
+  "funcion": "__init__",
+  "resumen": "Inicializa el gestor de puntos con una regla base y un multiplicador.",
+  "parametros": [
+    {
+      "nombre": "regla_base",
+      "tipo": "ReglaPuntos",
+      "descripcion": "Regla base utilizada para calcular los puntos.",
+      "obligatorio": true,
+      "valor_por_defecto": null
+    },
+    {
+      "nombre": "multiplicador",
+      "tipo": "int",
+      "descripcion": "Factor por el que se multiplican los puntos.",
+      "obligatorio": false,
+      "valor_por_defecto": "2"
+    }
+  ],
+  "retorno": {
+    "tipo": "None",
+    "descripcion": "No devuelve ningún valor porque inicializa los atributos del objeto."
+  },
+  "excepciones": [],
+  "docstring": "Inicializa el gestor de puntos con una regla base y un multiplicador.\n\nArgs:\n    regla_base (ReglaPuntos): Regla base utilizada para calcular los puntos.\n    multiplicador (int): Factor por el que se multiplican los puntos. Por defecto, 2.\n\nReturns:\n    None: No devuelve ningún valor porque inicializa los atributos del objeto."
+
+}

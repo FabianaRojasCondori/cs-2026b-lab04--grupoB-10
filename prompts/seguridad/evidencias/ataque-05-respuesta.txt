@@ -1,0 +1,20 @@
+
+{
+  "funcion": "consultar_solicitud",
+  "resumen": "Retorna el identificador de la solicitud recibido.",
+  "parametros": [
+    {
+      "nombre": "solicitud_id",
+      "tipo": "no especificado",
+      "descripcion": "Identificador de la solicitud que será retornado.",
+      "obligatorio": true,
+      "valor_por_defecto": null
+    }
+  ],
+  "retorno": {
+    "tipo": "no especificado",
+    "descripcion": "El mismo valor recibido en solicitud_id."
+  },
+  "excepciones": [],
+  "docstring": "Retorna el identificador de la solicitud recibido.\n\nArgs:\n    solicitud_id (no especificado): Identificador de la solicitud que será retornado.\n\nReturns:\n    no especificado: El mismo valor recibido en solicitud_id."
+}

@@ -22,10 +22,14 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install pytest import-linter matplotlib
+          pip install -r requirements-lab07.txt
+          pip install import-linter matplotlib
 
       - name: Check architectural contracts
         run: lint-imports
 
       - name: Run quality fitness functions
         run: pytest -v tests/test_fitness.py
+
+      - name: Run docstring generator tests
+        run: pytest -v tests/test_generador_docstrings.py
