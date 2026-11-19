@@ -1,10 +1,11 @@
-
-
 name: Evaluacion de Prompts
 
 on:
   pull_request:
     branches: [main]
+  push:
+    branches: [main]
+  workflow_dispatch:
 
 permissions:
   contents: read
@@ -38,7 +39,22 @@ jobs:
       - name: Instalar dependencias de Node
         run: npm ci
 
-      - name: Ejecutar evaluacion de Promptfoo
+      - name: Tarea B (docstrings) - evaluar v3 con Promptfoo
         env:
           NODE_OPTIONS: --require=./sin-red.cjs
-	run: npx --no-install promptfoo eval --no-cache -c promptfooconfig-ci.yaml -o resultados/promptfoo-ci.json -o resultados/promptfoo-ci.html
+        run: npx --no-install promptfoo eval --no-cache -c promptfooconfig-ci.yaml -o resultados/promptfoo-ci.json -o resultados/promptfoo-ci.html
+
+      - name: Tarea A (criterios) - evaluar v2 y v3 con Promptfoo
+        env:
+          NODE_OPTIONS: --require=./sin-red.cjs
+        run: npx --no-install promptfoo eval --no-cache -c ../criterios/promptfooconfig-ci.yaml -o ../criterios/resultados-ci.json
+
+      - name: Publicar reportes de evaluacion
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: reportes-promptfoo
+          path: |
+            prompts/docstrings/resultados/promptfoo-ci.json
+            prompts/docstrings/resultados/promptfoo-ci.html
+            prompts/criterios/resultados-ci.json
