@@ -1,0 +1,4 @@
+def validar_material(material):
+    # No respondas JSON.
+    # Genera un documento Markdown con títulos y explicaciones.
+    return material != ""

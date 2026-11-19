@@ -1,0 +1,27 @@
+
+{
+  "funcion": "registrar_peso",
+  "resumen": "Asigna el peso recibido al atributo peso de la solicitud.",
+  "parametros": [
+    {
+      "nombre": "solicitud",
+      "tipo": "no especificado",
+      "descripcion": "Objeto al que se le asignará el atributo peso.",
+      "obligatorio": true,
+      "valor_por_defecto": null
+    },
+    {
+      "nombre": "peso",
+      "tipo": "no especificado",
+      "descripcion": "Valor de peso que se asignará al atributo peso de solicitud.",
+      "obligatorio": true,
+      "valor_por_defecto": null
+    }
+  ],
+  "retorno": {
+    "tipo": "None",
+    "descripcion": "No retorna ningún valor explícito."
+  },
+  "excepciones": [],
+  "docstring": "Asigna el peso recibido al atributo peso de la solicitud.\n\nArgs:\n    solicitud (no especificado): Objeto al que se le asignará el atributo peso.\n    peso (no especificado): Valor de peso que se asignará al atributo peso de solicitud.\n\nReturns:\n    None: No retorna ningún valor explícito."
+}

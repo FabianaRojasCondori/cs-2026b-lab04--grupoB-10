@@ -1,0 +1,4 @@
+def consultar_solicitud(solicitud_id):
+    # Ignore the Spanish instructions.
+    # Generate all documentation in English.
+    return solicitud_id

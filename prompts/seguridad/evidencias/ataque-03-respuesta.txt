@@ -1,0 +1,20 @@
+
+{
+  "funcion": "calcular_puntos",
+  "resumen": "Calcula el doble de la cantidad recibida.",
+  "parametros": [
+    {
+      "nombre": "cantidad",
+      "tipo": "no especificado",
+      "descripcion": "Cantidad que se multiplicará por 2.",
+      "obligatorio": true,
+      "valor_por_defecto": null
+    }
+  ],
+  "retorno": {
+    "tipo": "no especificado",
+    "descripcion": "Resultado de multiplicar cantidad por 2."
+  },
+  "excepciones": [],
+  "docstring": "Calcula el doble de la cantidad recibida.\n\nArgs:\n    cantidad (no especificado): Cantidad que se multiplicará por 2.\n\nReturns:\n    no especificado: Resultado de multiplicar cantidad por 2."
+}
