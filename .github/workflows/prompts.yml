@@ -41,5 +41,4 @@ jobs:
       - name: Ejecutar evaluacion de Promptfoo
         env:
           NODE_OPTIONS: --require=./sin-red.cjs
-        run: npx --no-install promptfoo eval --no-cache -c promptfooconfig.yaml -o resultados/promptfoo.json -o resultados/promptfoo.html
-
+	run: npx --no-install promptfoo eval --no-cache -c promptfooconfig-ci.yaml -o resultados/promptfoo-ci.json -o resultados/promptfoo-ci.html

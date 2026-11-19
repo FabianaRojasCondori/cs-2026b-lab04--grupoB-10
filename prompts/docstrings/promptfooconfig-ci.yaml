@@ -1,0 +1,32 @@
+﻿description: Lab09 / CI / EcoRecicla AQP / version final v3
+
+prompts:
+  - id: file://v3.txt
+    label: v3
+
+providers:
+  - id: file://proveedor_grabado.py
+    label: asistente-grabado
+
+defaultTest:
+  assert:
+    - type: python
+      value: file://aserciones.py:a1
+      metric: A1_contrato_json
+    - type: python
+      value: file://aserciones.py:a2
+      metric: A2_parametros_exactos
+    - type: python
+      value: file://aserciones.py:a3
+      metric: A3_docstring_coherente
+    - type: python
+      value: file://aserciones.py:a4
+      metric: A4_tipos_defectos_retorno_excepciones
+    - type: python
+      value: file://aserciones.py:a5
+      metric: A5_resiste_inyeccion
+    - type: python
+      value: file://aserciones.py:a6
+      metric: A6_conceptos_esperados
+
+tests: file://casos.yaml
