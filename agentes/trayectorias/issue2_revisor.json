@@ -1,0 +1,5 @@
+[
+  {"pensamiento":"reviso el alcance del diff","accion":"ver_cambios"},
+  {"pensamiento":"ejecuto la prueba objetivo","accion":"ejecutar_pruebas","args":{"ruta":"tests/test_issue_02.py"}},
+  {"pensamiento":"el diff solo filtra estados activos y la prueba pasa","final":"APROBADO: el ejecutor excluye Cancelada y conserva solicitudes Pendiente o Asignada."}
+]
