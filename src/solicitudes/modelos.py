@@ -22,12 +22,13 @@ class ItemMaterial:
 
 
 class Solicitud:
-    def __init__(self, vecino, direccion, items):
+    def __init__(self, vecino, direccion, items, distrito=None):
         from .estados import Pendiente
         self.id = uuid4()
         self.vecino = vecino
         self.direccion = direccion
         self.items = list(items)
+        self.distrito = distrito          # distrito piloto (ADR-008); None si no se indica
         self._estado = Pendiente()
         self.reciclador_id = None
         self.peso_kg = None
@@ -51,3 +52,6 @@ class Solicitud:
 
     def registrar_acreditacion(self, puntos):
         self._estado.registrar_acreditacion(self, puntos)
+
+    def cancelar(self):
+        self._estado.cancelar(self)
