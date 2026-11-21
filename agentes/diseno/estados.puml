@@ -1,0 +1,61 @@
+@startuml estados-agente-ecorecicla
+skinparam dpi 180
+skinparam shadowing false
+skinparam defaultFontName Arial
+skinparam defaultFontSize 12
+skinparam state {
+  BackgroundColor #EEF2F8
+  BorderColor #1A3A5C
+  ArrowColor #444444
+}
+title Máquina de estados del agente de EcoRecicla AQP (agentes/agente/nucleo.py + politica.py)
+
+[*] --> Decidiendo : objetivo recibido\n(issues/ISSUE-0N.md)
+
+Decidiendo : el modelo propone
+Decidiendo : pensamiento + acción | final
+Decidiendo --> ValidandoContrato : decisión (JSON o texto)
+
+ValidandoContrato : contrato.validar_decision()
+ValidandoContrato --> Decidiendo : [inválida] / CONTRATO_INVALIDO\nobs = "ERROR DE CONTRATO"
+ValidandoContrato --> Finalizado : [es "final"]
+ValidandoContrato --> EvaluandoPolitica : [es "accion"]
+
+state EvaluandoPolitica {
+  [*] --> Verificando
+  Verificando : paso <= max_pasos
+  Verificando : herramienta permitida
+  Verificando : comando en lista blanca
+  Verificando : ruta no protegida (tests/, issues/)
+  Verificando --> EsperandoAprobacion : [editar_archivo y\naprobar_edicion activa]
+  EsperandoAprobacion : humano responde "s" o "n"\n(se valida la entrada)
+  EsperandoAprobacion --> [*] : [s] permitida
+  Verificando --> [*] : [permitida]
+}
+
+EvaluandoPolitica --> LimiteAlcanzado : [paso > max_pasos]
+EvaluandoPolitica --> Decidiendo : [denegada] / BLOQUEADO\nobs = "BLOQUEADO POR LA POLÍTICA"
+EvaluandoPolitica --> Decidiendo : [humano responde n] / BLOQUEADO\n"El revisor humano rechazó la edición"
+EvaluandoPolitica --> Ejecutando : [permitida]
+
+Ejecutando : herramienta real en el sandbox\n(agentes/trabajo/)
+Ejecutando --> Observando : resultado o error\n(el error también es observación)
+
+Observando : se registra en la traza JSONL
+Observando : se agrega al historial
+Observando --> Decidiendo
+
+Finalizado --> [*] : respuesta final\n(el humano revisa el diff)
+LimiteAlcanzado --> [*] : sin respuesta\n(presupuesto agotado)
+
+state Finalizado #EAF4EC
+state LimiteAlcanzado #F4CCC3
+state EsperandoAprobacion #FFF4D6
+
+legend right
+  Estados en la traza: INICIO, OBSERVANDO, CONTRATO_INVALIDO,
+  BLOQUEADO, LIMITE_ALCANZADO, FINALIZADO.
+  Guardia anti-bucle: [paso <= max_pasos] (Politica.max_pasos).
+  EsperandoAprobacion: Politica.aprobar_edicion (E6).
+endlegend
+@enduml
