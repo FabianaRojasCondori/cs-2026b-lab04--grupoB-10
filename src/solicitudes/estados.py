@@ -16,6 +16,9 @@ class EstadoSolicitud:
     def registrar_acreditacion(self, solicitud, puntos):
         raise ValueError("Transición no permitida")
 
+    def cancelar(self, solicitud):
+        raise ValueError("Transición no permitida")
+
 
 class Pendiente(EstadoSolicitud):
     nombre = "Pendiente"
@@ -26,12 +29,18 @@ class Pendiente(EstadoSolicitud):
         solicitud.reciclador_id = reciclador_id
         solicitud._cambiar_estado(Asignada())
 
+    def cancelar(self, solicitud):
+        solicitud._cambiar_estado(Cancelada())
+
 
 class Asignada(EstadoSolicitud):
     nombre = "Asignada"
 
     def registrar_recojo(self, solicitud):
         solicitud._cambiar_estado(Recogida())
+
+    def cancelar(self, solicitud):
+        solicitud._cambiar_estado(Cancelada())
 
 
 class Recogida(EstadoSolicitud):
@@ -56,3 +65,8 @@ class Pesada(EstadoSolicitud):
 
 class PuntosAcreditados(EstadoSolicitud):
     nombre = "PuntosAcreditados"
+
+
+class Cancelada(EstadoSolicitud):
+    """Estado final: el vecino canceló antes del recojo (HU-03, Lab 10)."""
+    nombre = "Cancelada"

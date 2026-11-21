@@ -3,3 +3,6 @@ __pycache__/
 *.py[cod]
 .pytest_cache/
 .env
+
+# Lab 10: sandbox del agente (copia del repo), nunca se versiona
+agentes/trabajo/

@@ -1,0 +1,26 @@
+sequenceDiagram
+    autonumber
+    actor U as Humano
+    participant AU as Agente Unico
+    participant P as Política
+    participant H as Herramientas
+    U->>AU: objetivo (issue)
+    AU->>H: leer_archivo
+    H-->>AU: contenido de ISSUE-01.md
+    AU->>H: ejecutar_pruebas
+    H-->>AU: 1 failed, 1 passed in 0.05s
+    AU->>H: leer_archivo
+    H-->>AU: contenido de cuenta.py
+    AU->>H: leer_archivo
+    H-->>AU: contenido de test_issue_01.py
+    AU->>H: editar_archivo
+    H-->>AU: OK, archivo modificado
+    AU->>H: ejecutar_pruebas
+    H-->>AU: 2 passed in 0.02s
+    AU->>H: ejecutar_pruebas
+    H-->>AU: 27 passed in 0.06s
+    AU->>H: ejecutar_pruebas
+    H-->>AU: 46 passed in 0.07s
+    AU-xP: ver_cambios
+    P--xAU: BLOQUEADO
+    AU-->>U: Corregí src/puntos/cuenta
