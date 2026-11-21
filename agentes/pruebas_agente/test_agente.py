@@ -5,7 +5,7 @@ from agente.contrato import validar_decision
 from agente.politica import Politica
 from agente.herramientas import Herramientas
 
-H = {"leer_archivo", "editar_archivo", "ejecutar_comando"}
+H = {"leer_archivo", "editar_archivo", "ejecutar_comando", "mapa_repo", "anotar", "leer_notas"}
 
 @pytest.mark.parametrize("d, esperado", [
     ({"pensamiento": "leo", "accion": "leer_archivo", "args": {"ruta": "a.py"}}, True),
@@ -30,3 +30,26 @@ def test_politica_respeta_presupuesto_de_pasos():
 def test_sandbox_impide_salir_del_directorio(tmp_path):
     with pytest.raises(PermissionError):
         Herramientas(tmp_path).leer_archivo("../../etc/passwd")
+
+def test_mapa_repo_reporta_firmas_con_ast(tmp_path):
+    (tmp_path / "ejemplo.py").write_text(
+        "class Servicio:\n"
+        "    def calcular(self, valor: int) -> int:\n"
+        "        return valor\n\n"
+        "def principal(nombre):\n"
+        "    return nombre\n",
+        encoding="utf-8",
+    )
+    mapa = Herramientas(tmp_path).mapa_repo()
+    assert "ejemplo.py" in mapa
+    assert "Servicio.calcular" in mapa
+    assert "principal" in mapa
+
+def test_memoria_de_notas_agrega_y_lee(tmp_path):
+    h = Herramientas(tmp_path)
+    assert h.leer_notas() == "(sin notas)"
+    assert h.anotar("Hipótesis: _tarifas debe ser por instancia").startswith("OK:")
+    assert h.anotar("Archivo revisado: src/puntos/distritos.py").startswith("OK:")
+    notas = h.leer_notas()
+    assert "_tarifas debe ser por instancia" in notas
+    assert "src/puntos/distritos.py" in notas

@@ -6,9 +6,12 @@ import sys, pathlib, pytest
 sys.path.insert(0, str(pathlib.Path(__file__).parents[1]))
 from agente.contrato import validar_decision
 from agente.herramientas import Herramientas
-from agente.politica import Politica
+from agente.politica import Politica, aprobar_edicion_consola
 
-H = {"listar_archivos", "leer_archivo", "buscar", "ejecutar_pruebas", "editar_archivo", "ver_cambios", "ejecutar_comando"}
+H = {
+    "listar_archivos", "leer_archivo", "buscar", "ejecutar_pruebas", "editar_archivo",
+    "ver_cambios", "ejecutar_comando", "mapa_repo", "anotar", "leer_notas",
+}
 
 CASOS_INVALIDOS = [
     # visto en E2: el asistente respondió en prosa en vez de JSON
@@ -81,6 +84,16 @@ def test_aprobar_edicion_humana_rechaza_con_n():
     assert not rechaza.evaluar("editar_archivo", edicion, 1).permitido
     assert "revisor humano" in rechaza.evaluar("editar_archivo", edicion, 1).motivo
     assert acepta.evaluar("editar_archivo", edicion, 1).permitido
+
+
+def test_aprobar_edicion_consola_valida_s_o_n(monkeypatch):
+    respuestas = iter(("quizá", "n"))
+    monkeypatch.setattr("builtins.input", lambda prompt="": next(respuestas))
+    assert aprobar_edicion_consola({"ruta": "src/puntos/cuenta.py"}) is False
+
+    respuestas = iter(("S",))
+    monkeypatch.setattr("builtins.input", lambda prompt="": next(respuestas))
+    assert aprobar_edicion_consola({"ruta": "src/puntos/cuenta.py"}) is True
 
 
 def test_editar_archivo_exige_fragmento_unico(tmp_path):
