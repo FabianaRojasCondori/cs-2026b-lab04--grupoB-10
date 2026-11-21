@@ -18,6 +18,8 @@ class CuentaPuntos:
         """Suma `puntos` al saldo por la solicitud indicada y devuelve el nuevo saldo."""
         if puntos <= 0:
             raise ValueError("Los puntos deben ser positivos")
+        if self.movimientos_de(solicitud_id):
+            return self.saldo
         self.saldo += puntos
         self.movimientos.append((solicitud_id, puntos))
         return self.saldo

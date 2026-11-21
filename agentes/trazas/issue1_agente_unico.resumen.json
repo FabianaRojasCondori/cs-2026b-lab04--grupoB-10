@@ -1,0 +1,18 @@
+{
+ "issue": "ISSUE-01",
+ "agente": "agente_unico",
+ "modo": "interactivo",
+ "pasos": 9,
+ "permitidas": 8,
+ "bloqueadas_por_politica": 1,
+ "rechazadas_por_contrato": 0,
+ "herramientas": [
+  "editar_archivo",
+  "ejecutar_pruebas",
+  "leer_archivo"
+ ],
+ "estado_final": "FINALIZADO",
+ "contexto_final_caracteres": 8951,
+ "contexto_final_tokens_aprox": 2237,
+ "pruebas_sandbox": "2 failed, 77 passed in 0.14s"
+}
