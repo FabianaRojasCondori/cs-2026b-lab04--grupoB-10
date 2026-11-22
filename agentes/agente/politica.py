@@ -12,7 +12,8 @@ class Decision:
 @dataclass
 class Politica:
     herramientas_permitidas: set = field(default_factory=lambda: {
-        "listar_archivos", "leer_archivo", "buscar", "ejecutar_pruebas", "editar_archivo", "ejecutar_comando"})
+        "listar_archivos", "leer_archivo", "buscar", "mapa_repo", "anotar", "leer_notas",
+        "ejecutar_pruebas", "editar_archivo", "ejecutar_comando"})
     comandos_permitidos: tuple = (r"^python -m pytest\b", r"^radon cc\b", r"^lint-imports\b", r"^git (status|diff)\b")
     rutas_protegidas: tuple = ("tests/",)          # el agente no puede "arreglar" las pruebas para que pasen
     max_pasos: int = 15
@@ -34,3 +35,17 @@ class Politica:
             if self.aprobar_edicion and not self.aprobar_edicion(args):
                 return Decision(False, "El revisor humano rechazó la edición")
         return Decision(True)
+
+
+def aprobar_edicion_consola(args: dict) -> bool:
+    """Solicita aprobación humana y acepta exclusivamente 's' o 'n'."""
+    while True:
+        try:
+            respuesta = input(
+                f"¿Aprobar edición en {args.get('ruta', '?')}? [s/n]: "
+            ).strip().lower()
+        except EOFError:
+            return False
+        if respuesta in ("s", "n"):
+            return respuesta == "s"
+        print("Respuesta inválida. Escriba únicamente 's' o 'n'.")

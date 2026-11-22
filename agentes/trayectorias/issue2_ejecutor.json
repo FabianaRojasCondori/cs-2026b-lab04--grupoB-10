@@ -1,0 +1,7 @@
+[
+  {"pensamiento":"leo el issue y preparo el cambio mínimo","accion":"leer_archivo","args":{"ruta":"issues/ISSUE-02.md"}},
+  {"pensamiento":"obtengo el mapa compacto del módulo","accion":"mapa_repo","args":{"carpeta":"src/rutas"}},
+  {"pensamiento":"aplico el filtro por estado activo","accion":"editar_archivo","args":{"ruta":"src/rutas/planificador.py","antes":"    del_distrito = [s for s in solicitudes if s.distrito == distrito]\n","despues":"    del_distrito = [\n        s for s in solicitudes\n        if s.distrito == distrito\n        and s.estado in (\"Pendiente\", \"Asignada\")\n    ]\n"}},
+  {"pensamiento":"ejecuto la prueba objetivo","accion":"ejecutar_pruebas","args":{"ruta":"tests/test_issue_02.py"}},
+  {"pensamiento":"el cambio queda limitado al planificador","final":"Ejecutor: corregido planificar_ruta para excluir solicitudes canceladas."}
+]
