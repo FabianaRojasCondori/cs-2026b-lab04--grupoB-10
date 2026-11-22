@@ -1,0 +1,9 @@
+[
+  {"pensamiento":"leo el issue antes de localizar la causa","accion":"leer_archivo","args":{"ruta":"issues/ISSUE-03.md"}},
+  {"pensamiento":"obtengo el mapa compacto de src/puntos","accion":"mapa_repo","args":{"carpeta":"src/puntos"}},
+  {"pensamiento":"reviso la implementación de tarifas por distrito","accion":"leer_archivo","args":{"ruta":"src/puntos/distritos.py"}},
+  {"pensamiento":"cada instancia debe tener su propio diccionario","accion":"editar_archivo","args":{"ruta":"src/puntos/distritos.py","antes":"    _tarifas = {}  # material -> callable que crea la ReglaPuntos local\n\n    def __init__(self, distrito: str, fabrica=None):\n        self.distrito = distrito\n        self._fabrica = fabrica or fabrica_estandar()\n","despues":"    def __init__(self, distrito: str, fabrica=None):\n        self.distrito = distrito\n        self._fabrica = fabrica or fabrica_estandar()\n        self._tarifas = {}  # material -> callable que crea la ReglaPuntos local\n"}},
+  {"pensamiento":"registro hipótesis y archivo revisado","accion":"anotar","args":{"texto":"Hipótesis: _tarifas compartida entre instancias mezclaba configuraciones de distritos.\nArchivo revisado: src/puntos/distritos.py"}},
+  {"pensamiento":"verifico Cayma frente a Yanahuara","accion":"ejecutar_pruebas","args":{"ruta":"tests/test_issue_03.py"}},
+  {"pensamiento":"la tarifa queda aislada por instancia","final":"Issue 03 resuelto: ReglasDistrito usa un _tarifas por instancia y las pruebas pasan."}
+]

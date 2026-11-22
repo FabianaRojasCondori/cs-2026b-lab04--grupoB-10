@@ -1,0 +1,18 @@
+{
+ "issue": "ISSUE-02",
+ "agente": "agente_unico",
+ "modo": "grabado",
+ "pasos": 4,
+ "permitidas": 3,
+ "bloqueadas_por_politica": 1,
+ "rechazadas_por_contrato": 0,
+ "herramientas": [
+  "editar_archivo",
+  "ejecutar_pruebas",
+  "leer_archivo"
+ ],
+ "estado_final": "FINALIZADO",
+ "contexto_final_caracteres": 4874,
+ "contexto_final_tokens_aprox": 1218,
+ "pruebas_sandbox": "79 passed in 0.36s"
+}

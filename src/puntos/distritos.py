@@ -10,11 +10,10 @@ from src.puntos.reglas import fabrica_estandar
 class ReglasDistrito:
     """Reglas de puntos vigentes en un distrito."""
 
-    _tarifas = {}  # material -> callable que crea la ReglaPuntos local
-
     def __init__(self, distrito: str, fabrica=None):
         self.distrito = distrito
         self._fabrica = fabrica or fabrica_estandar()
+        self._tarifas = {}  # material -> callable que crea la ReglaPuntos local
 
     def configurar(self, material: str, creador) -> None:
         """Sobrescribe la regla de `material` solo para este distrito."""

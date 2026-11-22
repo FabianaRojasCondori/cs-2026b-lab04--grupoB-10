@@ -3,7 +3,11 @@ Todas operan DENTRO del directorio de trabajo (sandbox).
 
 Adaptación EcoRecicla (Lab 10): `original` apunta al repositorio real para `ver_cambios`,
 `ejecutar_pruebas` usa el mismo intérprete de Python y fuerza UTF-8 (necesario en Windows)."""
-import pathlib, subprocess, re, sys
+import ast
+import pathlib
+import re
+import subprocess
+import sys
 
 
 class Herramientas:
@@ -24,6 +28,9 @@ class Herramientas:
             "listar_archivos": "listar_archivos(carpeta='.'): lista los archivos .py y .md",
             "leer_archivo": "leer_archivo(ruta): devuelve el contenido con números de línea",
             "buscar": "buscar(patron): busca una expresión regular en los archivos .py",
+            "mapa_repo": "mapa_repo(carpeta='.'): devuelve rutas y firmas de funciones, clases y métodos Python dentro del sandbox",
+            "anotar": "anotar(texto): agrega una nota breve y persistente a notas.md dentro del sandbox",
+            "leer_notas": "leer_notas(): devuelve el contenido persistente de notas.md",
             "ejecutar_pruebas": "ejecutar_pruebas(ruta=''): ejecuta pytest (toda la suite o solo la ruta indicada) y devuelve el resumen",
             "editar_archivo": "editar_archivo(ruta, antes, despues): reemplaza un fragmento exacto (una sola vez)",
             "ver_cambios": "ver_cambios(): muestra el diff respecto de la versión original",
@@ -49,6 +56,49 @@ class Herramientas:
                 if rx.search(l):
                     hallazgos.append(f"{p.relative_to(self.raiz).as_posix()}:{i}: {l.strip()}")
         return "\n".join(hallazgos) or "(sin resultados)"
+
+    def mapa_repo(self, carpeta="."):
+        base = self._ruta(carpeta)
+        if not base.exists():
+            return f"ERROR: carpeta inexistente: {carpeta}"
+        if not base.is_dir():
+            return f"ERROR: no es una carpeta: {carpeta}"
+
+        bloques = []
+        for p in sorted(base.rglob("*.py")):
+            if "__pycache__" in p.parts:
+                continue
+            try:
+                arbol = ast.parse(p.read_text(encoding="utf-8"), filename=p.as_posix())
+            except (SyntaxError, UnicodeDecodeError) as error:
+                bloques.append(f"{p.relative_to(self.raiz).as_posix()}: ERROR {error}")
+                continue
+
+            firmas = []
+            for nodo in arbol.body:
+                if isinstance(nodo, (ast.FunctionDef, ast.AsyncFunctionDef)):
+                    firmas.append(f"{nodo.name}{ast.unparse(nodo.args)}")
+                elif isinstance(nodo, ast.ClassDef):
+                    for miembro in nodo.body:
+                        if isinstance(miembro, (ast.FunctionDef, ast.AsyncFunctionDef)):
+                            firmas.append(f"{nodo.name}.{miembro.name}{ast.unparse(miembro.args)}")
+            if firmas:
+                bloques.append(f"{p.relative_to(self.raiz).as_posix()}: " + "; ".join(firmas))
+        return "\n".join(bloques) or "(sin módulos Python)"
+
+    def anotar(self, texto):
+        if not isinstance(texto, str) or not texto.strip():
+            return "ERROR: la nota no puede estar vacía"
+        notas = self.raiz / "notas.md"
+        with notas.open("a", encoding="utf-8") as archivo:
+            archivo.write(texto.strip() + "\n")
+        return f"OK: nota agregada a notas.md ({len(texto)} caracteres)"
+
+    def leer_notas(self):
+        notas = self.raiz / "notas.md"
+        if not notas.exists():
+            return "(sin notas)"
+        return notas.read_text(encoding="utf-8").strip() or "(sin notas)"
 
     def ejecutar_pruebas(self, ruta=""):
         cmd = [sys.executable, "-m", "pytest", "-q", "--no-header", "-p", "no:cacheprovider"]

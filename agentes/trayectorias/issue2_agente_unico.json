@@ -1,0 +1,7 @@
+[
+  {"pensamiento":"leo el issue y la restricción de alcance","accion":"leer_archivo","args":{"ruta":"issues/ISSUE-02.md"}},
+  {"pensamiento":"obtengo una vista compacta del módulo de rutas","accion":"mapa_repo","args":{"carpeta":"src/rutas"}},
+  {"pensamiento":"la ruta debe filtrar estado activo y distrito","accion":"editar_archivo","args":{"ruta":"src/rutas/planificador.py","antes":"    del_distrito = [s for s in solicitudes if s.distrito == distrito]\n","despues":"    del_distrito = [\n        s for s in solicitudes\n        if s.distrito == distrito\n        and s.estado in (\"Pendiente\", \"Asignada\")\n    ]\n"}},
+  {"pensamiento":"verifico exclusivamente la prueba del issue 2","accion":"ejecutar_pruebas","args":{"ruta":"tests/test_issue_02.py"}},
+  {"pensamiento":"Cancelada queda excluida y se conservan las activas","final":"Issue 02 resuelto: planificar_ruta filtra estado activo y distrito."}
+]

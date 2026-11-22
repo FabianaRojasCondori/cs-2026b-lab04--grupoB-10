@@ -12,7 +12,7 @@ sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
 from agente.nucleo import Agente
 from agente.herramientas import Herramientas
 from agente.modelos import ModeloGrabado, ModeloInteractivo
-from agente.politica import Politica
+from agente.politica import Politica, aprobar_edicion_consola
 from sandbox import preparar_sandbox, RAIZ
 
 ap = argparse.ArgumentParser()
@@ -49,8 +49,10 @@ print(f"PLANIFICADOR:\n{plan}\n")
 agentes, retro = [planificador], ""
 
 for ronda in range(1, MAX_RONDAS + 1):
+    politica_ejecutor = Politica(max_pasos=12, rutas_protegidas=("tests/", "issues/"))
+    politica_ejecutor.aprobar_edicion = aprobar_edicion_consola
     ejecutor = Agente("ejecutor", modelo("ejecutor", ronda), h,
-                      Politica(max_pasos=12, rutas_protegidas=("tests/", "issues/")),
+                      politica_ejecutor,
                       f"{PROTOCOLO}Resuelve issues/{ISSUE}.md siguiendo este plan:\n{plan}\n{retro}"
                       f"No modifiques tests/ ni issues/. Herramientas: {json.dumps(h.catalogo(), ensure_ascii=False)}",
                       traza("ejecutor", ronda))

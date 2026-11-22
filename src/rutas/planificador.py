@@ -8,5 +8,9 @@ atributos `distrito`, `estado` y `direccion` de cada solicitud.
 
 def planificar_ruta(solicitudes, distrito: str) -> list:
     """Devuelve, en orden de visita, las solicitudes que el reciclador debe atender."""
-    del_distrito = [s for s in solicitudes if s.distrito == distrito]
+    del_distrito = [
+        s for s in solicitudes
+        if s.distrito == distrito
+        and s.estado in ("Pendiente", "Asignada")
+    ]
     return sorted(del_distrito, key=lambda s: s.direccion)
