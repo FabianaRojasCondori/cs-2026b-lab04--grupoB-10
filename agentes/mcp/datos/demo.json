@@ -1,0 +1,16 @@
+{
+  "aviso": "Datos ficticios para el Lab 11; no representan vecinos ni recojos reales.",
+  "distritos": ["Cayma", "Yanahuara", "Cerro Colorado"],
+  "vecinos": [
+    {"id": "vecino-7", "nombre": "Vecino ficticio 7", "movimientos": [["sol-001", 20], ["sol-002", 5]]},
+    {"id": "vecino-8", "nombre": "Vecino ficticio 8", "movimientos": [["sol-003", 10]]},
+    {"id": "vecino-9", "nombre": "Vecino ficticio 9", "movimientos": []}
+  ],
+  "rutas": [
+    {"id": "demo-001", "vecino_id": "vecino-7", "fecha": "2026-11-25", "distrito": "Cayma", "direccion": "Calle Demo B 200", "material": "PLASTICO", "volumen_litros": 10, "estado": "Pendiente"},
+    {"id": "demo-002", "vecino_id": "vecino-8", "fecha": "2026-11-25", "distrito": "Cayma", "direccion": "Calle Demo A 100", "material": "PAPEL", "volumen_litros": 5, "estado": "Asignada"},
+    {"id": "demo-003", "vecino_id": "vecino-7", "fecha": "2026-11-25", "distrito": "Cayma", "direccion": "Calle Demo C 300", "material": "VIDRIO", "volumen_litros": 4, "estado": "Cancelada"},
+    {"id": "demo-004", "vecino_id": "vecino-9", "fecha": "2026-11-25", "distrito": "Yanahuara", "direccion": "Calle Demo D 400", "material": "PLASTICO", "volumen_litros": 6, "estado": "Pendiente"},
+    {"id": "demo-005", "vecino_id": "vecino-7", "fecha": "2026-11-26", "distrito": "Cayma", "direccion": "Calle Demo E 500", "material": "PAPEL", "volumen_litros": 3, "estado": "Pendiente"}
+  ]
+}

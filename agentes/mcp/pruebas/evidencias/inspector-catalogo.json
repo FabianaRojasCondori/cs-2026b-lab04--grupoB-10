@@ -1,0 +1,269 @@
+{
+  "tools": [
+    {
+      "name": "puntos_usuario",
+      "title": "Consultar puntos del vecino",
+      "description": "Consulta el saldo y movimientos ficticios sin modificar la cuenta.\n    vecino_id: vecino-7, vecino-8 o vecino-9. Devuelve vecino_id, saldo y movimientos.\n    No calcula ni acredita puntos por solicitudes nuevas.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "vecino_id": {
+            "maxLength": 40,
+            "minLength": 1,
+            "title": "Vecino Id",
+            "type": "string"
+          }
+        },
+        "required": [
+          "vecino_id"
+        ],
+        "title": "puntos_usuarioArguments"
+      },
+      "outputSchema": {
+        "type": "object",
+        "properties": {
+          "vecino_id": {
+            "title": "Vecino Id",
+            "type": "string"
+          },
+          "saldo": {
+            "title": "Saldo",
+            "type": "integer"
+          },
+          "movimientos": {
+            "items": {
+              "$ref": "#/$defs/Movimiento"
+            },
+            "title": "Movimientos",
+            "type": "array"
+          }
+        },
+        "required": [
+          "vecino_id",
+          "saldo",
+          "movimientos"
+        ],
+        "$defs": {
+          "Movimiento": {
+            "properties": {
+              "solicitud_id": {
+                "title": "Solicitud Id",
+                "type": "string"
+              },
+              "puntos": {
+                "title": "Puntos",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "solicitud_id",
+              "puntos"
+            ],
+            "title": "Movimiento",
+            "type": "object"
+          }
+        },
+        "title": "PuntosUsuario"
+      },
+      "annotations": {
+        "readOnlyHint": true,
+        "destructiveHint": false,
+        "idempotentHint": true,
+        "openWorldHint": false
+      }
+    },
+    {
+      "name": "rutas_del_dia",
+      "title": "Consultar rutas del día",
+      "description": "Lista hasta 20 paradas Pendiente/Asignada ordenadas por dirección.\n    fecha: AAAA-MM-DD. distrito: Cayma, Yanahuara o Cerro Colorado (exacto).\n    Devuelve fecha, distrito, total, truncado y paradas. Sin coincidencias: lista vacía.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "fecha": {
+            "maxLength": 10,
+            "minLength": 10,
+            "title": "Fecha",
+            "type": "string"
+          },
+          "distrito": {
+            "maxLength": 40,
+            "minLength": 1,
+            "title": "Distrito",
+            "type": "string"
+          }
+        },
+        "required": [
+          "fecha",
+          "distrito"
+        ],
+        "title": "rutas_del_diaArguments"
+      },
+      "outputSchema": {
+        "type": "object",
+        "properties": {
+          "fecha": {
+            "title": "Fecha",
+            "type": "string"
+          },
+          "distrito": {
+            "title": "Distrito",
+            "type": "string"
+          },
+          "total": {
+            "title": "Total",
+            "type": "integer"
+          },
+          "truncado": {
+            "title": "Truncado",
+            "type": "boolean"
+          },
+          "paradas": {
+            "items": {
+              "$ref": "#/$defs/Parada"
+            },
+            "title": "Paradas",
+            "type": "array"
+          }
+        },
+        "required": [
+          "fecha",
+          "distrito",
+          "total",
+          "truncado",
+          "paradas"
+        ],
+        "$defs": {
+          "Parada": {
+            "properties": {
+              "solicitud_id": {
+                "title": "Solicitud Id",
+                "type": "string"
+              },
+              "direccion": {
+                "title": "Direccion",
+                "type": "string"
+              },
+              "estado": {
+                "title": "Estado",
+                "type": "string"
+              },
+              "vecino_id": {
+                "title": "Vecino Id",
+                "type": "string"
+              }
+            },
+            "required": [
+              "solicitud_id",
+              "direccion",
+              "estado",
+              "vecino_id"
+            ],
+            "title": "Parada",
+            "type": "object"
+          }
+        },
+        "title": "RutaDia"
+      },
+      "annotations": {
+        "readOnlyHint": true,
+        "destructiveHint": false,
+        "idempotentHint": true,
+        "openWorldHint": false
+      }
+    },
+    {
+      "name": "registrar_solicitud",
+      "title": "Registrar solicitud de demostración",
+      "description": "Crea un JSON nuevo de solicitud demo Pendiente; requiere aprobación humana en el host.\n    vecino_id: vecino-7/8/9; fecha: AAAA-MM-DD; distrito: Cayma/Yanahuara/Cerro Colorado.\n    direccion: 5–160 caracteres; material: PLASTICO/VIDRIO/PAPEL; volumen_litros: >0 y <=1000.\n    Devuelve solicitud_id, estado, fecha, distrito y demo. No sobrescribe, borra ni notifica.\n    No es idempotente: repetir la llamada crea otra solicitud.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "vecino_id": {
+            "maxLength": 40,
+            "minLength": 1,
+            "title": "Vecino Id",
+            "type": "string"
+          },
+          "fecha": {
+            "maxLength": 10,
+            "minLength": 10,
+            "title": "Fecha",
+            "type": "string"
+          },
+          "distrito": {
+            "maxLength": 40,
+            "minLength": 1,
+            "title": "Distrito",
+            "type": "string"
+          },
+          "direccion": {
+            "maxLength": 160,
+            "minLength": 5,
+            "title": "Direccion",
+            "type": "string"
+          },
+          "material": {
+            "maxLength": 12,
+            "minLength": 1,
+            "title": "Material",
+            "type": "string"
+          },
+          "volumen_litros": {
+            "exclusiveMinimum": 0,
+            "maximum": 1000,
+            "title": "Volumen Litros",
+            "type": "number"
+          }
+        },
+        "required": [
+          "vecino_id",
+          "fecha",
+          "distrito",
+          "direccion",
+          "material",
+          "volumen_litros"
+        ],
+        "title": "registrar_solicitudArguments"
+      },
+      "outputSchema": {
+        "type": "object",
+        "properties": {
+          "solicitud_id": {
+            "title": "Solicitud Id",
+            "type": "string"
+          },
+          "estado": {
+            "title": "Estado",
+            "type": "string"
+          },
+          "fecha": {
+            "title": "Fecha",
+            "type": "string"
+          },
+          "distrito": {
+            "title": "Distrito",
+            "type": "string"
+          },
+          "demo": {
+            "title": "Demo",
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "solicitud_id",
+          "estado",
+          "fecha",
+          "distrito",
+          "demo"
+        ],
+        "title": "SolicitudCreada"
+      },
+      "annotations": {
+        "readOnlyHint": false,
+        "destructiveHint": false,
+        "idempotentHint": false,
+        "openWorldHint": false
+      }
+    }
+  ]
+}

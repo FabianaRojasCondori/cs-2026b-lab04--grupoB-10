@@ -1,0 +1,23 @@
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "{\n  \"vecino_id\": \"vecino-7\",\n  \"saldo\": 25,\n  \"movimientos\": [\n    {\n      \"solicitud_id\": \"sol-001\",\n      \"puntos\": 20\n    },\n    {\n      \"solicitud_id\": \"sol-002\",\n      \"puntos\": 5\n    }\n  ]\n}"
+    }
+  ],
+  "structuredContent": {
+    "vecino_id": "vecino-7",
+    "saldo": 25,
+    "movimientos": [
+      {
+        "solicitud_id": "sol-001",
+        "puntos": 20
+      },
+      {
+        "solicitud_id": "sol-002",
+        "puntos": 5
+      }
+    ]
+  },
+  "isError": false
+}
