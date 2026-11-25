@@ -1,0 +1,70 @@
+Verificación real del 2026-11-25; Linux, Python 3.12.14, mcp 2.3.0.
+Base: d1ca0c8d38c1843503a6d23a6449edc7fd216d96
+Capturas gráficas de Inspector: pendientes en la PC de Andrés.
+
+$ python -m pytest -q agentes/mcp/pruebas
+.....................................                                    [100%]
+37 passed in 0.67s
+exit_code=0
+
+$ python -m pytest -q tests agentes/pruebas_agente agentes/mcp/pruebas
+........................................................................ [ 45%]
+........................................................................ [ 91%]
+..............                                                           [100%]
+158 passed in 0.79s
+exit_code=0
+
+$ python agentes/mcp/cliente/explorar.py
+Servidor: ecorecicla | protocolo: 2026-07-28
+HERRAMIENTAS
+- puntos_usuario [LECTURA]
+- rutas_del_dia [LECTURA]
+- registrar_solicitud [ESCRITURA]
+RECURSOS
+- ecorecicla://puntos/tabla
+- ecorecicla://demo/contexto
+- ecorecicla://adr/{numero} (plantilla)
+PROMPTS
+- documentar_funcion
+puntos_usuario is_error= False {"vecino_id": "vecino-7", "saldo": 25, "movimientos": [{"solicitud_id": "sol-001", "puntos": 20}, {"solicitud_id": "sol-002", "puntos": 5}]}
+rutas_del_dia is_error= False {"fecha": "2026-11-25", "distrito": "Cayma", "total": 2, "truncado": false, "paradas": [{"solicitud_id": "demo-002", "direccion": "Calle Demo A 100", "estado": "Asignada", "vecino_id": "vecino-8"}, {"solicitud_id": "demo-001", "direccion": "Calle Demo B 200", "estado": "Pendiente", "vecino_id": "vecino-7"}]}
+rutas_del_dia is_error= True Error executing tool rutas_del_dia: Fecha inválida: use una fecha real en formato AAAA-MM-DD, por ejemplo 2026-11-25
+ADR: # ADR-001: Adoptar Monolito Modular para EcoRecicla AQP
+PROMPT: # ROL (Persona)
+stderr:
+Tool 'rutas_del_dia' failed: 'Error executing tool rutas_del_dia: Fecha inválida: use una fecha real en formato AAAA-MM-DD, por ejemplo 2026-11-25'
+exit_code=0
+
+$ python -m radon cc -s agentes/mcp/servidor_mcp
+agentes/mcp/servidor_mcp/ecorecicla_mcp.py
+    F 149:0 adr - B (6)
+    F 113:0 registrar_solicitud - A (5)
+    F 167:0 documentar_funcion - A (5)
+    F 73:0 _fecha_distrito - A (4)
+    F 85:0 _ejecutar - A (3)
+    F 138:0 contexto_demo - A (2)
+    F 96:0 puntos_usuario - A (1)
+    F 104:0 rutas_del_dia - A (1)
+    F 132:0 tabla_puntos - A (1)
+    C 39:0 Movimiento - A (1)
+    C 44:0 PuntosUsuario - A (1)
+    C 50:0 Parada - A (1)
+    C 57:0 RutaDia - A (1)
+    C 65:0 SolicitudCreada - A (1)
+agentes/mcp/servidor_mcp/servicio_demo.py
+    M 94:4 ServicioDemo.rutas - B (7)
+    M 70:4 ServicioDemo.puntos - A (5)
+    C 52:0 ServicioDemo - A (4)
+    M 63:4 ServicioDemo.vecino - A (4)
+    M 80:4 ServicioDemo._solicitud - A (4)
+    C 20:0 NotificadorDemo - A (2)
+    C 27:0 RepositorioCreacion - A (2)
+    M 119:4 ServicioDemo.tabla_puntos - A (2)
+    F 16:0 cargar_demo - A (1)
+    M 23:4 NotificadorDemo.notificar_solicitud - A (1)
+    M 30:4 RepositorioCreacion.__init__ - A (1)
+    M 35:4 RepositorioCreacion.guardar - A (1)
+    M 55:4 ServicioDemo.__init__ - A (1)
+    M 60:4 ServicioDemo.distritos - A (1)
+    M 109:4 ServicioDemo.registrar - A (1)
+exit_code=0
